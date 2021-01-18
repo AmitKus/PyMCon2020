@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> Probability questions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> Probability questions </small></h1>
+</section>
+
+<section><section id="countable-additivity-axiom" class="title-slide slide level1"><h1><small> Countable Additivity Axiom </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(P(A_1 \cup A_2 \cup A_3 \cup ...) = P(A_1) + P(A_2) + P(A_3) + ...\)</span></p>
+<ul>
+<li>Additivity holds for “countable” sequence of events.</li>
+<li>The unit square (or real line) is <strong>not countable</strong> (its elements cannot be arranged in a sequence)</li>
+</ul>
+</section></section>
+<section><section id="the-role-of-probability-theory" class="title-slide slide level1"><h1><small> The role of probability theory </small></h1></section><section id="section-1" class="slide level2">
+<h2></h2>
+<p>A framework for analyzing phenomena with uncertain outcomes</p>
+<ul>
+<li>Rules of consistent reasoning</li>
+<li>Used for predictions and decisions</li>
+</ul>
+</section><section id="section-2" class="slide level2">
+<h2></h2>
+<p><img src="pics/probability_theory.png" alt="drawing" width="200"/></p>
+<p>Statistics: Role is to complement probability theory, come up with statistical models</p>
+</section></section>
+<section><section id="conditional-probabilities" class="title-slide slide level1"><h1><small> Conditional Probabilities </small></h1></section><section id="section-3" class="slide level2">
+<h2></h2>
+<ul>
+<li>Conditional probabilities are like any other probabilties its just that we have additional information available.</li>
+</ul>
+<h3 id="conditional-independence">Conditional independence</h3>
+<ul>
+<li>Similar to notion of independence but applied to conditional probabilities
+<ul>
+<li><span class="math inline">\(P(A \cap B) = P(A) P(B)\)</span></li>
+</ul></li>
+<li>Independence between A and B does not imply conditional independence</li>
+<li>Given C, either of A or B happens (figure below)</li>
+</ul>
+</section><section id="section-4" class="slide level2">
+<h2></h2>
+<p><img data-src="pics/conditional_independence.png" /></p>
+</section></section>
+<section><section id="independence-vs-pair-wise-independence" class="title-slide slide level1"><h1><small> Independence vs Pair-wise independence </small></h1></section><section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li>H1, H2 and C are pairwise independent but not independent.</li>
+<li>Example: If H1 happened we can’t say anything about H2 or C</li>
+<li>Example: If H1 and H2 happened then we know that C happened in the case below.</li>
+</ul>
+<p><img data-src="pics/pairwise-independence.png" /></p>
+</section></section>
+<section><section id="discrete-random-variables" class="title-slide slide level1"><h1><small> Discrete Random Variables </small></h1></section><section id="section-6" class="slide level2">
+<h2></h2>
+<h3 id="properties-of-variance">Properties of variance</h3>
+<ul>
+<li><span class="math inline">\(\text{var}(aX + b) = a^2 \text{var}(X)\)</span></li>
+</ul>
+<p>Useful formula: <span class="math inline">\(\text{var}(X) = E[X^2] - (E[X])^2\)</span></p>
+</section><section id="section-7" class="slide level2">
+<h2></h2>
+<ul>
+<li>Variance of Bernoulli distribution = <span class="math inline">\(E[X^2] - (E[X])^2 = p - p^2 = p(1-p)\)</span>
+<ul>
+<li><span class="math inline">\(E[X^2] = E[X]\)</span>, as X is in {0,1}</li>
+<li>fair coin (p=0.5) has the highest uncertainty (in a sense var is a measure of uncertainty of random variable)</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="total-expectation-theorem" class="title-slide slide level1"><h1><small> Total Expectation Theorem </small></h1></section><section id="section-8" class="slide level2">
+<h2></h2>
+<p><img data-src="pics/total_expectation_theorem.png" /></p>
+</section><section id="section-9" class="slide level2">
+<h2></h2>
+<p><img data-src="pics/total_expectation_theorem_ex.png" /></p>
+</section></section>
+<section><section id="geometric-distribution" class="title-slide slide level1"><h1><small> Geometric Distribution </small></h1></section><section id="section-10" class="slide level2">
+<h2></h2>
+<ul>
+<li><p>X: number of independent coin tosses until first head; P(H) = p</p></li>
+<li><p><strong>Memorylessness:</strong> Number of remaining coin tosses, conditioned on Tails in the first toss, is Geometric, with parameter p</p></li>
+</ul>
+</section><section id="section-11" class="slide level2">
+<h2></h2>
+<ul>
+<li><p>Conditioned on <span class="math inline">\(X&gt;n\)</span> , <span class="math inline">\(X-n\)</span> is geometric with parameter p</p></li>
+<li><p>Mean of geometric distribution:</p>
+<p>  <span class="math inline">\(E[X] = 1 + 2p(1-p) + 3p(1-p)^2 + 4p(1-p)^3 + ..\)</span><br>   <span class="math inline">\(E[X] = 1 + p(2(1-p) + 3*(1-p)^2 + 4*(1-p)^3 + ..)\)</span><br>   <span class="math inline">\(E[X] = 1 - p*\frac{d}{dp} [(1-p)^2 + (1-p)^3 + (1-p)^4 + ..]\)</span> <br>   <span class="math inline">\(E[X] = 1 - p*\frac{d}{dp} [(1-p)^2 * 1/p]\)</span> <br>   <span class="math inline">\(E[X] = 1/p\)</span></p></li>
+</ul>
+</section></section>
+<section><section id="linearity-of-expectations" class="title-slide slide level1"><h1><small> Linearity of expectations </small></h1></section><section id="section-12" class="slide level2">
+<h2></h2>
+<p>X = X1 + X2 ….. Xn</p>
+<p>E[X] = E[X1] + E[X2] …… + E[Xn]</p>
+</section><section id="example-compute-the-mean-of-binomial-distribution" class="slide level2">
+<h2>Example: Compute the mean of Binomial Distribution</h2>
+<ul>
+<li>Probability of k success in n toss: <span class="math inline">\({n \choose k}p^k(1-p)^{n-k}\)</span></li>
+<li>Mean of Binomial distribution = <span class="math inline">\(\sum_k k {n \choose k}p^k(1-p)^{n-k}\)</span></li>
+<li>Easier way below: <span class="math inline">\(i^{th}\)</span> trial is a success or a failure</li>
+</ul>
+</section><section id="section-13" class="slide level2">
+<h2></h2>
+<p><img data-src="pics/mean_of_binomial.png" /></p>
+</section></section>
+<section><section id="continuous-random-variable" class="title-slide slide level1"><h1><small> Continuous Random Variable </small></h1></section><section id="section-14" class="slide level2">
+<h2></h2>
+<p>Definition: A random variable is continuous if it can be described by a PDF</p>
+</section></section>
+<section><section id="exponential-random-variable" class="title-slide slide level1"><h1><small> Exponential random variable </small></h1></section><section id="section-15" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(f_X(x)=\begin{cases} \lambda e^{-\lambda x} &amp; x \ge 0\\ 0 &amp; x &lt; o \end{cases}\)</span></p>
+<ul>
+<li><strong>Analogous to the geometric distribution in discrete setting.</strong>
+<ul>
+<li>Exponential random variable models the time that we have to wait until something happens.</li>
+<li>Geometric random variable models the time until we see a success for the first time.</li>
+</ul></li>
+</ul>
+</section><section id="section-16" class="slide level2">
+<h2></h2>
+<ul>
+<li>Exponential random variable is used to model many important and real world phenomena. For example:
+<ul>
+<li>the time until a customer arrives,</li>
+<li>the time until a light bulb burns out,</li>
+<li>the time until a machine breaks down,</li>
+<li>the time until you receive an email,</li>
+<li>the timeuntil a meteorite falls on your house</li>
+</ul></li>
+</ul>
+</section><section id="section-17" class="slide level2">
+<h2></h2>
+<p><img data-src="pics/exponential_random_variable.png" /></p>
+</section></section>
+<section><section id="cumulative-density-functions" class="title-slide slide level1"><h1><small> Cumulative density functions </small></h1></section><section id="section-18" class="slide level2">
+<h2></h2>
+<ul>
+<li>Defined for both discrete and continuous random variable.</li>
+</ul>
+<p><img data-src="pics/cdf_properties.png" /></p>
+</section></section>
+<section><section id="exponential-random-variable-1" class="title-slide slide level1"><h1><small> Exponential random variable </small></h1></section><section id="section-19" class="slide level2">
+<h2></h2>
+<ul>
+<li>Memorylessness property using an example</li>
+<li>Old light bulb does not remember how long it has been on for.</li>
+</ul>
+<p><img data-src="pics/exponential_distribution_memoryless.png" /></p>
+</section></section>
+<section><section id="independence-of-random-variables" class="title-slide slide level1"><h1><small> Independence of Random Variables </small></h1></section><section id="section-20" class="slide level2">
+<h2></h2>
+<ul>
+<li>The independence property allows us to build large models from small simple models.</li>
+<li>Discrete: <span class="math inline">\(p_{XY}(x,y) = p_X(x) p_Y(y)\)</span> for all x,y</li>
+<li>Continuous: <span class="math inline">\(f_{XY}(x,y) = f_X(x) f_Y(y)\)</span> for all x,y
+<ul>
+<li><span class="math inline">\(f_{X|Y}(x|y) = f_X(x)\)</span></li>
+<li><span class="math inline">\(f_{Y|X}(y|x) = f_Y(y)\)</span></li>
+</ul></li>
+</ul>
+</section><section id="section-21" class="slide level2">
+<h2></h2>
+<p>Other properties:</p>
+<p><img data-src="pics/continuous_independence.png" /></p>
+</section></section>
+<section><section id="can-bayes-rule-be-applied-to-mixed-random-variables" class="title-slide slide level1"><h1><small> Can Bayes Rule be applied to mixed random variables </small></h1></section><section id="section-22" class="slide level2">
+<h2></h2>
+<ul>
+<li>YES</li>
+</ul>
+<p>K: discrete distribution (<span class="math inline">\(p_K(k)\)</span>) <br> Y: continuous distribution (<span class="math inline">\(f_Y(y)\)</span>)</p>
+<p><span class="math inline">\(p_{K|Y}(k|y) f_Y(y) = f_{Y|K}(y|k) p_K(k)\)</span></p>
+<p>Versions:</p>
+<ol type="1">
+<li><span class="math inline">\(p_{K|Y}(k|y) = \frac{f_{Y|K}(y|k) p_K(k)}{f_Y(y)}\)</span></li>
+<li><span class="math inline">\(f_{Y|K}(y|k) = \frac{p_{K|Y}(k|y) f_Y(y)}{p_K(k)}\)</span></li>
+</ol>
+</section></section>
+<section><section id="derived-distributions" class="title-slide slide level1"><h1><small> Derived distributions </small></h1></section><section id="section-23" class="slide level2">
+<h2></h2>
+</section><section id="linear-transformation-discrete" class="slide level2">
+<h2>Linear transformation: Discrete</h2>
+<p>If: Y = aX + b <br></p>
+<p><span class="math inline">\(p_Y(y) = p_X(\frac{y -b}{a})\)</span></p>
+</section><section id="linear-transformation-continuous" class="slide level2">
+<h2>Linear transformation: Continuous</h2>
+<p>If: Y = aX + b <br></p>
+<p><span class="math inline">\(f_Y(y) = \frac{1}{|a|}f_X(\frac{y -b}{a})\)</span></p>
+<p>Example: * If <span class="math inline">\(X \sim N(\mu, \sigma^2)\)</span> * Then <span class="math inline">\(aX + b \sim N(a\mu+b, a^2\sigma^2)\)</span></p>
+</section></section>
+<section><section id="a-general-function-gx-of-a-continuous-random-variable" class="title-slide slide level1"><h1><small> A general function g(X) of a continuous random variable </small></h1></section><section id="section-24" class="slide level2">
+<h2></h2>
+<p>Two step procedure:</p>
+<ul>
+<li>Find the CDF of Y: <span class="math inline">\(F_Y(y) = P(Y \le y) = P(g(X) \le y)\)</span></li>
+<li>Differentiate: <span class="math inline">\(f_Y(y) = \frac{dF_Y}{dy}\left( y \right)\)</span></li>
+</ul>
+</section></section>
+<section><section id="example-1-y-x3" class="title-slide slide level1"><h1><small> Example 1: <span class="math inline">\(Y = X^3\)</span> </small></h1></section><section id="section-25" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(Y = X^3\)</span> where <span class="math inline">\(X\)</span> is uniform[0,2]</p>
+<p><span class="math inline">\(F_Y(y) = P(g(X) \le y) = P(X^3 \le y) = P(X \le y^{1/3}) = 1/2*y^{1/3}\)</span></p>
+<p><span class="math inline">\(f_Y(y) = \frac{dF_Y}{dy}\left( y \right) = \frac{1}{6}y^{-2/3}\)</span></p>
+</section></section>
+<section><section id="example-2-you-go-to-the-gym-and-set-the-speed-x-of-the-treadmill-to-a-number-between-5-and-10-kmhr-with-a-uniform-distribution.-find-the-pdf-of-the-time-it-takes-to-run-10km." class="title-slide slide level1"><h1><small> Example 2: You go to the gym and set the speed X of the treadmill to a number between 5 and 10 km/hr (with a uniform distribution). Find the PDF of the time it takes to run 10km. </small></h1></section><section id="section-26" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(X \sim U[5,10]\)</span> <br> <span class="math inline">\(Y = 10/X\)</span></p>
+<p><span class="math inline">\(F_Y(y) = P(g(X) \le y) = P(10X^{-1} \le y)\)</span> <br> <span class="math inline">\(F_Y(y) = P(X \ge 10y^{-1}) = 2 -\frac{2}{y}\)</span> <br> <span class="math inline">\(f_Y(y) = \frac{dF_Y}{dy}\left( y \right) = \frac{2}{y^2}\)</span> for <span class="math inline">\(1\le y \le 2\)</span> <br> and 0 otherwise</p>
+</section></section>
+<section><section id="general-formula-for-monotonic-function-gx" class="title-slide slide level1"><h1><small> General formula for monotonic function g(X) </small></h1></section><section id="section-27" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(f_Y(y) = f_X \left( h(y) \right) \left| \frac{dh}{dy}(y) \right|\)</span></p>
+<p>h is the inverse of <span class="math inline">\(g(X)\)</span></p>
+<ul>
+<li>Example 1:
+<ul>
+<li><span class="math inline">\(h = y^{1/3}\)</span></li>
+<li><span class="math inline">\(f_X \left( h(y) \right) = 1/2\)</span></li>
+<li><span class="math inline">\(\frac{dh}{dy}(y) = \frac{1}{3y^{2/3}}\)</span></li>
+<li><span class="math inline">\(f_Y(y) = \frac{1}{6y^{2/3}}\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="sums-of-independent-random-variables" class="title-slide slide level1"><h1><small> Sums of independent random variables </small></h1></section><section id="section-28" class="slide level2">
+<h2></h2>
+</section><section id="discrete-case" class="slide level2">
+<h2>Discrete case:</h2>
+<ul>
+<li><span class="math inline">\(Z = X + Y\)</span>, X and Y are independent R.V.s with know PDF.</li>
+<li><span class="math inline">\(P_Z(z) = \sum_x P(X=x, Y=z-x) = \sum_x P_X(x) P_Y(z-x)\)</span></li>
+<li>Convolution formula</li>
+</ul>
+</section><section id="section-29" class="slide level2">
+<h2></h2>
+</section><section id="continuous-case" class="slide level2">
+<h2>Continuous case:</h2>
+<ul>
+<li><span class="math inline">\(f_Z(z) = \int_{-\infty}^{\infty} f_X(x) f_Y(z-x) dx\)</span></li>
+</ul>
+</section></section>
+<section><section id="sum-of-normal-random-variables" class="title-slide slide level1"><h1><small> Sum of Normal Random Variables </small></h1></section><section id="section-30" class="slide level2">
+<h2></h2>
+<ul>
+<li>Sum of finitely many independent normals is normal.</li>
+<li>Can be proved using the convolutional formula.</li>
+<li><span class="math inline">\(Z = X + Y\)</span></li>
+<li><span class="math inline">\(X \sim N(\mu_x, \sigma_x^2)\)</span>, <span class="math inline">\(Y \sim N(\mu_y, \sigma_y^2)\)</span></li>
+<li><span class="math inline">\(Z \sim N(\mu_x + \mu_y, \sigma_x^2 + \sigma_y^2)\)</span></li>
+</ul>
+</section></section>
+<section><section id="what-is-covariance" class="title-slide slide level1"><h1><small> What is covariance </small></h1></section><section id="section-31" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(cov(X,Y) = E[(X - E(X)) (Y - E(Y))] = E[XY] - E[X]E[Y]\)</span></li>
+<li>Independence -&gt; cov(X,Y) = 0 but not vice-versa</li>
+<li><span class="math inline">\(cov(X,X) = var(X)\)</span></li>
+</ul>
+</section></section>
+<section><section id="what-is-the-variance-of-sum-of-random-numbers" class="title-slide slide level1"><h1><small> What is the variance of sum of random numbers? </small></h1></section><section id="section-32" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(var(X1 + X2) = var(X1) + var(X2) + 2*cov(X1,X2)\)</span></p>
+</section></section>
+<section><section id="what-is-correlation-coefficient" class="title-slide slide level1"><h1><small> What is correlation coefficient? </small></h1></section><section id="section-33" class="slide level2">
+<h2></h2>
+<ul>
+<li>Dimensionless version of covariance</li>
+<li><span class="math inline">\(\rho(X,Y) = E\left[ \frac{(X-E(X))}{\sigma(X)} \frac{(Y-E(Y))}{\sigma(Y)} \right]\)</span></li>
+<li>Correlation doesn’t imply causation</li>
+<li>Correlation often reflects underlying, common, hidden factor</li>
+</ul>
+</section></section>
+<section><section id="example-of-effect-of-correlation" class="title-slide slide level1"><h1><small> Example of effect of correlation </small></h1></section><section id="section-34" class="slide level2">
+<h2></h2>
+<p><img data-src="pics/correlation_matters.png" /></p>
+</section><section id="section-35" class="slide level2">
+<h2></h2>
+<ul>
+<li>If assumed uncorrelated, the expected return has a small standard deviation, less risky.</li>
+<li>If correlation exists, the expected return has a large standard deviation, more risky.</li>
+</ul>
+</section></section>
+<section><section id="conditional-expectation-properties" class="title-slide slide level1"><h1><small> Conditional Expectation Properties </small></h1></section><section id="section-36" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(g(y) = E(X | Y=y)\)</span></li>
+<li><span class="math inline">\(g(Y) = E(X|Y)\)</span> -&gt; Random Number</li>
+<li><span class="math inline">\(E(g(Y)) = E( E(X|Y))\)</span></li>
+</ul>
+</section></section>
+<section><section id="what-is-law-of-iterated-expectations" class="title-slide slide level1"><h1><small> What is law of iterated expectations? </small></h1></section><section id="section-37" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(E[E[X|Y]] = E[X]\)</span></li>
+</ul>
+</section></section>
+<section><section id="what-is-law-of-total-variance" class="title-slide slide level1"><h1><small> What is law of total variance? </small></h1></section><section id="section-38" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(var(X) = E[var(X|Y)] + var(E[X|Y])\)</span></li>
+</ul>
+</section><section id="properties" class="slide level2">
+<h2>Properties</h2>
+<ul>
+<li><span class="math inline">\(E[g(Y)X | Y] = g(Y)E[X|Y]\)</span></li>
+<li>If h is invertible: <span class="math inline">\(E[X|Y] = E[X|h(Y)]\)</span></li>
+</ul>
+</section></section>
+<section><section id="classical-statistics-estimating-the-mean" class="title-slide slide level1"><h1><small> Classical Statistics: Estimating the mean </small></h1></section><section id="section-39" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(X_1, .... X_n\)</span>: i.i.d. with mean <span class="math inline">\(\theta\)</span> and variance <span class="math inline">\(\sigma^2\)</span></p>
+<p>Sample mean <span class="math inline">\(\hat{\Theta}_n = \frac{X_1 + .... X_n}{n}\)</span> <br> <span class="math inline">\(\hat{\Theta}_n\)</span>: estimator (a random variable)</p>
+<h3 id="properties-1">Properties:</h3>
+<ol type="1">
+<li>Unbiased: <span class="math inline">\(E[\hat{\Theta}_n] = \theta\)</span></li>
+<li>Consistency: <span class="math inline">\(\hat{\Theta}_n \to \theta\)</span></li>
+<li>MSE: <span class="math inline">\(E[(\hat{\Theta}_n - \theta)^2] = var(\hat{\Theta}_n) = \frac{\sigma^2}{n}\)</span></li>
+</ol>
+</section></section>
+<section><section id="bias-variance-tradeoff" class="title-slide slide level1"><h1><small> Bias-Variance Tradeoff </small></h1></section><section id="section-40" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(var(Z_n) = E[Z_n^2] - E[Z_n]^2\)</span><br> <span class="math inline">\(E[Z_n^2] = var(Z_n) + E[Z_n]^2\)</span><br> <span class="math inline">\(E[Z_n^2] = variance + Bias^2\)</span><br> <br> <span class="math inline">\(MSE = E[(\hat{\Theta}_n - \theta)^2] = var(\hat{\Theta}_n-\theta) + \left( E[\hat{\Theta}_n-\theta] \right)^2\)</span></p>
+</section></section>
+<section><section id="example-of-bias-variance-tradeoff" class="title-slide slide level1"><h1><small> Example of Bias-Variance Tradeoff </small></h1></section><section id="section-41" class="slide level2">
+<h2></h2>
+<h3 id="examples">Examples:</h3>
+<ol type="1">
+<li>Estimator: <span class="math inline">\(\hat{\Theta}_n = \frac{X_1+....X_n}{n}\)</span>
+<ul>
+<li>MSE = <span class="math inline">\(\sigma^2/n\)</span> (variance) + 0 (bias)</li>
+</ul></li>
+<li>Estimator: <span class="math inline">\(\hat{\Theta} = 0\)</span>
+<ul>
+<li>MSE = 0 (variance) + <span class="math inline">\(\theta^2\)</span> (bias)</li>
+</ul></li>
+</ol>
+<p>Standard error = <span class="math inline">\(\sqrt{var(\Theta_n)}\)</span></p>
+</section></section>
+<section><section id="what-is-confidence-interview-in-frequentist-setting" class="title-slide slide level1"><h1><small> What is confidence interview in frequentist setting? </small></h1></section><section id="section-42" class="slide level2">
+<h2></h2>
+<p>A <span class="math inline">\(1-\alpha\)</span> confidence interval is an interval <span class="math inline">\(\left[ \hat{\Theta}^-,\hat{\Theta}^+ \right]\)</span>,<br> s.t. <span class="math inline">\(P(\hat{\Theta}^- \le \theta \le \hat{\Theta}^+) \ge 1-\alpha\)</span>, for all <span class="math inline">\(\theta\)</span></p>
+<p>Probability is decribed for random numbers: * Random number: <span class="math inline">\(\hat{\Theta}^-, \hat{\Theta}^+\)</span> * Numerical: <span class="math inline">\(\theta\)</span></p>
+<p>The confidence interval is the random variable.</p>
+<p><img data-src="pics/confidence_interval.png" /></p>
+</section><section id="section-43" class="slide level2">
+<h2></h2>
+<h3 id="wrong-interpretation-about-ci">Wrong Interpretation about CI</h3>
+<p>The true value of the parameter lies inside this range, inside the reported confidence interval with probability at least 95%.</p>
+<h3 id="right-interpretation">Right Interpretation</h3>
+<p>Having a 95% confidence interval means that 95% of the time, 95% of the polls that you carry out will capture the true parameter.</p>
+</section></section>
+<section><section id="maximum-likelihood-estimate-vs-bayesian-posterior" class="title-slide slide level1"><h1><small> Maximum Likelihood Estimate vs Bayesian Posterior </small></h1></section><section id="section-44" class="slide level2">
+<h2></h2>
+<h3 id="deference-in-interpretation">Deference in interpretation</h3>
+<ul>
+<li><p>Bayesian setting: what is the most likely value of theta?</p></li>
+<li>Maximum likelihood setting:
+<ul>
+<li>what is the value of theta that makes my data most likely?</li>
+<li>Or what is the value of theta under which my data are the least surprising?</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="lms-vs-map-estimates-case-of-multiple-observation" class="title-slide slide level1"><h1><small> LMS vs MAP Estimates: Case of Multiple observation </small></h1></section><section id="section-45" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(X_1 = \theta + W_1\)</span> <br> <span class="math inline">\(X_2 = \theta + W_2\)</span> <br> … <br> <span class="math inline">\(X_n = \theta + W_n\)</span> <br></p>
+<ul>
+<li>Posterior of <span class="math inline">\(\theta\)</span> is normal</li>
+<li>LMS and MAP estimates coincide</li>
+<li>Solution is the weighted average of <span class="math inline">\(x_0\)</span> (prior) and <span class="math inline">\(x_i\)</span> (observations) <span class="math display">\[ \hat{\theta}_{MAP} =  \hat{\theta}_{LMS} = \frac{\sum_{i=0}^{n} \frac{x_i}{\sigma_i^2}}{\sum_{i=0}^{n} \frac{1}{\sigma_i^2}}\]</span></li>
+<li>Noisy <span class="math inline">\(x_i\)</span> -&gt; large <span class="math inline">\(\sigma_i\)</span> -&gt; small weight</li>
+</ul>
+</section></section>
+<section><section id="least-mean-squared-lms" class="title-slide slide level1"><h1><small> Least Mean Squared: LMS </small></h1></section><section id="section-46" class="slide level2">
+<h2></h2>
+<ul>
+<li>LMS estimate: <span class="math inline">\(\hat{\theta} = E[\Theta|X=x]\)</span></li>
+<li>LMS estimator: <span class="math inline">\(\hat{\Theta} = E[\Theta|X]\)</span></li>
+<li>LMS relevant to estimation than hypothesis testing</li>
+</ul>
+<p><strong>Expected performance, once we have a measurement</strong> <br> <span class="math inline">\(MSE = E[(\Theta-E[\Theta|X=x])^2 | X=x] = var(\Theta|X=x)\)</span></p>
+<p><strong>Expected performance of the design</strong> <br> <span class="math inline">\(MSE = E[(\Theta-E[\Theta|X])^2] = E[var(\Theta|X)]\)</span></p>
+</section></section>
+<section><section id="lms-properties" class="title-slide slide level1"><h1><small> LMS Properties </small></h1></section><section id="section-47" class="slide level2">
+<h2></h2>
+<ul>
+<li>LMS estimator: <span class="math inline">\(\hat{\Theta} = E[\Theta|X]\)</span></li>
+<li>Error <span class="math inline">\(\tilde{\Theta} = \hat{\Theta} - \Theta\)</span></li>
+</ul>
+<p><span class="math display">\[ E[\tilde{\Theta} | X=x] = 0 \]</span></p>
+<p><span class="math display">\[ cov(\tilde{\Theta}, \hat{\Theta}) = 0\]</span></p>
+<p><span class="math display">\[ var(\Theta) = var(\hat{\Theta}) + var(\tilde{\Theta})\]</span></p>
+</section></section>
+<section><section id="when-are-the-least-squares-and-maximum-likelihood-methods-of-regression-not-equivalent" class="title-slide slide level1"><h1><small> When are the Least-Squares and Maximum-Likelihood methods of regression not equivalent? </small></h1></section><section id="section-48" class="slide level2">
+<h2></h2>
+<ul>
+<li>When the errors are not normally distributed.</li>
+<li>In Normal distribution: <span class="math inline">\(f_X = \frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(x - \mu)^2}{2\sigma^2}}\)</span></li>
+<li>The squared term <span class="math inline">\((x - \mu)^2\)</span> results in the Least squared when computing <span class="math inline">\(\mu\)</span> that fits data best.</li>
+</ul>
+</section></section>
+<section><section id="what-is-central-limit-theorem-clt" class="title-slide slide level1"><h1><small> What is Central Limit Theorem (CLT) </small></h1></section><section id="section-49" class="slide level2">
+<h2></h2>
+<p>Different kinds of scaling and why <span class="math inline">\(\sqrt{n}\)</span> is the interesting one.</p>
+<ul>
+<li><span class="math inline">\(S_n\)</span> spreads out as variance grows</li>
+<li><span class="math inline">\(M_n\)</span> collapses as <span class="math inline">\(n\)</span> increases</li>
+<li><span class="math inline">\(\frac{S_n}{\sqrt{n}}\)</span> reaches a limiting distribution <span class="math inline">\(\checkmark\)</span></li>
+</ul>
+</section><section id="section-50" class="slide level2">
+<h2></h2>
+<p><img data-src="pics/sum_of_iid.png" /></p>
+</section><section id="section-51" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(Z_n = \frac{S_n - n\mu}{\sqrt{n}\sigma}\)</span> <br></li>
+<li><span class="math inline">\(Z_n\)</span> has mean 0 and variance 1.</li>
+</ul>
+<p>Let <span class="math inline">\(Z\)</span> be a standard normal random variable with mean 0 and variance 1.</p>
+<p><strong>Central limit theorem</strong>:For every <span class="math inline">\(z\)</span>: <span class="math inline">\(P_{n-&gt;\infty}(Z_n \le z) = P(Z \le z)\)</span></p>
+<p>Where <span class="math inline">\(P(Z \le z)\)</span> is the normal CDF.</p>
+</section><section id="section-52" class="slide level2">
+<h2></h2>
+<ul>
+<li>CDF of <span class="math inline">\(Z_n\)</span> converges to normal CDF</li>
+<li>results for convergence of PDF and PMF (with more assumptions)</li>
+<li>can be applied for <span class="math inline">\(N&gt;30\)</span></li>
+</ul>
+</section></section>
+<section><section id="bernoulli-process-time-of-k_th-arrival" class="title-slide slide level1"><h1><small> Bernoulli Process: Time of <span class="math inline">\(K_{th}\)</span> arrival </small></h1></section><section id="section-53" class="slide level2">
+<h2></h2>
+</section><section id="time-of-k_th-arrival" class="slide level2">
+<h2>TIme of <span class="math inline">\(k_{th}\)</span> arrival</h2>
+<p><img data-src="pics/kth_arrival1.png" /></p>
+</section><section id="section-54" class="slide level2">
+<h2></h2>
+<p><img data-src="pics/kth_arrival2.png" /></p>
+</section></section>
+<section><section id="derive-poisson-approximation-to-binomial-distribution" class="title-slide slide level1"><h1><small> Derive Poisson approximation to Binomial distribution </small></h1></section><section id="section-55" class="slide level2">
+<h2></h2>
+<p>Case: <span class="math inline">\(n \to \infty\)</span> and <span class="math inline">\(p \to 0\)</span><br> <span class="math inline">\(\lambda = np\)</span></p>
+<p><span class="math inline">\(P_S(k) = {n \choose k} p^k (1-p)^{n-k}\)</span><br> <span class="math inline">\(P_S(k) = \frac{n!}{k!(n-k)!} p^k (1-p)^{n-k}\)</span><br> <span class="math inline">\(P_S(k) = \frac{n!}{k!(n-k)!} (\lambda/n)^k (1-\lambda/n)^{n}(1-\lambda/n)^{-k}\)</span><br> <span class="math inline">\(P_S(k) = \frac{n(n-1)(n-2)...(n-k+1)}{n.n.....n} \frac{\lambda^k}{k!} (1-\lambda/n)^{n}(1-\lambda/n)^{-k}\)</span><br> <span class="math inline">\(P_S(k) = 1. \frac{\lambda^k}{k!} e^{-\lambda}.1\)</span><br> <span class="math inline">\(P_S(k) = \frac{\lambda^k}{k!} e^{-\lambda}\)</span><br></p>
+</section><section id="section-56" class="slide level2">
+<h2></h2>
+<p><img src="pics/bernoulli_poisson.png" alt="Kitten"
+    title="A cute kitten" width="350" /></p>
+<p>Poisson CDF: <span class="math inline">\(P(k,\tau) =\frac{(\lambda \tau)^k e^{-\lambda \tau}}{k!}\)</span></p>
+</section></section>
+<section><section id="how-would-you-simulate-a-poisson-process" class="title-slide slide level1"><h1><small> How would you simulate a Poisson Process </small></h1></section><section id="section-57" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(Y_k\)</span>: time to <span class="math inline">\(K_{th}\)</span> arrival</li>
+<li>fresh start property: all <span class="math inline">\(T_k = Y_{k} - Y_{k-1}\)</span> are Exp. R.V.</li>
+<li><span class="math inline">\(Y_k = T_1 + T_2 + .... + T_k\)</span> is sum of i.i.d. Exp. R.V.
+<ul>
+<li><span class="math inline">\(E[Y_k] = k/\lambda\)</span></li>
+<li><span class="math inline">\(var(Y_k) = k/\lambda^2\)</span></li>
+</ul></li>
+</ul>
+</section><section id="section-58" class="slide level2">
+<h2></h2>
+<ul>
+<li>Using Exponential RVs
+<ul>
+<li>use Exp. RNG to generation <span class="math inline">\(T_i\)</span></li>
+<li>sum <span class="math inline">\(T_i\)</span> to generate a Poisson process</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="sum-of-independent-poisson-r.vs" class="title-slide slide level1"><h1><small> sum of independent Poisson R.Vs </small></h1></section><section id="section-59" class="slide level2">
+<h2></h2>
+<ul>
+<li>sum of independent Poisson and Normal random variables is Poisson and Normal respectively. It is not a general property.</li>
+</ul>
+</section></section>
+<section><section id="poisson-vs.-normal-approximations-of-the-binomial" class="title-slide slide level1"><h1><small> Poisson vs. Normal approximations of the binomial </small></h1></section><section id="section-60" class="slide level2">
+<h2></h2>
+<p>Binomial(n,p) - p fixed, <span class="math inline">\(n \to \infty\)</span>: normal - np fixed, <span class="math inline">\(n \to \infty, p \to 0\)</span>: Poisson</p>
+<h3 id="in-practice">in practice?</h3>
+<ul>
+<li>p=1/100, n=100: Poisson</li>
+<li>p=1/3, n=100: normal</li>
+<li>p=1/100,n=10,000: both</li>
+</ul>
+</section></section>
+<section><section id="the-probability-of-getting-a-pair-a-straight-in-52-cards" class="title-slide slide level1"><h1><small> the probability of getting a pair, a straight in 52 cards </small></h1></section><section id="section-61" class="slide level2">
+<h2></h2>
+<ul>
+<li>Prob of picking 1st card = 1</li>
+<li>Proc of picking a pair card = 3/51</li>
+</ul>
+</section></section>
+<section><section id="probability-question-card-color" class="title-slide slide level1"><h1><small> Probability question: Card Color </small></h1></section><section id="section-62" class="slide level2">
+<h2></h2>
+<pre><code>Here are 50 cards of 5 different colors. It comprises of  10 Red cards, 10 blue cards, 10 orange cards, 10 green cards and 10 yellow cards. Each color will have the cards numbered between 1 to 10. You pick 2 cards at random. What is the probability that they are not of same color and not of same number.</code></pre>
+</section><section id="section-63" class="slide level2">
+<h2></h2>
+<p>Let’s say we choose one card - Red number 9. Probability = (Available choices from leftover cards that do not violate constraint)/(Total cards left)</p>
+<p>We can not choose another Red card or number 9 of any other color</p>
+<p>= ( 0 red cards + 9 of each other color *4) / 49 = 36/49 = .73</p>
+</section></section>
+<section><section id="two-dice-game" class="title-slide slide level1"><h1><small> Two dice game </small></h1></section><section id="section-64" class="slide level2">
+<h2></h2>
+<pre><code>There&#39;s a game where you are given two fair six-sided dice  and asked to roll. If the sum of the values on the dice equals seven, then you win $21. However, you must pay $5 to play each time you roll both dice. Do you play this game? And in follow-up: What is the probability of making money from this game?</code></pre>
+</section><section id="section-65" class="slide level2">
+<h2></h2>
+<p>Part 1:</p>
+<ul>
+<li>p(winning) = 6/36 = 1/6</li>
+<li>p(loosing) = 5/6</li>
+<li>E = 1/6 * 16 - 5/6 * 5 = -1.5 (Do not play)</li>
+</ul>
+<p>Part 2: - Not answerable as number of tosses is not given</p>
+</section></section>
+<section><section id="ads-within-newsfeed-example" class="title-slide slide level1"><h1><small> Ads within newsfeed example </small></h1></section><section id="section-66" class="slide level2">
+<h2></h2>
+<pre><code>We have two options for serving ads within Newsfeed : 1 - out of every 25 stories, one will be an ad 2 - every story has a 4% chance of being an ad For each option, what is the expected number of ads shown in 100 news stories? If we go with option 2, what is the chance a user will be shown only a single ad in 100 stories? What about no ads at all?</code></pre>
+</section><section id="section-67" class="slide level2">
+<h2></h2>
+<ul>
+<li>Option 1: 4</li>
+<li>Option 2: Bernoulli process: p = .04: Number of success in 100 trail = 4 (Binomial distribution)</li>
+<li>PMF of Binomial distribution (probability of k successes in n trials) = <span class="math inline">\({n \choose k}p^k (1-p)^{n-k}\)</span></li>
+</ul>
+</section></section>
+<section><section id="what-is-a-z-test-when-would-you-use-a-z-test-over-a-t-test" class="title-slide slide level1"><h1><small> What is a Z-test? When would you use a Z test over a T test? </small></h1></section><section id="section-68" class="slide level2">
+<h2></h2>
+<ul>
+<li>Generally, z-tests are used when we have large sample sizes (n &gt; 30), whereas t-tests are most helpful with a smaller sample size (n &lt; 30). Both methods assume a normal distribution of the data, but the z-tests are most useful when the standard deviation is known.</li>
+<li><a href="https://bloomingtontutors.com/blog/user/pages/when-to-use-the-z-test-versus-t-test/z-vs-t-distribution-flowchart.jpg">Flow chart of tests</a></li>
+</ul>
+</section></section>
+<section><section id="draw-a-sample-distribution-of-average-daily-views-by-users-for-instagram." class="title-slide slide level1"><h1><small> Draw a sample distribution of average daily views by users for Instagram. </small></h1></section><section id="section-69" class="slide level2">
+<h2></h2>
+<ul>
+<li>Give reasoning</li>
+<li>remember the inactive users.</li>
+</ul>
+</section></section>
+<section><section id="facebook-raters-example" class="title-slide slide level1"><h1><small> Facebook raters example </small></h1></section><section id="section-70" class="slide level2">
+<h2></h2>
+<pre><code>1. FB has hired raters to rate ads. 80% are careful rates  and rate 60% of the ads as good and 40% as bad, 20% are lazy raters and rate 100% ads as good. What is the probability that an ad is rated good? Given that 3 ads have been rated as good, what is the probability that they were rated by a lazy rater? Given that n ads have been rated as good, what is the probability that they were rated by a lazy rater? You want to classify raters as careful/lazy, how would you do that using all the probabilities and ideas discussed above (open ended question)?</code></pre>
+<ul>
+<li>P(rated good) = .8*.6 + .2 = .68</li>
+<li>Bayes theorem: P(Lazy | 3 good) = P(3 good | Lazy) P (Lazy)/P(3 good)</li>
+</ul>
+</section></section>
+<section><section id="probability-question-dice-game" class="title-slide slide level1"><h1><small> Probability question: Dice game </small></h1></section><section id="section-71" class="slide level2">
+<h2></h2>
+<pre><code>Consider a game with 2 players, A and B. Player A has  8 stones, player B has 6. Game proceeds as follows. First, A rolls a fair 6-sided die, and the number on the die determines how many stones A takes over from B. Next, B rolls the same die, and the exact same thing happens in reverse. This concludes the round. Whoever has more stones at the end of the round wins and the game is over. If players end up with equal # of stones at the end of the round, it is a tie and another round ensues. What is the probability that B wins in 1, 2, ..., n rounds?</code></pre>
+</section><section id="section-72" class="slide level2">
+<h2></h2>
+<pre><code>Because at the beginning time, A has 8 and B has 6, so let A:x and B:y, then A:8+x-y and B:6-x+y; so there are 10/36 prob of B wins. And A wins prob is 21/36 and the equal prob for next round is 5/36. So for B wins at round prob is 10/36. And if they are equal and to have another round, the number has changed to 7 and 7. So A:7+x-y and B:7-x+y, so this time B wins has prob 15/36 and A wins has prob 15/36. And the equal to have another round is 6/36=1/6.
+
+So overall B wins in 2 rounds has prob 5/36*15/36. And for round 3,4,...etc, since after each equal round, the number will go back to 7 and 7 so the prob will not change. So B wins in round 3,4,...n has prob 5/36*(6/36)^(r-2)*15/36. r means the number of the total rounds.</code></pre>
+</section><section id="section-73" class="slide level2">
+<h2></h2>
+<p>Round 1:</p>
+<ul>
+<li>#A = 8+da-db</li>
+<li>#B = 6-da+db</li>
+<li>B to win: #B &gt; #A -&gt; 6-da+db &gt; 8+da-db -&gt; db &gt; da + 1 =&gt; (1,3) (1,4) (1,5) (1,6) (2,4) (2,5) (2,6) (3,5) (3,6) (4,6) = 10</li>
+<li>P(B win in 1st round) = 10/36</li>
+<li>P(B win in 2nd round) = P(draw)*P(B win in 2nd round): In second round both will have 7 stones each
+<ul>
+<li>P(draw) = (1,2) (2,3) (3,4) (4,5) (5,6) = 5/36</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="air-force-one-probability-question" class="title-slide slide level1"><h1><small> Air Force One Probability question </small></h1></section><section id="section-74" class="slide level2">
+<h2></h2>
+<pre><code>One hundred people are in line to board a plane which has exactly 100 seats. Each passenger has a ticket assigning them to a specific seat, and the passengers board on eat a time. The first person to board is drunk, picks a random seat, and sits in it. The remaining passengers board; if they find their assigned seat empty, they sit in it.  If they find their seat taken, they pick a random seat to sit in. Everyone boards, and is seated. What is the probability that the final person who boards gets to sit in their assigned seat?</code></pre>
+</section><section id="section-75" class="slide level2">
+<h2></h2>
+<ul>
+<li>2 Passenger example:
+<ul>
+<li>1st (drunk) person sits on seat 1: 2nd person sits on seat 2 (assigned)</li>
+<li>1st (drunk) person sits on seat 2: 2nd person sits on seat 1 (not assigned)</li>
+<li>Probability = 1/2</li>
+</ul></li>
+</ul>
+</section><section id="section-76" class="slide level2">
+<h2></h2>
+<ul>
+<li>3 Passenger example:
+<ul>
+<li>1st (drunk) person sits on seat 1: 3rd person sits on seat 3 (assigned)</li>
+<li>1st (drunk) person sits on seat 2:
+<ul>
+<li>2nd (seat 1) and 3rd (seat 3) (assigned)</li>
+<li>2nd (seat 3) and 3rd (seat 1) (not assigned)</li>
+</ul></li>
+<li>1st (drunk) person sits on seat 3:
+<ul>
+<li>3rd (non-assigned)</li>
+</ul></li>
+<li>Probability = 2/4 = 1/2</li>
+</ul></li>
+</ul>
+</section><section id="section-77" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/AirForce1_N4.png" /></p>
+</section><section id="section-78" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/AirForce1-N.png" /></p>
+</section><section id="section-79" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/AirForce1-N-sol.png" /></p>
+</section></section>
+<section><section id="stick-breaking-example-form-triangle" class="title-slide slide level1"><h1><small> Stick breaking example: Form Triangle </small></h1></section><section id="section-80" class="slide level2">
+<h2></h2>
+<pre><code>Break a 1 metre stick randomly in two places. What is the probability that the three resulting pieces form a triangle?</code></pre>
+<pre><code>Let x,y be uniformly distributed on [0, 1] and separate the unit interval [0, 1] into three pieces, what is the probability that the three pieces of the line can be constructed into a triangle?</code></pre>
+</section><section id="section-81" class="slide level2">
+<h2></h2>
+<ul>
+<li>Conditions to form triangle: sum of two side &gt; third</li>
+<li>Assume X &lt; Y:
+<ul>
+<li>lengths: X, Y-X, 1-Y</li>
+<li>X + Y - X &gt; 1-Y =&gt; Y &gt; 1/2</li>
+<li>X + 1- Y &gt; Y-X =&gt; Y &lt; X + 1/2</li>
+<li>Y - X + X &gt; X =&gt; X &lt; 1/2</li>
+</ul></li>
+</ul>
+</section><section id="section-82" class="slide level2">
+<h2></h2>
+<p><img src="Pictures/stick-triangle.png" alt="Drawing" style="width: 500px;"/></p>
+</section></section>
+<section><section id="stick-breaking-example-expected-longest-piece" class="title-slide slide level1"><h1><small> Stick breaking example: expected longest piece </small></h1></section><section id="section-83" class="slide level2">
+<h2></h2>
+<pre><code>Stick of unit length is broken into three random pieces, what is the expected length of the longest piece?</code></pre>
+</section><section id="section-84" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(X, Y \sim uniform(0,1)\)</span></li>
+<li>A = min(X,Y)</li>
+<li>B = max(X,Y)</li>
+<li>Sides: A, B-A, 1-B</li>
+<li><span class="math inline">\(L_{long} = max(A, B-A, 1-A)\)</span></li>
+<li>Expected length -&gt; need to compute pdf -&gt; using the cdf -&gt; using the probability</li>
+</ul>
+</section><section id="section-85" class="slide level2">
+<h2></h2>
+<ul>
+<li>CDF <span class="math inline">\(F_A(a) = max(A &lt; a, B-A &lt; a, 1-A &lt; a) = P(a)\)</span></li>
+<li>If X &lt; Y:
+<ul>
+<li><span class="math inline">\(max(X &lt; a, Y-X &lt; a, 1-Y &lt; a)\)</span></li>
+<li>Compute the probability <span class="math inline">\(P(a)\)</span> using the unit area as the total space</li>
+<li>Differentiate the CDF to get PDF and integrate for expected value.</li>
+</ul></li>
+</ul>
+</section><section id="section-86" class="slide level2">
+<h2></h2>
+<p><img src="Pictures/stick_break_case1.png" alt="Drawing" style="width: 400px;"/></p>
+</section><section id="section-87" class="slide level2">
+<h2></h2>
+<p><img src="Pictures/stick-break-case2.png" alt="Drawing" style="width: 400px;"/></p>
+</section><section id="section-88" class="slide level2">
+<h2></h2>
+<p><img src="Pictures/stick-break-case3.png" alt="Drawing" style="width: 400px;"/></p>
+</section><section id="section-89" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(F_C(a) = (3a-1)^2\)</span> for <span class="math inline">\(1/3 \ge a \ge\ 1/2\)</span></li>
+<li><p><span class="math inline">\(F_C(a) = 1 - 3(1-a)^2\)</span> for <span class="math inline">\(1/2 \ge a \ge\ 1\)</span></p></li>
+<li>PDF: <span class="math inline">\(f_C(a) = 6*(3a-1)\)</span> for <span class="math inline">\(1/3 \ge a \ge\ 1/2\)</span></li>
+<li><p>PDF: <span class="math inline">\(f_C(a) = 6*(1-a)\)</span> for <span class="math inline">\(1/2 \ge a \ge\ 1\)</span></p></li>
+</ul>
+<p>Expected value:</p>
+<p><span class="math inline">\(\int_{1/3} ^{1/2}6a(3a-1) da+\int_{1/2} ^{1}6a(1-a) da= \frac{11}{18}\)</span></p>
+</section></section>
+<section><section id="find-emaxxy" class="title-slide slide level1"><h1><small> Find E(max(X,Y)) </small></h1></section><section id="section-90" class="slide level2">
+<h2></h2>
+<p>Given <span class="math inline">\(X,Y ~ Multinormal([0,0]), [1, \rho, \rho, 1]\)</span> <br></p>
+<p><span class="math inline">\(max(X,Y) = \left\{\begin{matrix} X &amp; for X \ge Y\\ Y &amp; for Y &lt; X \end{matrix}\right.\)</span></p>
+<p>Using law of total expectations: <br> <span class="math inline">\(E(Z) = \sum_i E(Z | A_i) P(A_i)\)</span></p>
+</section><section id="section-91" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(Z = max(X,Y)\)</span><br></p>
+<p><span class="math inline">\(E(max(X,Y)) = E(X| X \ge Y) P(X \ge Y) + E(Y| Y &gt; X) P(Y &gt; X) = 2E(X| X \ge Y) P(X \ge Y)\)</span></p>
+<p><span class="math inline">\(P(X \ge Y) = 1/2\)</span></p>
+<p><span class="math inline">\(E(X | X \ge Y) = ?\)</span></p>
+</section><section id="section-92" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/multinormal-pics.png" /></p>
+</section><section id="section-93" class="slide level2">
+<h2></h2>
+</section></section>
+<section><section id="compute-ex4-when-x-sim-n0sigma2" class="title-slide slide level1"><h1><small> Compute <span class="math inline">\(E[X^4]\)</span> when <span class="math inline">\(X \sim N(0,\sigma^2)\)</span> </small></h1></section><section id="approach-1" class="slide level2">
+<h2>Approach 1</h2>
+<ul>
+<li>fourth moment: kurtosis</li>
+<li>third moment: skewness</li>
+<li>second moment: variance</li>
+<li>first moment: mean</li>
+</ul>
+<p><span class="math inline">\(E(X^4) = \int x^4 \frac{1}{\sqrt{2\pi}\sigma} exp(-\frac{x^2}{2\sigma^2}) dx\)</span></p>
+</section><section id="approach-2-moment-generating-function" class="slide level2">
+<h2>Approach 2: Moment generating function</h2>
+<p><span class="math inline">\(M(t) = e^{\mu t}e^{\frac{1}{2}\sigma^2 t^2}\)</span></p>
+<p>Calculate the moment using:</p>
+<p><span class="math inline">\(E(X^n) = M_X^{(n)}(0) = \frac{d^nM_X(t)}{dt^n}|_{t=0}\)</span></p>
+<p>Answer: <span class="math inline">\(3\sigma^4\)</span></p>
+</section></section>
+<section><section id="toss-game-to-play-or-not" class="title-slide slide level1"><h1><small> Toss game: to play or not </small></h1></section><section id="section-94" class="slide level2">
+<h2></h2>
+<pre><code>You are presented with the following gamble: you flip 100 fair coins. If 60 or more land on heads, you win £10; you win nothing on all other outcomes. Should you play this game for £1?</code></pre>
+</section><section id="section-95" class="slide level2">
+<h2></h2>
+<ul>
+<li>Binomial distribution: <span class="math inline">\(Y \sim Binomial(p=0.5, n=100)\)</span>
+<ul>
+<li>We can compute the probability of &gt;60 heads by computing integral.</li>
+<li><span class="math inline">\(1 - binom(p=0.5, n=100).cdf(k=60)\)</span></li>
+</ul></li>
+</ul>
+<p>OR</p>
+<ul>
+<li>We can make a normal approximation</li>
+</ul>
+</section><section id="section-96" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(Y \sim normal(\mu=n*p,\sigma^2=np(1-p)) = normal(50,25)\)</span></li>
+<li>The value 60 is <span class="math inline">\(\frac{10}{std} = 2\)</span> standard deviation away</li>
+<li>Area of norma outside 2 std = 95%</li>
+<li>One sided area = 2.5% -&gt; P(&gt;60 heads) = .025</li>
+<li>E(val) = -1 + 10*.025 - 0 = -.75 (loss)</li>
+</ul>
+</section></section>
+<section><section id="independence-of-random-variables-1" class="title-slide slide level1"><h1><small> Independence of random variables </small></h1></section><section id="section-97" class="slide level2">
+<h2></h2>
+<pre><code>You have X ∼ Normal(0, 1) and Y ∼ Normal(0, 1). If the correlation coefficient is ρXY = 0, are X and Y independent?</code></pre>
+</section><section id="section-98" class="slide level2">
+<h2></h2>
+<ul>
+<li>No, correlation measures only linear dependence, <span class="math inline">\(X,Y\)</span> could have non-linear dependence</li>
+<li>Independence implies zero correlation but not vice-versa.</li>
+<li><span class="math inline">\(\rho_{XY} = \frac{E[XY] - E[X]E[Y]}{\sigma_X\sigma_Y}\)</span></li>
+</ul>
+</section><section id="section-99" class="slide level2">
+<h2></h2>
+<ul>
+<li>Example 1: <span class="math inline">\(X \sim uniform[0,1]\)</span> and <span class="math inline">\(X^2 \sim Uniform[0,1]\)</span></li>
+<li>These have zero correlation but are not independent</li>
+<li>Example 2: <span class="math inline">\(X^2 + Y^2 = 1\)</span></li>
+</ul>
+</section><section id="section-100" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/correlation-dependence.png" /></p>
+<p><a href="https://en.wikipedia.org/wiki/Correlation_and_dependence#/media/File:Correlation_examples2.svg">Source: Wikipedia</a></p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

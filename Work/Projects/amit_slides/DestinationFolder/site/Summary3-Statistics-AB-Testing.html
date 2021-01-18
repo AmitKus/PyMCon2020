@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> AB Testing Questions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> AB Testing Questions </small></h1>
+</section>
+
+<section><section id="when-is-ab-testing-is-not-a-good-idea" class="title-slide slide level1"><h1><small> When is A/B Testing is not a good idea? </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<p>To test big change in user experience.</p>
+<ul>
+<li>Lack of baseline comparison</li>
+<li>Uncertainty around the Adaptation time</li>
+</ul>
+</section></section>
+<section><section id="key-metrics" class="title-slide slide level1"><h1><small> Key metrics? </small></h1></section><section id="section-1" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li>click-through-rate = clicks/page visits (measures Usability)</li>
+<li>click-through-probability = unique person clicks/ unique page visits (measures impact)</li>
+</ol>
+</section></section>
+<section><section id="standard-error-of-binomial-distribution" class="title-slide slide level1"><h1><small> Standard error of Binomial Distribution? </small></h1></section><section id="section-2" class="slide level2">
+<h2></h2>
+<p>standard error = <span class="math inline">\(\sqrt{\frac{p(1-p)}{N}}\)</span></p>
+</section></section>
+<section><section id="when-can-we-approximate-binomial-distribution-as-normal-distribution" class="title-slide slide level1"><h1><small> When can we approximate Binomial distribution as Normal distribution? </small></h1></section><section id="section-3" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(p*N &gt; 5\)</span> or <span class="math inline">\((1-p)*N\)</span> &gt; 5</li>
+<li>Confidence interval: <span class="math inline">\([p - z_{score} \sqrt{\frac{p(1-p)}{N}}, p + z_{score} \sqrt{\frac{p(1-p)}{N}}]\)</span></li>
+</ul>
+</section></section>
+<section><section id="basic-steps-to-do-ab-testing" class="title-slide slide level1"><h1><small> Basic steps to do AB testing </small></h1></section><section id="section-4" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(\hat{p}_{pooled}\)</span>: Success probability, assuming the control and experiments come from the same distribution.</li>
+<li><span class="math inline">\(\hat{p}_{cont}\)</span>: Success probability in control.</li>
+<li><span class="math inline">\(\hat{p}_{exp}\)</span>: Success probability in experiment.</li>
+<li><span class="math inline">\(\hat{d} = \hat{p}_{exp} - \hat{p}_{cont}\)</span>: Difference in success probability between control and experiment.</li>
+<li>Check if <span class="math inline">\(\hat{d}\)</span> is statistically significant.
+<ul>
+<li>Confidence interval: <span class="math inline">\([-z_{score} \sqrt{\frac{{p}_{pooled}(1-{p}_{pooled})}{N}}, z_{score} \sqrt{\frac{{p}_{pooled}(1-{p}_{pooled})}{N}}]\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="what-is-statistical-power" class="title-slide slide level1"><h1><small> What is Statistical Power? </small></h1></section><section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li>The power of any test of statistical significance is defined as the probability that it will reject a false null hypothesis.</li>
+<li>Statistical power is inversely related to beta or the probability of making a Type II error. In short, power = 1 – β.</li>
+<li>In plain English, statistical power is the likelihood that a study will detect an effect when there is an effect there to be detected.</li>
+</ul>
+</section><section id="section-6" class="slide level2">
+<h2></h2>
+<ul>
+<li>If statistical power is high, the probability of making a Type II error, or concluding there is no effect when, in fact, there is one, goes down.</li>
+<li>Statistical power is affected chiefly by the size of the effect and the size of the sample used to detect it.</li>
+<li>Bigger effects are easier to detect than smaller effects, while large samples offer greater test sensitivity than small samples.</li>
+</ul>
+</section></section>
+<section><section id="type-i-and-type-ii-error" class="title-slide slide level1"><h1><small> Type I and Type II Error </small></h1></section><section id="section-7" class="slide level2">
+<h2></h2>
+<ul>
+<li>p(reject H<span class="math inline">\(_0\)</span> | <span class="math inline">\(H_0\)</span> True) = <span class="math inline">\(\alpha\)</span></li>
+<li>p(accept H<span class="math inline">\(_0\)</span> | <span class="math inline">\(H_0\)</span> False) = <span class="math inline">\(\beta\)</span></li>
+</ul>
+</section></section>
+<section><section id="what-is-unit-of-diversion" class="title-slide slide level1"><h1><small> What is unit of diversion? </small></h1></section><section id="section-8" class="slide level2">
+<h2></h2>
+<ul>
+<li>unit to measure for our control and experiment group. <img data-src="pics/unit_of_diversion.jpg" /></li>
+</ul>
+</section></section>
+<section><section id="unit-of-analysis-vs-unit-of-diversion" class="title-slide slide level1"><h1><small> Unit of analysis vs unit of diversion? </small></h1></section><section id="section-9" class="slide level2">
+<h2></h2>
+<p>When would you expect the empirical variance to match the analytical variance?</p>
+<ol type="1">
+<li>Metric: CTR = <span class="math inline">\(\frac{\# clicks}{\# pageviews}\)</span>
+<ul>
+<li>unit of analysis: pageview, unit of diversion: cookie</li>
+</ul></li>
+<li>Metric: # cookies that view homepage
+<ul>
+<li>unit of analysis: pageview, unit of diversion: cookie</li>
+</ul></li>
+<li>Metric: <span class="math inline">\(\frac{\# users who sign up for coaching}{\# users enrolled in any course}\)</span>
+<ul>
+<li>unit of analysis: user-id, unit of diversion: user-id</li>
+</ul></li>
+</ol>
+</section><section id="section-10" class="slide level2">
+<h2></h2>
+<ul>
+<li>The correct answers is #3. Unit of diversion = unit of analysis</li>
+<li>In #1, a single cookie will generate multiple events, and the events could be mixed in both control and experiment group.</li>
+</ul>
+</section></section>
+<section><section id="what-are-the-steps-in-experimental-design-for-ab-testing" class="title-slide slide level1"><h1><small> What are the steps in experimental design for AB testing? </small></h1></section><section id="section-11" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li><span class="math inline">\(\textbf{Metric choice}\)</span>: Choose invariant and evaluation metrics</li>
+<li><span class="math inline">\(\textbf{Measuring standard deviation}\)</span>: List standard deviation of each evaluation metric. Is analytic estimate comparable to the empirical variability.</li>
+<li><span class="math inline">\(\textbf{Sizing}\)</span>:
+<ol type="1">
+<li>Number of samples vs Power: Bonferroni correction?</li>
+<li>Duration vs Exposure: Fraction of traffic diverted to this experiment.</li>
+</ol></li>
+</ol>
+</section><section id="section-12" class="slide level2">
+<h2></h2>
+<p>Experimental Analysis: 1. Sanity checks: Does the observed value fall in 95% confidence interval?</p>
+<p>Result Analysis: 1. Effect size tests 2. Sign tests</p>
+</section></section>
+<section><section id="what-do-we-need-to-calculate-confidence-interval" class="title-slide slide level1"><h1><small> What do we need to calculate confidence interval? </small></h1></section><section id="section-13" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li>Variance (or standard deviation)</li>
+<li>Distribution</li>
+</ol>
+</section></section>
+<section><section id="confidence-interval-without-assumption" class="title-slide slide level1"><h1><small> Confidence interval without assumption </small></h1></section><section id="section-14" class="slide level2">
+<h2></h2>
+<p>Sort them and based on the confidence interval find the boundary points.</p>
+</section></section>
+<section><section id="sign-testing" class="title-slide slide level1"><h1><small> Sign Testing </small></h1></section><section id="section-15" class="slide level2">
+<h2></h2>
+<ul>
+<li>Instead of summing up and looking at probability, convert the time series to a Bernoulli Process by computing Exp metric &gt; or &lt; Cont metric</li>
+<li>Compute the <span class="math inline">\(p-value\)</span> based in Binomial test.
+<ul>
+<li>Assuming <span class="math inline">\(p=0.5\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="ab-testing-terminology" class="title-slide slide level1"><h1><small> AB Testing: Terminology </small></h1></section><section id="section-16" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li>Overall evaluation criterion (OEC): A quantitative measure of the experiment’s objective. In statistics this is often called the Response or Dependent Variable. Also, called the performance metric.</li>
+<li>Factor: A controllable experimental variable that is though to influence the OEC.</li>
+<li>Variant: A user experience being tested by assigning levels to the factor.</li>
+</ol>
+</section><section id="section-17" class="slide level2">
+<h2></h2>
+<ol start="4" type="1">
+<li>Experimental unit: The entity over which metrics are calculated before averaging over the entire experiment for each variant. Sometimes called an item. On the web, the user is a common experimental unit, although some metrics may have user-day, user-session or page views as the experimental units.</li>
+</ol>
+</section><section id="section-18" class="slide level2">
+<h2></h2>
+<ol start="5" type="1">
+<li>Null Hypothesis: The OECs for the variants are not different and that any observed differences during the experiment are due to random fluctuations.</li>
+<li>Confidence interval: The probability of failing to reject (i.e., retaining) the null hypothesis when it is true.</li>
+<li>Power: The probability of correctly rejecting the null hypothesis, <span class="math inline">\(H_0\)</span>, when it is false. Power measures our ability to detect a difference when it indeed exists.</li>
+</ol>
+</section><section id="section-19" class="slide level2">
+<h2></h2>
+<ol start="8" type="1">
+<li>A/A Test: Sometimes called the NULL Test. An A/A test can be used to (i) collect data and assess its variability for power calculations, and (ii) test the experimentation system</li>
+<li>Standard deviation:</li>
+<li>Standard error: For a statistic, it is the standard deviation of the sampling distribution of the sample statistic. For a mean of n independent random variable it is <span class="math inline">\(\hat{\sigma}/n\)</span> where <span class="math inline">\(\hat{\sigma}\)</span> is the estimated standard deviation.</li>
+</ol>
+</section></section>
+<section><section id="ab-testing-complete-example" class="title-slide slide level1"><h1><small> AB Testing: Complete Example </small></h1></section><section id="section-20" class="slide level2">
+<h2></h2>
+<ul>
+<li><a href="https://github.com/AmitKus/courses/blob/master/AB_Testing_Udacity/Final_Project.ipynb">Final Project</a></li>
+<li><a href="https://link.springer.com/article/10.1007/s10618-008-0114-1">Paper</a></li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

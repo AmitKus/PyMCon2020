@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+ <html>
+ 
+ <head>
+   <title>Notes</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <style type="text/css">
+     @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+     @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+     @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+ 
+     body {
+       font-family: 'Droid Serif';
+     }
+ 
+     h1,
+     h2,
+     h3 {
+       color: crimson;
+       font-family: 'Yanone Kaffeesatz';
+       font-weight: normal;
+     }
+ 
+     .remark-code,
+     .remark-inline-code {
+       font-family: 'Ubuntu Mono';
+     }
+   </style>
+ </head>
+ 
+ <body>
+ 
+ <textarea id="source">
+ class: left, left
+ 
+ # TF, Keras, sklearn
+ 
+ - Usual imports
+ - Data preprocessing using sklearn
+ - Sequential API (useful for linear flow)
+ - Functional API (useful for merged flows)
+ - Save and load a model
+   - h5 (to save everything including weights)
+   - json (to save only architecture)
+ - "Normalization", validation, confusion matrix
+ - Different loss functions
+ - Initializers (why Glorot, why He)
+ - Regularizers (why L1, why L1, why elastic)
+ - Dropout, batch normalization
+ - CNN, RNNs
+ - Callbacks
+ - Lambda layers
+ - Transfer learning
+ - Tensorboard
+ - Custom loss function
+ - Loss function that has other derivatives
+ - Subclassing
+ 
+ Detailed notes: [Detailed notes on keras](keras-and-tf-detailed.html)
+ </textarea>
+ 
+   <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+   </script>
+   <script type="text/javascript">
+     // var slideshow = remark.create({ sourceUrl: 'mdfile' });
+     var slideshow = remark.create();
+   </script>
+ </body>
+ 
+ </html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+ <html>
+ 
+ <head>
+   <title>Notes</title>
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <style type="text/css">
+     @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+     @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+     @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+ 
+     body {
+       font-family: 'Droid Serif';
+     }
+ 
+     h1,
+     h2,
+     h3 {
+       color: crimson;
+       font-family: 'Yanone Kaffeesatz';
+       font-weight: normal;
+     }
+ 
+     .remark-code,
+     .remark-inline-code {
+       font-family: 'Ubuntu Mono';
+     }
+   </style>
+ </head>
+ 
+ <body>
+ 
+ <textarea id="source">
+ class: left, left
+ 
+ # Statistics Questions 
+ 
+ ---
+ 
+ #  What is the Law of Large Numbers? 
+ 
+ - Mean of the sample distribution $\to$ Mean of the population distribution as sample size $\uparrow$
+ - Intuitively: Collecting more data leads to a more representative sample.
+ 
+ ---
+ 
+ #  What is the Central Limit Theorem and why is it important? 
+ 
+ - In some situations, when independent random variables are added, their $\textbf{properly normalized sum}$ tends toward a normal distribution even if the original variables themselves are not normally distributed. 
+ - Since real-world quantities are often the balanced sum of many unobserved random events, the central limit theorem also provides a partial explanation for the prevalence of the normal probability distribution.
+ - Everyone believes in the [normal] law of errors: the mathematicians, because they think it is an experimental fact; and the experimenters, because they suppose it is a theorem of mathematics. - Lippmann
+ 
+ ---
+ 
+ #  What are some normality tests? 
+ 
+ - Shapiro-Wilk Test
+ - Q-Q Plot: Plot sample quantiles vs theoretical normal quantiles 
+ - D’Agostino’s K^2 Test
+ - Anderson Darling's Test
+ 
+ ---
+ 
+ #  What is sampling? 
+ 
+ In statistics, quality assurance, and survey methodology, sampling is the selection of a subset (a statistical sample) of individuals from within a statistical population to estimate characteristics of the whole population. Statisticians attempt for the samples to represent the population in question. Two advantages of sampling are lower cost and faster data collection than measuring the entire population 
+ 
+ ---
+ 
+ #  What is common in all sampling methods? 
+ 
+ - Every element has a known nonzero probability of being sampled
+ - involves random selection at some point.
+ 
+ ---
+ 
+ # What are different sampling techniques?
+ 
+ 
+ ![](Pictures/probability-sampling.png)
+ 
+ ---
+ 
+ - Simple Random Sampling: 
+   - all subsets of a sampling frame have an equal probability of being selected
+ - Systematic Sampling: 
+   - Every $k^{th}$ starting with a random initialization.
+ - Stratified Sampling: 
+   - Subsets of the data sets or population are created based on a common factor, and samples are randomly collected from each subgroup.
+ - Cluster Sampling: 
+   - The larger data set is divided into subsets (clusters) based on a defined factor, then a random sampling of clusters is analyzed.
+ - Convenience sampling: 
+   - Data is collected from an easily accessible and available group.
+ - Consecutive sampling: 
+   - Data is collected from every subject that meets the criteria until the predetermined sample size is met.
+ - Purposive or judgmental sampling: 
+   - The researcher selects the data to sample based on predefined criteria.
+ - Quota sampling: 
+   - The researcher ensures equal representation within the sample for all subgroups in the data set or population.
+ 
+ ---
+ 
+ #  What are Type I and Type II errors? 
+ 
+ * Type I error (α , also called significance level): the probability to reject H₀ (the null hypothesis) when it is true. (False positive)
+ * Confidence level (1 - α) : ability to produce accurate intervals that include the true parameter value if many samples were to be generated
+ 
+ * Type II error (β): the probability to FAIL to reject H₀ when it is false.(False negative)
+ * Power of the statistical test (1- β): the probability to reject H₀ when it is false
+ 
+ ```
+ Example: Hypothesis: This defendant is innocent.
+ Type 1 error: Convicting an innocent defendant. (Reject True NUll Hypothesis)
+ Type 2 error: Acquit a criminal. (Accept False Null Hypothesis)
+ ```
+ 
+ ---
+ 
+ #  What are the key quantities in Hypothesis testing 
+ 
+ 1. sample size n 
+ 2. power $\beta$ 
+ 3. significance level $\alpha$
+ 4. effect size d
+ 
+ ---
+ 
+ #  What is Null Hypothesis? 
+ 
+ - In inferential statistics, the null hypothesis (often denoted H0) is a general statement or 
+   default position that **there is no relationship between two measured phenomena**
+   or no association among groups
+ 
+ - The null hypothesis is generally assumed to be true until evidence indicates 
+   otherwise --**presumed innocent until guilty**.
+ 
+ ---
+ 
+ #  Uniform Distribution (Discrete) 
+ 
+ * f(x) = 1/n for n = 1,2,3....n
+ * $\mu = \frac{n+1}{2}$
+ * $\sigma^2 = \frac{n^2 - 1}{12}$
+ * Example: Role of dice
+ 
+ ---
+ 
+ #  Uniform Distribution (Continuous) 
+ 
+ * f(x) = 1/(b-a) for $x \in [a,b]$
+ * $\mu = \frac{a+b}{2}$
+ * $\sigma^2 = \frac{(b - a)^2}{12}$
+ * Example: Round-off error when rounding to nearest integer [-1/2,1/2]
+ 
+ ---
+ 
+ #  Bernoulli Distribution (Discrete) 
+ 
+ * f(0) = 1-p, f(1) = p 
+ * $\mu = p$
+ * $\sigma^2 = p(1-p)$
+ * Example: Binary events with probability p of success.
+ 
+ ---
+ 
+ #  Binomial Distribution (Discrete) 
+ 
+ * $f(x) = {n \choose x} p^x (1-p)^{n-x}$ 
+ * $\mu = np$
+ * $\sigma^2 = np(1-p)$
+ * Example: N independent Bernoulli trials, sampling with replacement is a Bernoulli process.
+ 
+ ---
+ 
+ #  Geometric Distribution (Discrete) 
+ 
+ * $f(x) = p(1-p)^{x-1}$ 
+ * $\mu = 1/p$
+ * $\sigma^2 = \frac{1-p}{p^2}$
+ * Example: Number of independent Bernoulli trials it takes to get first success.
+ 
+ ---
+ 
+ #  Negative Binomial Distribution (Discrete)
+ 
+ * $f(x) = {{x-1}\choose {r-1}}p^r(1-p)^{x-r}$ 
+ * $\mu = r/p$
+ * $\sigma^2 = \frac{r(1-p)}{p^2}$
+ * Example: Number of independent Bernoulli trials it takes to get first r success.
+ 
+ ---
+ 
+ #  Hypergeomtetric Distribution (Discrete) 
+ 
+ * $f(x) = {{M}\choose {x}}{{N-M}\choose {n-x}}/{N \choose n}$ 
+ * $\mu = np$
+ * Example: Given there are M success in N trials, the number X of success in the first n trials. This is also $\textbf{sampling without replacement}$.
+ 
+ ---
+ 
+ #  Poisson Process 
+ 
+ * The Poisson process is the continuous version of the Bernoulli process. 
+ * In a Bernoulli process, time is discrete, and at each time unit there is a certain probability p that success occurs, 
+   the same probability at any given time, and the events at one time instant are independent of the events at other time instants.
+ * In a Poisson process, time is continuous, and there is a certain rate λ of events occurring per unit time that is the same for any time interval, and events occur independently of each other. 
+ * Whereas in a Bernoulli process either no or one event occurs in a unit time interval, in a Poisson process any nonnegative whole number of events can occur in unit time.
+ 
+ ---
+ 
+ #  Poisson Distribution (Discrete) 
+ 
+ * Given $\lambda$ events per unit time, how many events in time $t$: Poisson($\lambda$t)
+ * $f(x) = \frac{(\lambda t)^{x}e^{-\lambda t}}{x!}$ for x = 0,1,...
+ * $\mu = \lambda t$
+ * $\sigma^2 = \lambda t$
+ * Example: Number of events in time $t$ with a rate of $\lambda$ events per unit time.
+ 
+ ---
+ 
+ #  Exponential Distribution (Continuous) 
+ 
+ * Exponential($\lambda$)
+ * $f(x) = \lambda e^{-\lambda x}$, for $x \in [0, \infty)$
+ * $\mu = 1/\lambda$
+ * $\sigma^2 = 1/\lambda^2$
+ * Example: Time to first event
+ 
+ ---
+ 
+ #  Gamma Distribution (Continuous) 
+ 
+ * Gamma($\lambda, r$)
+ * $f(x) = \frac{1}{\Gamma(r)}\lambda^rx^{r-1}e^{-\lambda x}$
+ * $\mu = r/\lambda$
+ * $\sigma^2 = r/\lambda^2$
+ * Example: Time to the $r^{th}$ event.
+ * Gamma($\lambda,1$) = Exponential($\lambda$)
+ * Used as conjugate priors in Bayesian statistics for distributions in the Poisson process.
+ 
+ ---
+ 
+ #  Beta Distribution (Continuous) 
+ 
+ * Beta($\alpha, \beta$)
+ * In a Poisson Process, if $\alpha + \beta$ events occur in a time interval, then the fraction of that interval until the $\alpha^{th}$ event occurs has a Beta($\alpha,\beta$) distribution.
+ * Beta($1,1$) = Uniform(0,1)
+ 
+ ---
+ 
+ #  $\chi^2$ Distribution (Continuous) 
+ 
+ * ChiSquared($\nu$)
+ * The parameter $\nu$, the number of "degrees of freedom", is a positive integer.
+ * Distribution for the sum of the squares of $\nu$ independent standard normal distributions.
+ * Example: $\chi^2-$distributions are used in statistics to make inferences on the population variance when the population is assumed to be normally distributed. 
+ 
+ ---
+ 
+ #  Student's $T-$Distribution (Continuous) 
+ 
+ * $X = Y/\sqrt{Z/\nu}$ has a $T-$distribution when $Y$ is Normal(0,1) and $Z$ is ChiSquared($\nu$) and independent of $Y$.
+ * Example: $T-$distributions are used in statistics to make inferences on the population variance when the population is assumed to be normally distributed, especially when the population is small.
+ 
+ ---
+ 
+ #  Bernoulli Process 
+ 
+ [Notebook](https://github.com/AmitKus/Useful_Material/blob/master/Data%20Science%20Interview/Statistics/Statistics6-Bernoulli_Process.ipynb)
+ </textarea>
+ 
+   <script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+   </script>
+   <script type="text/javascript">
+     // var slideshow = remark.create({ sourceUrl: 'mdfile' });
+     var slideshow = remark.create();
+   </script>
+ </body>
+ 
+ </html>

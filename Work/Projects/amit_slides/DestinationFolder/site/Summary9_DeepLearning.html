@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> Deep Learning Questions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> Deep Learning Questions </small></h1>
+</section>
+
+<section><section id="list-some-optimization-algorithms-used-in-dl" class="title-slide slide level1"><h1><small> List some optimization algorithms used in DL </small></h1></section><section id="sgd" class="slide level2">
+<h2>SGD</h2>
+<ul>
+<li>Saddle points: Present in NN not in Linear regression, logistic regression and SVM</li>
+<li>SGD gets stuck at local minima or a saddle point</li>
+<li>SGD Formula: <span class="math inline">\((w_{ij}^k)_{new} = (w_{ij}^k)_{old} - \eta \left[ \frac{\partial L}{\partial w_{ij}^k} \right]_(w_{ij}^k)_{old}\)</span></li>
+</ul>
+</section></section>
+<section><section id="gradient-descent-variants" class="title-slide slide level1"><h1><small> Gradient descent variants: </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<p>There are 3 variants of gradient descent</p>
+<ol type="1">
+<li>Batch gradient descent:
+<ul>
+<li>Computes gradient of the cost function w.r.t to the parameters <span class="math inline">\(\theta\)</span> for the entire training dataset:</li>
+<li><span class="math inline">\(\theta = \theta - \eta.\triangledown_{\theta}J(\theta)\)</span></li>
+<li>Computational and memory intensive</li>
+<li>Doesn’t allow online model update</li>
+<li>Guaranteed to converge to the global minimum for convex error surfaces.</li>
+</ul></li>
+</ol>
+</section><section id="section-1" class="slide level2">
+<h2></h2>
+<ol start="2" type="1">
+<li>Stochastic gradient descent:
+<ul>
+<li>Performs a parameter update for <span class="math inline">\(each\)</span> training example <span class="math inline">\(x^i\)</span> and label <span class="math inline">\(y^i\)</span>:</li>
+<li><span class="math inline">\(\theta = \theta - \eta.\triangledown_{\theta}J(\theta; x^i; y^i)\)</span></li>
+<li>SGD performs frequent update with a high variance that cause the objective function to fluctuate heavily.</li>
+<li>The fluctuations help SGD to jump to better local minima</li>
+<li>When we slowly decrease the learning rate, SGD shows same convergence behavior as batch gradient descent.</li>
+</ul></li>
+</ol>
+</section><section id="section-2" class="slide level2">
+<h2></h2>
+<ol start="3" type="1">
+<li>Mini-batch gradient descent:
+<ul>
+<li>Performs an update for every mini-batch</li>
+<li><span class="math inline">\(\theta = \theta - \eta.\triangledown_{\theta}J(\theta; x^{(i:i+n)}; y^{(i:i+n)})\)</span></li>
+<li>Typical batch size between 50 and 256</li>
+<li>reduces the variance of the parameter updates which can lead to more stable convergence</li>
+<li>typically the algorithm of choice when training NN</li>
+</ul></li>
+</ol>
+</section></section>
+<section><section id="challenges-with-vanilla-mini-batch-gradient-descent." class="title-slide slide level1"><h1><small> Challenges with vanilla Mini-batch gradient descent. </small></h1></section><section id="section-3" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li>Choosing a proper learning rate</li>
+<li>Learning rate schedules: need to be defined in advance</li>
+<li>The same learning rate applies to all parameters.
+<ol type="1">
+<li>In case of sparse data or features having different frequencies, we might not want to update all of them to the same extent but perform a larger update for rarely occurring features.</li>
+</ol></li>
+<li>Getting stuck on saddle points.
+<ol type="1">
+<li>Saddle points are usually surrounded by a plateau of same error.</li>
+</ol></li>
+</ol>
+</section></section>
+<section><section id="modifications-to-gradient-descent-optimization-algorithms" class="title-slide slide level1"><h1><small> Modifications to Gradient descent optimization algorithms </small></h1></section><section id="section-4" class="slide level2">
+<h2></h2>
+<ul>
+<li>Momentum: Momentum is a method that helps accelerate SGD in the relevant direction and dampens oscillations.
+<ul>
+<li><span class="math inline">\(v_t = \gamma v_{t-1} + \eta\triangledown_{\theta}J\left( \theta \right)\)</span></li>
+<li><span class="math inline">\(\theta = \theta - v_t\)</span></li>
+<li><span class="math inline">\(\gamma \approx 0.9\)</span></li>
+</ul></li>
+<li>Intuition: The momentum term increases for dimensions whose gradients point in the same directions and reduces updates for dimensions whose gradients change directions. Ball rolling down the hill accumulating momentum, becoming faster and faster on the way.</li>
+</ul>
+</section><section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li>Nesterov accelerated gradient (NAG): Update on the momentum term.
+<ul>
+<li><span class="math inline">\(v_t = \gamma v_{t-1} + \eta\triangledown_{\theta}J\left( \theta - \gamma v_{t-1}\right)\)</span></li>
+<li><span class="math inline">\(\theta = \theta - v_t\)</span></li>
+</ul></li>
+</ul>
+</section><section id="section-6" class="slide level2">
+<h2></h2>
+<ul>
+<li>Adagrad: Adagrad is an algorithm for gradient-based optimization that does just this: It adapts the learning rate to the parameters, performing larger updates for infrequent and smaller updates for frequent parameters.
+<ul>
+<li>It is well-suited for dealing with sparse data.</li>
+</ul></li>
+</ul>
+</section><section id="section-7" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(g_{t,i} = \triangledown_{\theta_t} J\left( \theta_{t,i} \right)\)</span></li>
+<li><span class="math inline">\(\theta_{t+1,i} = \theta_{t,i} - \eta g_{t,i}\)</span></li>
+<li><span class="math inline">\(\theta_{t+1,i} = \theta_{t,i} - \frac{\eta}{\sqrt{G_{t,ii} + \epsilon}} g_{t,i}\)</span></li>
+<li>Where <span class="math inline">\(G_t\)</span> is a diagonal matrix where each diagonal elementi, <span class="math inline">\(ii\)</span>s the sum of the squares of the gradients w.r.t. <span class="math inline">\(\theta_i\)</span> up to time step.</li>
+</ul>
+</section><section id="section-8" class="slide level2">
+<h2></h2>
+<ul>
+<li>One of Adagrad’s main benefits is that it eliminates the need to manually tune the learning rate.</li>
+<li>Adagrad’s main weakness is its accumulation of the squared gradients in the denominator: Since every added term is positive, the accumulated sum keeps growing during training. This in turn causes the learning rate to shrink and eventually become infinitesimally small, at which point the algorithms no longer able to acquire additional knowledge.</li>
+</ul>
+</section><section id="section-9" class="slide level2">
+<h2></h2>
+<p>Adadelta:</p>
+<ul>
+<li>It’s an extension of Adagrad that seeks to reduce its aggressive, monotonically decreasing learning rate.</li>
+<li>Instead of accumulating all past squared gradients, Adadelta restricts the window of accumulated past gradients to some fixed size <span class="math inline">\(w\)</span>.</li>
+<li>With Adadelta, we do not even need to set a default learning rate, as it has been eliminated from theupdate rule</li>
+<li><span class="math inline">\(\Delta \theta_t = -\frac{RMS[\Delta \theta]_{t-1}}{RMS[g]_t}\)</span></li>
+<li><span class="math inline">\(\theta_{t+1} = \theta_t + \Delta \theta_t\)</span></li>
+</ul>
+</section><section id="section-10" class="slide level2">
+<h2></h2>
+<p>Adam (Adaptive Moment Estimation):</p>
+<ul>
+<li>Another method that computes adaptive learning rates for each parameter.</li>
+<li>In addition to storing an exponentially decaying average of past squared gradients <span class="math inline">\(v_t\)</span> like Adadelta and RMSprop, Adam also keeps an exponentially decaying average of past gradients <span class="math inline">\(m_t\)</span>, similar to momentum:</li>
+</ul>
+</section><section id="section-11" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t\)</span></li>
+<li><span class="math inline">\(v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2\)</span></li>
+<li><span class="math inline">\(\hat{m_t} = \frac{m_t}{1 - \beta_1^t}\)</span></li>
+<li><span class="math inline">\(\hat{v_t} = \frac{v_t}{1 - \beta_2^t}\)</span></li>
+<li><span class="math inline">\(m_t\)</span> and <span class="math inline">\(v_t\)</span> are estimates of the first moment (mean) and the second moment (the uncentered variance) of the gradients respectively.</li>
+<li>Update rule: <span class="math inline">\(\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{v_t} + \epsilon}\hat{m_t}\)</span></li>
+</ul>
+</section><section id="section-12" class="slide level2">
+<h2></h2>
+<p>Nadam (Nesterov-accelerated Adaptive Moment Estimation):</p>
+<ul>
+<li>Adam = RMSprop + momentum</li>
+<li>RMSprop contributes the exponentially decaying average of past squared gradients <span class="math inline">\(v_t\)</span></li>
+<li>momentum accounts for the exponentially decaying average of past gradients <span class="math inline">\(m_t\)</span>.</li>
+<li>Nesterov accelerated gradient (NAG) is superior to vanilla momentum.</li>
+<li>Nadam = Adam + NAG</li>
+</ul>
+</section></section>
+<section><section id="which-optimizer-to-use" class="title-slide slide level1"><h1><small> Which optimizer to use? </small></h1></section><section id="section-13" class="slide level2">
+<h2></h2>
+<ul>
+<li>Sparse input data: one of the adaptive learning-rate methods</li>
+<li>RMSprop, Adadelta, and Adam are very similar algorithms that do well in similar circumstances.</li>
+<li>Adam might be the best overall choice.</li>
+</ul>
+</section></section>
+<section><section id="more-strategies-to-optimize-sgd" class="title-slide slide level1"><h1><small> More strategies to optimize SGD </small></h1></section><section id="section-14" class="slide level2">
+<h2></h2>
+<ul>
+<li>Curriculum learning: supplying the training examples in a meaningful order may actually lead to improved performance and better convergence.</li>
+<li>Batch normalization:
+<ul>
+<li>Starting with normalized parameter values (zero mean and unit variance), we loose the normalization as training progresses.</li>
+<li>BN reestablishes these normalizations for every mini-batch</li>
+<li>Can also act as regularizer, reducing the need for dropout.</li>
+</ul></li>
+</ul>
+</section><section id="section-15" class="slide level2">
+<h2></h2>
+<ul>
+<li>Early stopping:
+<ul>
+<li>Early stopping (is) beautiful free lunch</li>
+</ul></li>
+<li>Gradient noise:
+<ul>
+<li>Add Gaussian noise to each gradient update: <span class="math inline">\(g_{t,i} = g_{t,i} + N(0, \sigma_t^2)\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="batch-normalization" class="title-slide slide level1"><h1><small> Batch Normalization </small></h1></section><section id="section-16" class="slide level2">
+<h2></h2>
+<ul>
+<li><strong>Internal covariate shift</strong>:
+<ul>
+<li>Training large NN is hard.</li>
+<li>One reason: change in distribution of the inputs to the layers deep in network after each mini-batch</li>
+<li>Causes the learning algorithm to chase a moving target.</li>
+</ul></li>
+</ul>
+</section><section id="section-17" class="slide level2">
+<h2></h2>
+<pre><code>Training Deep Neural Networks is complicated by the fact that the distribution of each layer’s inputs 
+changes during training, as the parameters of the previous layers change. This slows down the training 
+by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard 
+to train models with saturating nonlinearities.</code></pre>
+</section><section id="section-18" class="slide level2">
+<h2></h2>
+<ul>
+<li><strong>Batch Normalization</strong>:
+<ul>
+<li>A technique that standardizes the inputs to a layer for each mini-batch</li>
+<li>It stabilizes the learning process and dramatically reduces the number of training epochs</li>
+<li>The process is called “whitening” when applied to images in computer vision.</li>
+</ul></li>
+</ul>
+<pre><code>Batch normalization reparametrizes the model to make some units always be standardize by definition.</code></pre>
+</section><section id="section-19" class="slide level2">
+<h2></h2>
+<ul>
+<li><strong>Tips for using Batch Normalization</strong>:
+<ul>
+<li>Use with different network types</li>
+<li>Empirical evidence:
+<ul>
+<li>After the activation function if for S-shaped functions like hyperbolic tangent and logistic function</li>
+<li>Before the activation function for result in non-Gaussian distribution like RELU</li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section id="section-20" class="slide level2">
+<h2></h2>
+<ul>
+<li>Use large learning rates</li>
+<li>Less sensitive to weight initialization</li>
+<li>Alternate to data preparation</li>
+<li>Don’t use dropout: BN offers some regularization</li>
+</ul>
+</section><section id="section-21" class="slide level2">
+<h2></h2>
+<p>Internal layers can be represented as:<br> <span class="math inline">\(l = F_2(F_1(u,\theta_1),\theta_2)\)</span> <br> Where <span class="math inline">\(\theta_1\)</span> and <span class="math inline">\(\theta_2\)</span> are the parameters to be learned.<br> Learning <span class="math inline">\(\theta_2\)</span> can be interpreted as, assuming input <span class="math inline">\(x = F_1(u,\theta_1)\)</span><br> <span class="math inline">\(l = F_2(x,\theta_2)\)</span><br> Update: <span class="math inline">\(\theta_2 \leftarrow \theta_2 - \frac{\alpha}{m} \sum_{i=1}^m \frac{\partial F_2(x_i, \theta_2)}{\partial \theta_2}\)</span></p>
+</section><section id="section-22" class="slide level2">
+<h2></h2>
+<p>Batch Normalization addsonly two extra parameters per activation (<span class="math inline">\(\gamma, \beta\)</span>) <br> <img src="Pictures/BatchNormalizationTransform.png" alt="Drawing" style="width: 500px;"/></p>
+</section><section id="section-23" class="slide level2">
+<h2></h2>
+<p>The goal of Batch Normalization is to achieve a stable distribution of activation values throughout training, and in our experiments we apply it before the nonlinearity since that is where matching the first and second moments is more likely to result in a stable distribution.</p>
+</section></section>
+<section><section id="how-to-alleviate-vanishing-gradient-problem" class="title-slide slide level1"><h1><small> How to alleviate vanishing gradient problem </small></h1></section><section id="section-24" class="slide level2">
+<h2></h2>
+<ul>
+<li>Use RELU</li>
+<li>Careful initialization</li>
+<li>small learning rates</li>
+<li>Batch Normalization</li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

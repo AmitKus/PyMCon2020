@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> Algorithms and Data Structure</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> Algorithms and Data Structure </small></h1>
+</section>
+
+<section><section id="what-is-heap" class="title-slide slide level1"><h1><small> What is heap? </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<ul>
+<li>A heap is a common implementation of a priority queue.</li>
+<li>A priority queue contains items with some priority.</li>
+<li>A heap is one of the tree structures and represented as a binary tree.</li>
+</ul>
+</section><section id="section-1" class="slide level2">
+<h2></h2>
+<ul>
+<li>Min heap: Each value of nodes is less than or equal to the value of child nodes.</li>
+</ul>
+<p><img data-src="Pictures/heap.png" /></p>
+</section><section id="section-2" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb1-1" title="1"><span class="im">import</span> heapq</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">class</span> KthLargest:</a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, k, nums):</a>
+<a class="sourceLine" id="cb1-4" title="4">        <span class="va">self</span>.heap <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb1-5" title="5">        <span class="va">self</span>.k <span class="op">=</span> k</a>
+<a class="sourceLine" id="cb1-6" title="6">        </a>
+<a class="sourceLine" id="cb1-7" title="7">        <span class="cf">for</span> num <span class="kw">in</span> nums:</a>
+<a class="sourceLine" id="cb1-8" title="8">            <span class="va">self</span>.add(num)</a>
+<a class="sourceLine" id="cb1-9" title="9">            </a>
+<a class="sourceLine" id="cb1-10" title="10">    <span class="kw">def</span> add(<span class="va">self</span>, val):</a>
+<a class="sourceLine" id="cb1-11" title="11">        </a>
+<a class="sourceLine" id="cb1-12" title="12">        <span class="cf">if</span> <span class="bu">len</span>(<span class="va">self</span>.heap)<span class="op">&lt;</span><span class="va">self</span>.k:</a>
+<a class="sourceLine" id="cb1-13" title="13">            heapq.heappush(<span class="va">self</span>.heap,val)</a>
+<a class="sourceLine" id="cb1-14" title="14">        <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb1-15" title="15">            heapq.heappushpop(<span class="va">self</span>.heap,val)</a>
+<a class="sourceLine" id="cb1-16" title="16"></a>
+<a class="sourceLine" id="cb1-17" title="17">        <span class="cf">return</span> <span class="va">self</span>.heap[<span class="dv">0</span>]</a></code></pre></div>
+</section></section>
+<section><section id="sorting-a-dictionary-or-tuple-based-on-value" class="title-slide slide level1"><h1><small> Sorting a dictionary or tuple based on value </small></h1></section><section id="section-3" class="slide level2">
+<h2></h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb2-1" title="1">test_dict <span class="op">=</span> {<span class="st">&#39;a&#39;</span>:<span class="dv">10</span>,<span class="st">&#39;b&#39;</span>:<span class="dv">20</span>,<span class="st">&#39;c&#39;</span>:<span class="dv">15</span>}</a>
+<a class="sourceLine" id="cb2-2" title="2">[(key,item) <span class="cf">for</span> key,item <span class="kw">in</span> <span class="bu">sorted</span>(test_dict.items(), key<span class="op">=</span><span class="kw">lambda</span> item: item[<span class="dv">1</span>], reverse<span class="op">=</span><span class="va">True</span>)]</a></code></pre></div>
+<p>Output: [(‘b’, 20), (‘c’, 15), (‘a’, 10)]</p>
+<ul>
+<li>Same syntax for tuple also. The argument key is the sorting dimension.</li>
+</ul>
+</section></section>
+<section><section id="finding-missing-number" class="title-slide slide level1"><h1><small> Finding missing number </small></h1></section><section id="section-4" class="slide level2">
+<h2></h2>
+<pre><code>You have an unsorted array containing integers 1, 2, 3, . . . , n, but one number is missing. Describe an algorithm to find the missing number and discuss its complexity.</code></pre>
+</section><section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li>Sum of numbers 1 to n: <span class="math inline">\(S = \frac{n(n+1)}{2}\)</span></li>
+<li>missing number = S - sum of given numbers</li>
+</ul>
+</section><section id="k-missing-numbers" class="slide level2">
+<h2>k missing numbers:</h2>
+<ul>
+<li>Compute more quantities: <span class="math inline">\(\sum x_i, \sum x_i^2, .... \sum x_i^n\)</span></li>
+<li>Compare them with theoretical values</li>
+<li>Solve the system of linear equations</li>
+</ul>
+</section><section id="one-missing-number-in-sorted-array" class="slide level2">
+<h2>one missing number in sorted array</h2>
+<ul>
+<li>compare the middle element compared to expected</li>
+<li><span class="math inline">\(O(\log_2 n)\)</span></li>
+</ul>
+</section></section>
+<section><section id="integer-overflow" class="title-slide slide level1"><h1><small> Integer overflow </small></h1></section><section id="section-6" class="slide level2">
+<h2></h2>
+<pre><code>What happens if we have the number 255 in an 8-bit unsigned integer (1111 1111 in binary) and we add 1? The answer (256) needs a 9th bit (1 0000 0000). But we only have 8 bits!
+
+This is called an integer overflow. At best, we might just get an error. At worst, our computer might compute the correct answer but then just throw out the 9th bit, giving us zero (0000 0000) instead of 256 (1 0000 0000)! (Python actually notices that the result won&#39;t fit and automatically allocates more bits to store the larger number.)</code></pre>
+</section></section>
+<section><section id="dynamic-arrays" class="title-slide slide level1"><h1><small> Dynamic arrays </small></h1></section><section id="section-7" class="slide level2">
+<h2></h2>
+<p>Python, Ruby, and JavaScript use dynamic arrays for their default array-like data structures. In Python, they’re called “lists.” Other languages have both. For example, in Java, array is a static array (whose size we have to define ahead of time) and ArrayList is a dynamic array.</p>
+</section></section>
+<section><section id="dynamic-array-vs-linked-list" class="title-slide slide level1"><h1><small> Dynamic array vs linked list </small></h1></section><section id="section-8" class="slide level2">
+<h2></h2>
+<ul>
+<li>Linked lists have worst-case O(1)O(1)O(1)-time appends, which is better than the worst-case O(n) time of dynamic arrays.</li>
+<li>That worst-case part is important. The average case runtime for appends to linked lists and dynamic arrays is the same: O(1)</li>
+<li>Linked lists have faster prepends (O(1) time) than dynamic arrays (O(n) time).</li>
+</ul>
+</section><section id="section-9" class="slide level2">
+<h2></h2>
+<p>Q: So if linked lists are so great, why do we usually store strings in an array?</p>
+<p>Ans: Because arrays have O(1)-time lookups. And those constant-time lookups come from the fact that all the array elements are lined up next to each other in memory. Walking down a list is not cache-friendly.</p>
+<blockquote>
+<p>The tradeoff with linked lists is they have faster prepends and faster appends than dynamic arrays, but they have slower lookups.</p>
+</blockquote>
+</section></section>
+<section><section id="hash-tables" class="title-slide slide level1"><h1><small> Hash Tables </small></h1></section><section id="section-10" class="slide level2">
+<h2></h2>
+<p>Quick lookups are often really important. For that reason, we tend to use arrays (<span class="math inline">\(O(1)\)</span>-time lookups) much more often than linked lists (<span class="math inline">\(O(i)\)</span>-time lookups).</p>
+<p>Main idea: &gt; We can think of an array as a table with two columns…except you don’t really get to pick the values in one column (the indices)—they’re always 0, 1, 2, 3, etc.</p>
+</section><section id="section-11" class="slide level2">
+<h2></h2>
+<ul>
+<li><p>Similar to arrays hash-table has quick lookups are only in one direction — we can quickly get the value for a given key, but the only way to get the key for a given value is to walk through all the values and keys.</p></li>
+<li><p>The only problem with hash tables is they have to deal with hash collisions, which means some lookups could be a bit slow.</p></li>
+</ul>
+</section><section id="hash-functions" class="slide level2">
+<h2>Hash functions</h2>
+<p><img data-src="Pictures/hash_functions.png" /></p>
+</section><section id="hash-collisions" class="slide level2">
+<h2>Hash collisions</h2>
+<ul>
+<li>Link list associated to keys with collision</li>
+</ul>
+<p><img data-src="Pictures/hash_collisions.png" /></p>
+</section></section>
+<section><section id="array-slicing" class="title-slide slide level1"><h1><small> Array slicing </small></h1></section><section id="section-12" class="slide level2">
+<h2></h2>
+<p>There’s a hidden time and space cost here! It’s tempting to think of slicing as just “getting elements,” but in reality you are: - allocating a new list - copying the elements from the original list to the new list</p>
+</section></section>
+<section><section id="in-place-vs-out-of-place" class="title-slide slide level1"><h1><small> In-place vs out-of-place </small></h1></section><section id="section-13" class="slide level2">
+<h2></h2>
+<p>In many languages, primitive values (integers, floating point numbers, or characters) are copied when passed as arguments, and more complex data structures (lists, heaps, or hash tables) are passed by reference. This is what Python does.</p>
+</section></section>
+<section><section id="dynamic-array" class="title-slide slide level1"><h1><small> Dynamic Array </small></h1></section><section id="section-14" class="slide level2">
+<h2></h2>
+<p>In Python, dynamic arrays are called lists.</p>
+<p><img data-src="Pictures/dynamic_array.png" /></p>
+</section></section>
+<section><section id="amortized-cost-of-appending" class="title-slide slide level1"><h1><small> Amortized cost of appending </small></h1></section><section id="section-15" class="slide level2">
+<h2></h2>
+<ul>
+<li>The time cost of each special O(n) “doubling append” doubles each time.</li>
+<li>At the same time, the number of O(1) appends you get until the next doubling append also doubles.</li>
+</ul>
+<p>These two things sort of “cancel out,” and we can say each append has an average cost or amortized cost of O(1).</p>
+</section></section>
+<section><section id="write-a-function-that-takes-a-list-of-characters-and-reverses-the-letters-in-place." class="title-slide slide level1"><h1><small> Write a function that takes a list of characters and reverses the letters in place. </small></h1></section><section id="section-16" class="slide level2">
+<h2></h2>
+<p>Swap the last and first elements and move towards center.</p>
+</section></section>
+<section><section id="hash-table" class="title-slide slide level1"><h1><small> Hash Table </small></h1></section><section id="section-17" class="slide level2">
+<h2></h2>
+<p>In python, hash tables are called dictionaries</p>
+<p><img data-src="Pictures/hash_table.png" /></p>
+</section><section id="section-18" class="slide level2">
+<h2></h2>
+<ul>
+<li>Strengths:
+<ul>
+<li>Fast lookups</li>
+<li>Flexible keys</li>
+</ul></li>
+<li>Weakness:
+<ul>
+<li>Slow worst case lookups</li>
+<li>Unordered</li>
+<li>Single directional lookup</li>
+<li>Not cache friendly</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="when-hash-table-operations-cost-on-time" class="title-slide slide level1"><h1><small> When hash table operations cost <span class="math inline">\(O(n)\)</span> time </small></h1></section><section id="section-19" class="slide level2">
+<h2></h2>
+<ul>
+<li>Hash collisions
+<ul>
+<li>If all our keys caused hash collisions, we’d be at risk of having to walk through all of our values for a single lookup (very unlikely)</li>
+</ul></li>
+<li>Dynamic array resizing
+<ul>
+<li>Resizing the array to avoid hash-collisions, relocate and rehash <span class="math inline">\(O(n)\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="sets" class="title-slide slide level1"><h1><small> Sets </small></h1></section><section id="section-20" class="slide level2">
+<h2></h2>
+<ul>
+<li>A set is like a hash map except it only stores keys, without values.</li>
+<li>Example: tracking groups of items—nodes we’ve visited in a graph, characters we’ve seen in a string, or colors used by neighboring nodes.</li>
+<li>In Python, the set implementation is largely copied from the dictionary implementation.</li>
+</ul>
+</section></section>
+<section><section id="breadth-first-search-bfs" class="title-slide slide level1"><h1><small> Breadth first search BFS </small></h1></section><section id="section-21" class="slide level2">
+<h2></h2>
+<p>Advantages: - A BFS will find the shortest path between the starting point and any other reachable node. A depth-first search will not necessarily find the shortest path.</p>
+<p>Disadvantages: - A BFS on a binary tree generally requires more memory than a DFS.</p>
+</section></section>
+<section><section id="depth-first-search-dfs" class="title-slide slide level1"><h1><small> Depth first search DFS </small></h1></section><section id="section-22" class="slide level2">
+<h2></h2>
+<p>Advantages: - Depth-first search on a binary tree generally requires less memory than breadth-first. - Depth-first search can be easily implemented with recursion.</p>
+<p>Disadvantages: - A DFS doesn’t necessarily find the shortest path to a node, while breadth-first search does.</p>
+</section></section>
+<section><section id="sorting-algorithms" class="title-slide slide level1"><h1><small> Sorting algorithms </small></h1></section><section id="section-23" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/sorting_algos_comparison.png" /></p>
+</section></section>
+<section><section id="which-sorting-algorithm-should-i-use" class="title-slide slide level1"><h1><small> Which Sorting Algorithm Should I Use? </small></h1></section><section id="section-24" class="slide level2">
+<h2></h2>
+<p>Each sorting algorithm has tradeoffs. You can’t have it all.</p>
+<p>So you have to know what’s important in the problem you’re working on. - How large is your input? - How many distinct values are in your input? - How much space overhead is acceptable? - Can you afford <span class="math inline">\(O(n^2)\)</span> worst-case runtime?</p>
+</section><section id="quicksort" class="slide level2">
+<h2>Quicksort</h2>
+<p><img data-src="Pictures/quicksort.png" /></p>
+<p>Quicksort is a good default choice. It tends to be fast in practice, and with some small tweaks its dreaded O(n^2)O worst-case time complexity becomes very unlikely. A tried and true favorite.</p>
+</section><section id="heapsort" class="slide level2">
+<h2>Heapsort</h2>
+<p><img data-src="Pictures/heapsort.png" /></p>
+<p>Heapsort is a good choice if you can’t tolerate a worst-case time complexity of O(n2)O(n^2)O(n2) or need low space costs. The Linux kernel uses heapsort instead of quicksort for both of those reasons.</p>
+</section><section id="mergesort" class="slide level2">
+<h2>Mergesort</h2>
+<p><img data-src="Pictures/mergesort.png" /></p>
+<p>Merge sort is a good choice if you want a stable sorting algorithm. Also, merge sort can easily be extended to handle data sets that can’t fit in RAM, where the bottleneck cost is reading and writing the input on disk, not comparing and swapping individual items.</p>
+</section><section id="radix-sort" class="slide level2">
+<h2>Radix sort</h2>
+<p><img data-src="Pictures/radixsort.png" /></p>
+<p>Radix sort looks fast, with its O(n)O(n)O(n) worst-case time complexity. But, if you’re using it to sort binary numbers, then there’s a hidden constant factor that’s usually 32 or 64 (depending on how many bits your numbers are). That’s often way bigger than O(lg⁡(n))O((n))O(lg(n)), meaning radix sort tends to be slow in practice.</p>
+</section><section id="counting-sort" class="slide level2">
+<h2>Counting sort</h2>
+<p><img data-src="Pictures/countingsort.png" /></p>
+<p>Counting sort is a good choice in scenarios where there are small number of distinct values to be sorted. This is pretty rare in practice, and counting sort doesn’t get much use.</p>
+</section><section id="selectionsort" class="slide level2">
+<h2>Selectionsort</h2>
+<p><img data-src="Pictures/selectionsrt.png" /></p>
+</section><section id="insertionsort" class="slide level2">
+<h2>Insertionsort</h2>
+<p><img data-src="Pictures/insertionsort.png" /></p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

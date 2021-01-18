@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> System Design</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> System Design </small></h1>
+</section>
+
+<section><section id="book" class="title-slide slide level1"><h1><small> Book </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<ul>
+<li><a href="https://github.com/chiphuyen/machine-learning-systems-design/blob/master/build/build1/consolidated.pdf">Chip Huyen Book</a></li>
+</ul>
+</section></section>
+<section><section id="artificial-vs-natural-systems" class="title-slide slide level1"><h1><small> Artificial vs Natural Systems </small></h1></section><section id="section-1" class="slide level2">
+<h2></h2>
+<p>Natural systems are evolved whereas artificial systems are designed.</p>
+<ul>
+<li>Natural systems
+<ul>
+<li>Survival of the fittest (not the best)</li>
+<li>Non-survival of the non-fit</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="youtube-system-design" class="title-slide slide level1"><h1><small> Youtube System Design </small></h1></section><section id="section-2" class="slide level2">
+<h2></h2>
+<ul>
+<li>You tube of 2020
+<ul>
+<li>Dense matrix-matrix multiplication efficiency</li>
+<li>Multiple 1-D user vectors X Multiple 1-D movie vectors</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="research-vs-production" class="title-slide slide level1"><h1><small> Research vs Production </small></h1></section><section id="section-3" class="slide level2">
+<h2></h2>
+<ul>
+<li>In academic settings, people care more about training whereas in production, people care more about serving.</li>
+</ul>
+</section></section>
+<section><section id="compute-requirements" class="title-slide slide level1"><h1><small> Compute requirements </small></h1></section><section id="section-4" class="slide level2">
+<h2></h2>
+<ul>
+<li>According to OpenAI,“the amount of compute used in the largest AI training runs has doubled every 3.5 months.”</li>
+<li>From AlexNet in 2012 to AlphaGo Zero in 2018, the compute power required increased300,000 times.</li>
+<li>These massive models make ideal headlines, not ideal products.</li>
+</ul>
+</section></section>
+<section><section id="design-a-machine-learning-system" class="title-slide slide level1"><h1><small> Design a machine learning system </small></h1></section><section id="section-5" class="slide level2">
+<h2></h2>
+<p>There are generally four main components of the process: 1. project setup, 2. data pipeline, 3. modeling (selecting, training, and debugging your model), and 4. serving (testing, deploying, maintaining).</p>
+</section><section id="project-setup" class="slide level2">
+<h2>Project setup</h2>
+<ul>
+<li>Goals: What do you want to achieve with this problem?</li>
+<li>User experience: Ask your interviewer for a step by step walk-through of how end users are supposed to use the system.</li>
+<li>Performance constraints: How fast/good does the prediction have to be? What’s more important: precision or recall? What’s more costly: false negative or false positive?</li>
+<li>Evaluation: How would you evaluate the performance of your system, during both training and inference?</li>
+<li>Personalization: How personalized does your model have to be? Do you need one model for all the users, for a group of users, or for each user individually?</li>
+<li>Project constraints: These are the constraints that you have to worry about in the real world but less so during interviews</li>
+</ul>
+</section><section id="data-pipeline" class="slide level2">
+<h2>Data pipeline</h2>
+<ul>
+<li>Data availability and collection: What kind of data is available? How much data do you already have?</li>
+<li>User data: What data do you need from users? How do you collect it?</li>
+<li>Storage: Where is the data currently stored: on the cloud, local, or on the users’ devices? How big is each sample?</li>
+<li>Data preprocessing &amp; representation: How do you process the raw data into a form useful for your models? Will you have to do any featuring engineering or feature extraction?</li>
+<li>Challenges: Handling user data requires extra care, as any of the many companies that have got into trouble for user data mishandling can tell you</li>
+<li>Privacy: What privacy concerns do users have about their data? What anonymizing methods do you want to use on their data?</li>
+<li>Biases: What biases might represent in the data? How would you correct the biases?Are your data and your annotation inclusive?</li>
+</ul>
+</section><section id="modeling" class="slide level2">
+<h2>Modeling</h2>
+<ul>
+<li>You should first figure out the category of the problem.
+<ul>
+<li>Is it supervised or unsupervised? Is it regression or classification?</li>
+<li>Does it require generation or only prediction?</li>
+<li>If generation, your models will have to learn the latent space of your data, which is a much harder task than just prediction.</li>
+</ul></li>
+</ul>
+</section><section id="modeling-baseline" class="slide level2">
+<h2>Modeling: Baseline</h2>
+<ul>
+<li>Random baseline: if your model just predicts everything at random, what’s the expected performance?</li>
+<li>Human baseline: how well would humans perform on this task?</li>
+<li>Simple heuristic: for example, for the task of recommending the app to use next on your phone, the simplest model would be to recommend your most frequently used app. If this simple heuristic can predict the next app accurately 70% of the time, any model you build has to outperform it significantly to justify the added complexity.</li>
+</ul>
+</section><section id="modeling-heuristics" class="slide level2">
+<h2>Modeling: Heuristics</h2>
+<blockquote>
+<p>if you think that machine learning will give you a 100% boost, then a heuristic will get you 50% of the way there." However, resist the trap of increasingly complex heuristics. If your system has more than 100 nested if-else, it’s time to switch to machine learning.</p>
+</blockquote>
+</section><section id="training" class="slide level2">
+<h2>Training:</h2>
+<ul>
+<li><p>Some of the common problems include: the training loss doesn’t decrease, overfitting, underfitting, fluctuating weight values, dead neurons, etc.</p></li>
+<li>Theoretical constraints: e.g. wrong assumptions, poor model/data fit.</li>
+<li>Poor model implementation:</li>
+<li>Snobby training techniques: e.g. call model.train()instead of model.eval() during evaluation.</li>
+<li>Poor choice of hyperparameters:</li>
+<li><p>Data problems: mismatched inputs/labels, over-preprocessed data, noisy data, etc.</p></li>
+</ul>
+</section><section id="training-debugging" class="slide level2">
+<h2>Training: Debugging</h2>
+<ol type="1">
+<li>Start simple and expand</li>
+<li>Overfit on small data set, see if you can get 100% accuracy on small dataset</li>
+<li>Set the random seed</li>
+</ol>
+</section><section id="training-scaling" class="slide level2">
+<h2>Training: Scaling</h2>
+<ul>
+<li>data parallelism: you split your data on multiple machines, train your model on all of them, and accumulate gradients. This gives rise to a couple of issues.
+<ul>
+<li>Synchronous stochastic gradient descent(SSGD) - stragglers will cause the entire model to slow down.</li>
+<li>Model waits for all the machines to finish computing their gradients</li>
+<li>Asynchronous SGD (ASGD) - it will cause gradient staleness because the gradients from one machine has caused the weights to change before the gradients from another machine has come in.</li>
+</ul></li>
+</ul>
+</section><section id="training-model-parallelism" class="slide level2">
+<h2>Training: Model parallelism</h2>
+<ul>
+<li>Model parallelism is when different components of your model can be evaluated on different machines. For example, machine 0 handles the computation for the firsttwo layers while machine 1 handles the next two layers, or some machines can handle the forward pass while several others handle the backward pass.</li>
+</ul>
+</section><section id="serving" class="slide level2">
+<h2>Serving</h2>
+<ul>
+<li>Your model will continuously improve as you get more user feedback.</li>
+<li>Do you want to train your model online with each new data point?</li>
+<li>Do you need to personalize your model to each user?</li>
+<li>How often should you update your machine learning model?</li>
+<li>Interpretability</li>
+</ul>
+</section></section>
+<section><section id="airbnb-blog" class="title-slide slide level1"><h1><small> Airbnb blog </small></h1></section><section id="section-6" class="slide level2">
+<h2></h2>
+<ul>
+<li><a href="https://medium.com/airbnb-engineering/using-machine-learning-to-predict-value-of-homes-on-airbnb-9272d3d4739d">Airbnb blog</a></li>
+<li>Customer Lifetime Value (LTV),
+<ul>
+<li>a popular concept among e-commerce and marketplace companies,</li>
+<li>captures the projected value of a user for a fixed time horizon (in $)</li>
+</ul></li>
+</ul>
+</section><section id="section-7" class="slide level2">
+<h2></h2>
+<ul>
+<li>Feature Engineering: Define relevant features</li>
+<li>Prototyping and Training: Train a model prototype</li>
+<li>Model Selection &amp; Validation: Perform model selection and tuning</li>
+<li>Productionization: Take the selected model prototype to production</li>
+</ul>
+</section><section id="feature-engineering-zipline-in-house" class="slide level2">
+<h2>Feature Engineering: zipline (in-house)</h2>
+<ul>
+<li>Using Apache Hive queries, you can query distributed data storage including Hadoop data.</li>
+<li>We developed Zipline — a training feature repository that provides features at different levels of granularity, such as at the host, guest, listing, or market level.</li>
+</ul>
+</section><section id="features" class="slide level2">
+<h2>Features</h2>
+<ul>
+<li>Location: country, market, neighborhood and various geography features</li>
+<li>Price: nightly rate, cleaning fees, price point relative to similar listings</li>
+<li>Availability: Total nights available, % of nights manually blocked</li>
+<li>Bookability: Number of bookings or nights booked in the past X days</li>
+<li>Quality: Review scores, number of reviews, and amenities</li>
+</ul>
+</section><section id="prototyping-and-training-scikit-learn" class="slide level2">
+<h2>Prototyping and training: scikit-learn</h2>
+<ul>
+<li>Data imputation</li>
+<li>One-hot encoding</li>
+<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">Scikit-learn or spark pipeline</a></li>
+<li><a href="http://scikit-learn.org/stable/modules/generated/sklearn.pipeline.FeatureUnion.html">Feature Union</a> combines the features column-wise</li>
+<li><a href="http://scikit-learn.org/stable/data_transforms.html">Data transforms</a> for data transformation</li>
+<li>Pipelines also separate data transformations from model fitting.</li>
+</ul>
+</section><section id="performing-model-selection-automl-frameworks" class="slide level2">
+<h2>Performing model selection: AutoML frameworks</h2>
+<ul>
+<li>weigh the tradeoffs between model interpretability and model complexity</li>
+<li>Use AutoML framework to achieve this.</li>
+<li>Given that our primary goal was to predict listing values, we felt comfortable productionizing our final model using XGBoost, which favors flexibility over interpretability.</li>
+</ul>
+</section><section id="prototypes-to-production" class="slide level2">
+<h2>Prototypes to Production</h2>
+<ul>
+<li>Tool used: Airbnb’s notebook translation framework — ML Automato</li>
+<li>how can we perform periodic re-training?</li>
+<li>How do we score a large number of examples efficiently?</li>
+<li>How do we build a pipeline to monitor model performance over time?</li>
+</ul>
+</section></section>
+<section><section id="netflix-blog" class="title-slide slide level1"><h1><small> Netflix blog </small></h1></section><section id="section-8" class="slide level2">
+<h2></h2>
+<ul>
+<li><a href="https://netflixtechblog.com/using-machine-learning-to-improve-streaming-quality-at-netflix-9651263ef09f">Netflix blog</a></li>
+<li>Viewing/browsing behavior on mobile devices is different than on Smart TVs</li>
+<li>Cellular networks may be more volatile and unstable than fixed broadband networks</li>
+<li>Networks in some markets may experience higher degrees of congestion</li>
+<li>Different device groups have different capabilities and fidelities of internet connection due to hardware differences</li>
+</ul>
+</section><section id="quality-of-experience" class="slide level2">
+<h2>Quality of experience</h2>
+<ul>
+<li>the quality of experience can be measured in several ways,
+<ul>
+<li>the initial amount of time spent waiting for video to play,</li>
+<li>the overall video quality experienced by the user,</li>
+<li>the number of times playback paused to load more video into the buffer (“rebuffer”)</li>
+<li>the amount of perceptible fluctuation in quality during playback.</li>
+</ul></li>
+</ul>
+</section><section id="section-9" class="slide level2">
+<h2></h2>
+<ul>
+<li>Predictive caching: predicting what a user will play in order to cache (part of) it on the device before the user hits play.</li>
+<li>Device anomaly detection: predict the likelihood that a given set of measured conditions constitutes a real problem.</li>
+<li>Even when we’re confident we’re observing a problematic issue, it is often challenging to determine the root cause.</li>
+</ul>
+</section></section>
+<section><section id="booking.com" class="title-slide slide level1"><h1><small> Booking.com </small></h1></section><section id="section-10" class="slide level2">
+<h2></h2>
+<p><a href="https://www.kdd.org/kdd2019/accepted-papers/view/150-successful-machine-learning-models-6-lessons-learned-at-booking.com">6 lessons learned at Booking.com</a></p>
+<ol type="1">
+<li>Projects introducing machine learned models deliver strong business value</li>
+<li>Model performance is not the same as business performance</li>
+<li>Be clear about the problem you’re trying to solve</li>
+<li>Prediction serving latency matters</li>
+<li>Get early feedback on model quality</li>
+<li>Test the business impact of your models using randomised controlled trials (follows from #2)</li>
+</ol>
+</section><section id="section-11" class="slide level2">
+<h2></h2>
+<pre><code>We found that driving true business impact is amazingly hard, plus it is difficult to isolate and understand the connection between efforts on modeling and the observed impact… Our main conclusion is that an iterative, hypothesis driven process, integrated with other disciplines was fundamental to build 150 successful products enabled by machine learning.</code></pre>
+</section><section id="context" class="slide level2">
+<h2>Context</h2>
+<ul>
+<li>Stakes are high - booking hotel at wrong place worse than streaming a bad movie</li>
+<li>User provide scant information</li>
+<li>Limited supply and changing prices</li>
+<li>Changing guest preference</li>
+<li>Overwhelming information about the accommodations</li>
+</ul>
+</section><section id="model-performance-is-not-the-same-as-business-performance" class="slide level2">
+<h2>model performance is not the same as business performance</h2>
+<ul>
+<li>saturation of business value</li>
+<li>segment saturation due to smaller populations being exposed to a treatment</li>
+<li>over-optimisation on a proxy metric (e.g. clicks) that fails to convert into the desired business metric (e.g. conversion);</li>
+</ul>
+</section><section id="be-clear-about-the-problem-youre-trying-to-solve" class="slide level2">
+<h2>be clear about the problem you’re trying to solve</h2>
+<pre><code>The Problem Construction Process takes as input a business case or concept and outputs a well-defined modeling problem (usually a supervised machine learning problem), such that a good solution effectively models the given business case or concept.</code></pre>
+</section><section id="test-the-business-impact-of-your-models-through-randomised-controlled-trials" class="slide level2">
+<h2>test the business impact of your models through randomised controlled trials</h2>
+<pre><code>The large majority of the successful use cases of machine learning studied in this work have been enabled by sophisticated experiment designs, either to guide the development process or in order to detect their impact.</code></pre>
+</section></section>
+<section><section id="chicisimo-fashion-app" class="title-slide slide level1"><h1><small> Chicisimo: Fashion app </small></h1></section><section id="section-12" class="slide level2">
+<h2></h2>
+<p>We ended building the infrastructure to automate outfit advice: (i) a consumer app storing the clothes in your closet, and an interface focused on capturing the right input and providing the right output; (ii) a data platform that automates the jobs of interpreting incoming data (taste) and providing the correct output to the delivery mechanisms; (iii) a dataset that reflects what people wear, what people own in their closet, and how people think, when they think about clothes; (iv) and an IP portfolio protecting all of the above.</p>
+</section></section>
+<section><section id="airbnb-experiences" class="title-slide slide level1"><h1><small> Airbnb Experiences </small></h1></section><section id="section-13" class="slide level2">
+<h2></h2>
+<p><a href="https://medium.com/airbnb-engineering/machine-learning-powered-search-ranking-of-airbnb-experiences-110b4b1a0789">Blog about Airbnb Experiences</a></p>
+<p><img data-src="https://miro.medium.com/max/700/1*7mW2UKcdI09OVYwWlpHXLw.png" /></p>
+</section><section id="stage1-building-a-strong-baseline" class="slide level2">
+<h2>Stage1: Building a strong baseline</h2>
+<ul>
+<li>Started collecting data on user interactions with Experiences (impressions, clicks, and bookings).</li>
+<li>At that moment, the best choice was to just randomly re-rank Experiences daily, until a small dataset is collected for development of the Stage 1 ML model.</li>
+</ul>
+</section><section id="setup" class="slide level2">
+<h2>Setup</h2>
+<ul>
+<li>collecting data: search logs for users who made booking</li>
+<li>labelling training data: Two labels: experiences that were booked (positive) and experiences that were clicked but not booked (negative).</li>
+<li>Features:
+<ul>
+<li>Experience duration</li>
+<li>Price</li>
+<li>Category</li>
+<li>Reviews</li>
+<li>Number of bookings</li>
+<li>Occupancy of past and future instances</li>
+<li>maximum number of seats</li>
+<li>click through rate</li>
+</ul></li>
+</ul>
+</section><section id="training-1" class="slide level2">
+<h2>Training</h2>
+<ul>
+<li>Binary classification using log-loss loss function</li>
+<li>Gradient boosted decision tree
+<ul>
+<li>No need to worry about scaling the features or missing values</li>
+<li>Unlike linear models do not use raw count based features when they are prone to change rapidly in a growing marketplace, instead use ratio/fractions</li>
+</ul></li>
+</ul>
+</section><section id="testing" class="slide level2">
+<h2>Testing</h2>
+<ul>
+<li>Our choice of metrics were AUC and NDCG (discounted cumulative gain), which are standard ranking metrics.</li>
+<li>we plotted partial dependency plots for several most important Experience features.</li>
+</ul>
+</section><section id="offline-testing-vs-ab-testing" class="slide level2">
+<h2>Offline testing vs A/B testing:</h2>
+<pre><code>Since offline testing often has too many assumptions, e.g. in our case it was limited to re-ranking what users clicked and not the entire inventory, we conducted an online experiment, i.e. A/B test, as our next step. We compared the Stage 1 ML model to the rule-based random ranking in terms of number of bookings. The results were very encouraging as we were able to improve bookings by +13% with the Stage 1 ML ranking model.</code></pre>
+</section><section id="implementation-details" class="slide level2">
+<h2>Implementation details:</h2>
+<ul>
+<li>the ranking of Experiences was the same for all users</li>
+<li>simple filtering on top of fixed ranking</li>
+<li>training and scoring, was implemented offline and ran daily in Airflow.</li>
+</ul>
+</section><section id="stage-2-personalize" class="slide level2">
+<h2>Stage 2: Personalize</h2>
+<ul>
+<li>Personalize based on booked homes in Airbnb Homes
+<ul>
+<li>Feature engineering: distance of experience from last booked home, experience available during the time of stay etc</li>
+</ul></li>
+<li>Personalize based on user clicks
+<ul>
+<li>history of kind of activities clicked</li>
+<li>history of time of activities clicked</li>
+</ul></li>
+</ul>
+</section><section id="section-14" class="slide level2">
+<h2></h2>
+<ul>
+<li>A/B testing showed that personalization improved the booking by 7.9%</li>
+<li>Stage 2 implementation was a temporary solution used to validate personalization gains before we invest more resources in building an Online Scoring Infrastructure in Stage 3</li>
+</ul>
+</section><section id="stage-3-move-to-online-scoring" class="slide level2">
+<h2>Stage 3: Move to online scoring</h2>
+<ul>
+<li>Moving to Online Scoring also unlocks a whole new set of features that can be used: Query Features (e.g. dates, #guests etc)</li>
+<li>Enables language matching experiences</li>
+<li>Enables knowing the country</li>
+<li>engineer several personalization features at the Origin — Destination level</li>
+</ul>
+</section><section id="stage-3-training-model" class="slide level2">
+<h2>Stage 3: Training model</h2>
+<ul>
+<li>Two GBDT models:
+<ul>
+<li><ol type="1">
+<li>model for logged-in users.</li>
+</ol></li>
+<li><ol start="2" type="1">
+<li>model for logged-out users (no personlization)</li>
+</ol></li>
+</ul>
+<pre><code>We conducted an A/B test to compare the Stage 3 models to Stage 2 models. Once again, we were able to grow the bookings, this time by +5.1%.</code></pre></li>
+</ul>
+</section><section id="stage-3-implementation-details" class="slide level2">
+<h2>Stage 3: Implementation details</h2>
+<p>three parts of the infrastructure, - getting model input from various places in real time, - model deployment to production, and - model scoring.</p>
+</section><section id="stage-4-handle-business-rules" class="slide level2">
+<h2>Stage 4: Handle business rules</h2>
+<ul>
+<li>Promote Quality: collecting feedback from users</li>
+<li>Discovering and promoting potential new hits early</li>
+<li>Enforcing diversity in the top 8 results</li>
+<li>Optimize Search without Location for Clickability</li>
+</ul>
+</section><section id="summary" class="slide level2">
+<h2>Summary</h2>
+<p><img data-src="../Pictures/../Data-Science-Interview/Pictures/summary_airbnb_exp.png" /></p>
+</section></section>
+<section><section id="lyft-from-shallow-to-deep-learning-in-fraud" class="title-slide slide level1"><h1><small> Lyft: From shallow to deep learning in fraud </small></h1></section><section id="section-15" class="slide level2">
+<h2></h2>
+<blockquote>
+<p>In Fraud, we’re primarily interested in classification algorithms that distinguish between good and fraudulent users on the platform.</p>
+</blockquote>
+<ul>
+<li>logistic regression is still very much the bread-and-butter classifier of many industries.</li>
+</ul>
+<pre><code>In terms of performance, a small team that constantly develops better features and maintains a good retraining pipeline will beat any huge team that manually handcrafts and manages hundreds of business rules.</code></pre>
+</section><section id="section-16" class="slide level2">
+<h2></h2>
+<p><img data-src="https://miro.medium.com/max/700/0*RiVxjNpp-tF0wvUC.png" /></p>
+</section><section id="model" class="slide level2">
+<h2>Model</h2>
+<pre><code>After exploring several types of logistic regression and decision tree ensemble models, we settled on the gradient-boosted decision trees (GBDT) model trained on the popular XGBoost library given its ease of use and efficiency.</code></pre>
+</section><section id="road-to-production" class="slide level2">
+<h2>Road to production</h2>
+<ul>
+<li>GBDT are harder to interpret</li>
+<li>Use feature importances and model explainers.</li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

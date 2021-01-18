@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> Statistical Inference Questions</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> Statistical Inference Questions </small></h1>
+</section>
+
+<section><section id="in-an-ab-test-how-can-you-check-if-assignment-to-the-various-buckets-was-truly-random" class="title-slide slide level1"><h1><small> In an A/B test, how can you check if assignment to the various buckets was truly random? </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<ul>
+<li>Histogram: counts in each bucket</li>
+<li>Plot distributions of different metrics to check if they are same. Try permutation test to conclude if the distributions are same or not.</li>
+</ul>
+</section></section>
+<section><section id="permutation-test" class="title-slide slide level1"><h1><small> Permutation test: </small></h1></section><section id="section-1" class="slide level2">
+<h2></h2>
+<p><a href="http://www2.stat.duke.edu/~ar182/rr/examples-gallery/PermutationTest.html">Example</a></p>
+<p>Testing the Null Hypothesis that: <span class="math inline">\(H_0: z = y\)</span></p>
+</section></section>
+<section><section id="anova-analysis-of-variation" class="title-slide slide level1"><h1><small> ANOVA: Analysis of Variation </small></h1></section><section id="section-2" class="slide level2">
+<h2></h2>
+<ul>
+<li>Compare 3 or more population means in one test</li>
+<li>Pairwise hypothesis testing is combinatorial</li>
+<li>Null Hypothesis <span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_1 = \mu_2 = \mu_3 = ...... \mu_n\)</span></li>
+<li>Alternate Hypothesis <span class="math inline">\(H_A\)</span>: At least one of the means differs from others</li>
+</ul>
+</section></section>
+<section><section id="anova-analysis-of-variation-1" class="title-slide slide level1"><h1><small> ANOVA: Analysis of Variation </small></h1></section><section id="section-3" class="slide level2">
+<h2></h2>
+<p>The ANOVA is based on the law of total variance, where the observed variance in a particular variable is partitioned into components attributable to different sources of variation. In its simplest form, ANOVA <strong>provides a statistical test of whether two or more population means are equal</strong>, and therefore <strong>generalizes the t-test</strong> beyond two means.</p>
+</section></section>
+<section><section id="anova-formulas" class="title-slide slide level1"><h1><small> ANOVA Formulas </small></h1></section><section id="section-4" class="slide level2">
+<h2></h2>
+<p>p = Total number of populations </br> <span class="math inline">\(n_j\)</span> = The total number of samples in a population j. <br> N = Total number of samples <span class="math inline">\(\sum n_j\)</span></p>
+<p><span class="math inline">\(\begin{array}{l} SS_{\text {total }}=\sum_{j=1}^{N}\left({X}_{ij}-\bar{X}\right)^{2} \quad \\ SS_{\text {within }}=\sum_{j=1}^{p} \sum_{i=1}^{n_j}\left(X_{ij}-\bar{X}_{j}\right)^{2} \\ SS_{\text {between }}=\sum_{j=1}^{p}n_j\left(\bar{X}_{j}-\bar{X}\right)^{2} \end{array}\)</span></p>
+<ul>
+<li>Aggregate Count, Mean and Variance of the samples and work with that data frame.</li>
+</ul>
+<h4 id="law-of-total-variance">Law of total variance</h4>
+<p><span class="math inline">\(var(X) = E[var(X|Y)] + var(E[X|Y])\)</span></p>
+</section></section>
+<section><section id="what-might-be-the-benefits-of-running-an-aa-test-where-you-have-two-buckets-who-are-exposed-to-the-exact-same-product" class="title-slide slide level1"><h1><small> What might be the benefits of running an A/A test, where you have two buckets who are exposed to the exact same product? </small></h1></section><section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li>Verifying the sampling algorithm is random</li>
+</ul>
+</section></section>
+<section><section id="how-would-you-run-an-ab-test-for-many-variants-say-20-or-more" class="title-slide slide level1"><h1><small> How would you run an A/B test for many variants, say 20 or more? </small></h1></section><section id="section-6" class="slide level2">
+<h2></h2>
+<ul>
+<li>one control, 20 treatment, if the sample size for each group is big enough.</li>
+<li>Ways to attempt to correct for this include changing your confidence level (<strong>e.g. Bonferroni Correction</strong>) or doing family-wide tests before you dive in to the individual metrics (e.g. Fisher’s Protected LSD).</li>
+</ul>
+</section></section>
+<section><section id="how-would-you-run-an-ab-test-if-the-observations-are-extremely-right-skewedquora-link" class="title-slide slide level1"><h1><small> How would you run an A/B test if the observations are extremely right-skewed?<a href="https://www.quora.com/How-would-you-run-an-A-B-test-if-the-observations-are-extremely-right-skewed">quora link</a> </small></h1></section><section id="section-7" class="slide level2">
+<h2></h2>
+<p>Most A/B tests look at means of observations, so the Central Limit Theorem (CLT) implies that under fairly general conditions, your mean will be normally distributed, and the distribution of the mean will be more normal as the number of independent observations grows.</p>
+</section><section id="section-8" class="slide level2">
+<h2></h2>
+<ul>
+<li>Lower the variability of your metric.</li>
+<li>Log transform to make normal</li>
+<li>cap values</li>
+<li>Look at percentile metrics or trimmed means. For example, time-to-X (time-to-onload event for page-load, time-to-click) tends to have a lot right-skew. Instead of the mean, look at some percentile, such as 90th.</li>
+</ul>
+</section></section>
+<section><section id="you-are-airbnb-and-you-want-to-test-the-hypothesis-that-a-greater-number-of-photographs-increases-the-chances-that-a-buyer-selects-the-listing.-how-would-you-test-this-hypothesis" class="title-slide slide level1"><h1><small> You are AirBnB and you want to test the hypothesis that a greater number of photographs increases the chances that a buyer selects the listing. How would you test this hypothesis? </small></h1></section><section id="section-9" class="slide level2">
+<h2></h2>
+<ul>
+<li>A/B testing: Randomly select listings hide a picture from group A and show to B, compare booking rate</li>
+</ul>
+</section></section>
+<section><section id="could-there-be-any-case-where-mle-doesnt-exist" class="title-slide slide level1"><h1><small> Could there be any case where MLE doesn’t exist? </small></h1></section><section id="section-10" class="slide level2">
+<h2></h2>
+<ul>
+<li>for gaussian mixtures, non parametric models, it doesn’t exist</li>
+</ul>
+</section></section>
+<section><section id="what-is-unbiasedness-as-a-property-of-an-estimator-is-this-always-a-desirable-property-when-performing-inference-what-about-in-data-analysis-or-predictive-modeling" class="title-slide slide level1"><h1><small> What is unbiasedness as a property of an estimator? Is this always a desirable property when performing inference? What about in data analysis or predictive modeling? </small></h1></section><section id="section-11" class="slide level2">
+<h2></h2>
+<ul>
+<li>Unbiasedness means that the expectation of the estimator is equal to the population value we are estimating.</li>
+<li>This is desirable in inference because the goal is to explain the dataset as accurately as possible.</li>
+<li>However, this is not always desirable for data analysis or predictive modeling as there is the bias variance tradeoff. We sometimes want to prioritize the generalizability and avoid overfitting by reducing variance and thus increasing bias.</li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

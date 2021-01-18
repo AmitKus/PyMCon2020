@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> Machine Learning</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> Machine Learning </small></h1>
+</section>
+
+<section><section id="assumption-of-linear-regression" class="title-slide slide level1"><h1><small> Assumption of linear regression? </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<p>Four assumptions: 1. Linearity and additivity of the relationship between dependent and independent variables. 2. Statistical independence of errors 3. Homescedasity (constant variance) of the errors versus time, versus predictions versus any independent variable 4. Normality of the error distribution</p>
+</section><section id="section-1" class="slide level2">
+<h2></h2>
+<ul>
+<li>Weak exogeneity: the covariates are observed without error.</li>
+<li>Linearity: the mean of the variate is a linear combination of the parameters and the covariates.</li>
+<li>Constant variance: call it homoscedasticity for bonus points on terminology (in contrast to heteroscedasticity). This means that all the observations of Y are assumed to have the same, constant variance.</li>
+<li>Independence of errors: we assume that the errors of the variates are uncorrelated.</li>
+</ul>
+</section><section id="section-2" class="slide level2">
+<h2></h2>
+<ul>
+<li>No multicollinearity: more properly, the lack of perfect multicollinearity. Assume that the covariates aren’t perfectly correlated.</li>
+<li>Errors have a statistical distribution: this isn’t strictly necessary, but it makes prediction theoretically coherent. The usual assumption is that the errors have a normal distribution, but others can also be used. (For instance, the t-distribution is used for “robust regression”, where the variance observed is larger than that of the normal distribution.)</li>
+</ul>
+</section></section>
+<section><section id="if-linear-regression-assumptions-dont-hold" class="title-slide slide level1"><h1><small> If linear regression assumptions don’t hold? </small></h1></section><section id="section-3" class="slide level2">
+<h2></h2>
+<ul>
+<li>Weak exogeneity:
+<ul>
+<li>The sensitivity of the model can be tested by doing boot-strapping.</li>
+<li>Using Bayesian Hierarchical model to model covariates with error</li>
+</ul></li>
+</ul>
+</section><section id="section-4" class="slide level2">
+<h2></h2>
+<ul>
+<li>Linearity:
+<ul>
+<li>Non-linear transforms of covariates:
+<ul>
+<li><span class="math inline">\(Y=X1 \beta_1 + X1^2 \beta_2 + \log(X1) \beta_3\)</span></li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li>Constant variance:
+<ul>
+<li>variance-stabilising transformation on the data.</li>
+<li>variance as a function of mean</li>
+</ul></li>
+</ul>
+</section><section id="section-6" class="slide level2">
+<h2></h2>
+<ul>
+<li>Independence of errors:
+<ul>
+<li>Time-series are highly correlated</li>
+<li>estimate the impact of this assumption</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="linear-regression-significance-test" class="title-slide slide level1"><h1><small> Linear regression: Significance test </small></h1></section><section id="section-7" class="slide level2">
+<h2></h2>
+<ul>
+<li>In the ordinary linear regression, the t-statistic is used to test the significance of each parameter,</li>
+<li><p><span class="math inline">\(t_{\hat{\beta}} = \frac{\hat{beta}-\beta_0}{std dev(\tilde{\beta})}\)</span></p></li>
+<li><p>When multi-collinearity is present, do not place too much emphasis on the interpretation of these statistics, as the stdev(<span class="math inline">\(\tilde{\beta}\)</span>) will be high and the <span class="math inline">\(\tilde{\beta}\)</span> will be correlated.</p></li>
+</ul>
+</section></section>
+<section><section id="linear-regression-parameter-estimation" class="title-slide slide level1"><h1><small> Linear regression: parameter estimation </small></h1></section><section id="section-8" class="slide level2">
+<h2></h2>
+<ul>
+<li>Multiple ways of estimating parameters:</li>
+</ul>
+</section><section id="least-squares-and-related-techniques" class="slide level2">
+<h2>Least squares and related techniques</h2>
+<p><span class="math inline">\(\beta = (X^TX)^{-1}X^Ty\)</span></p>
+<ul>
+<li>Inverting matrix troublesome in case of multi-collinearity</li>
+<li>OLS implies assumption of normal distribution</li>
+<li>If variance is data more than the normal distribution can explain:
+<ul>
+<li>use robust least squares or</li>
+<li>likelihood based techniques</li>
+</ul></li>
+</ul>
+</section><section id="likelihood-based" class="slide level2">
+<h2>Likelihood based</h2>
+<ul>
+<li>Necessitates assuming a distribution on data</li>
+<li>Frequentist: Maximize likelihood</li>
+<li>Bayesian: Full posterior</li>
+</ul>
+</section></section>
+<section><section id="linear-regression-least-squares" class="title-slide slide level1"><h1><small> Linear regression: least squares </small></h1></section><section id="section-9" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(y = X\beta + \epsilon\)</span></li>
+<li><span class="math inline">\(\epsilon = y - X\beta\)</span></li>
+<li>Total sum of squares: <span class="math inline">\(S(\beta) = \epsilon^T\epsilon = (y - X \beta)^T(y - X \beta)\)</span></li>
+<li>Take the derivative: <span class="math inline">\(\frac{\partial S}{\partial \beta} = 0\)</span></li>
+<li>Results in the equation: <span class="math inline">\(\beta = (X^TX)^{-1}X^Ty\)</span></li>
+</ul>
+</section></section>
+<section><section id="linear-regression-likelihood" class="title-slide slide level1"><h1><small> Linear regression: likelihood </small></h1></section><section id="section-10" class="slide level2">
+<h2></h2>
+<ul>
+<li>Need to make an assumption on the error.</li>
+<li><span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span></li>
+<li><span class="math inline">\(\epsilon \sim MultiNormal(0, I_n\sigma^2)\)</span></li>
+<li><span class="math inline">\(y = X\beta + \epsilon\)</span></li>
+<li>Equivalent to: <span class="math inline">\(y \sim MultiNormal(X\beta, I_n\sigma^2)\)</span></li>
+</ul>
+</section><section id="section-11" class="slide level2">
+<h2></h2>
+<ul>
+<li>Likelihood for this multivariate normal distribution:</li>
+<li><span class="math inline">\(L(θ;Y) = f(Y) = \frac{1}{\sqrt{(2\pi)^n |I_n| \sigma^2}}\exp(-\frac{1}{2} (y - X\beta)^T(I_n\sigma^2)^{-1}(y-X\beta))\)</span></li>
+<li><span class="math inline">\(L(\theta;y) = \frac{1}{\sqrt{(2\pi)^n} \sigma^n}\exp(\frac{1}{2\sigma^2}(y-X\beta)^T(y-X\beta))\)</span></li>
+<li><span class="math inline">\(f(Y)\)</span> is the pdf of the multivariate normal distribution and <span class="math inline">\(\theta = {\beta, \sigma}\)</span></li>
+</ul>
+</section><section id="mle" class="slide level2">
+<h2>MLE</h2>
+<ul>
+<li>maximum likelihood estimate: <span class="math inline">\(\hat{\theta}_{MLE} = arg max_{\theta} L(\theta; y)\)</span></li>
+<li>log likelihood: <span class="math inline">\(\log L(\theta;y) = -\log{\sqrt{2\pi}^n} - \log\sigma^n - \frac{1}{2\sigma^2}(y-X\beta)^T(y-X\beta)\)</span></li>
+<li>Take derivative w.r.t <span class="math inline">\(\beta\)</span>: <span class="math inline">\(\frac{\partial}{\partial \beta}\log L(\theta;y) = \frac{1}{2\sigma^2}(2X^Ty - 2X^TX\beta) = 0\)</span></li>
+<li>Take derivative w.r.t <span class="math inline">\(\sigma\)</span>: <span class="math inline">\(\frac{\partial}{\partial \sigma}\log L(\theta;y) = -\frac{n}{\sigma} + \frac{1}{\sigma^3}(y - X\beta)^T(y - X\beta) = 0\)</span></li>
+</ul>
+</section><section id="mle-1" class="slide level2">
+<h2>MLE</h2>
+<ul>
+<li><span class="math inline">\(\hat{\beta}_{MLE} = (X^TX)^{-1}X^TY\)</span></li>
+<li><span class="math inline">\(\hat{\sigma}_{MLE} = \sqrt{\frac{1}{n} (y - X\hat{\beta}_{MLE})^T(y - X\hat{\beta}_{MLE})}\)</span></li>
+</ul>
+</section></section>
+<section><section id="simple-linear-regression" class="title-slide slide level1"><h1><small> Simple linear regression </small></h1></section><section id="section-12" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(\hat{\beta} = (X^TX)^{-1}X^Ty\)</span></li>
+<li>For simple regression:</li>
+<li><span class="math inline">\(\hat{\beta} = \frac{\sum_{i=1}^{n}(y_i - \bar{y})(x_i - \bar{x})^2}{\sum_{i=1}^{n}(x_i - \bar{x})^2} = \frac{Cov(x,y)}{var(x)} = \frac{\rho_{xy}sd(y)}{sd(x)}\)</span></li>
+<li><span class="math inline">\(R^2 = \rho_{xy}\)</span></li>
+</ul>
+</section></section>
+<section><section id="logistic-regression" class="title-slide slide level1"><h1><small> Logistic regression </small></h1></section><section id="section-13" class="slide level2">
+<h2></h2>
+<ul>
+<li>Assumptions are similar to linear regression except that you are assuming linearity on the logit scale.</li>
+<li><span class="math inline">\(y \sim Bernoulli(p)\)</span></li>
+<li><span class="math inline">\(logit(p) = X\beta\)</span> or <span class="math inline">\(p = logistic(X\beta)\)</span></li>
+</ul>
+</section><section id="section-14" class="slide level2">
+<h2></h2>
+<ul>
+<li>Logistic regression doesn’t have a <span class="math inline">\(R^2\)</span> measure similar to linear regression</li>
+</ul>
+</section></section>
+<section><section id="logistic-regression-significance-test" class="title-slide slide level1"><h1><small> Logistic regression: Significance test </small></h1></section><section id="section-15" class="slide level2">
+<h2></h2>
+<ul>
+<li>linear regression: t-test</li>
+<li>logistic regression: Wald-statistic</li>
+<li><span class="math inline">\(W_{\hat{\beta}}= \frac{(\hat{\beta} - \beta_0)^2}{sdev(\tilde{\beta})} \sim \chi^2\)</span></li>
+<li>Asymptotically, it has a <span class="math inline">\(chi^2\)</span> distribution</li>
+</ul>
+</section></section>
+<section><section id="probit-regression" class="title-slide slide level1"><h1><small> Probit regression </small></h1></section><section id="section-16" class="slide level2">
+<h2></h2>
+<ul>
+<li>Similar to logistic regression with a different link function</li>
+<li><span class="math inline">\(y \sim Bernoulli(p)\)</span></li>
+<li><span class="math inline">\(probit(p) = X\beta\)</span> or <span class="math inline">\(p = \Phi(X\beta)\)</span></li>
+<li>Where <span class="math inline">\(\Phi\)</span> is the CDF of standard normal distribution</li>
+</ul>
+</section></section>
+<section><section id="logistic-regression-parameter-estimation" class="title-slide slide level1"><h1><small> Logistic regression: Parameter estimation </small></h1></section><section id="section-17" class="slide level2">
+<h2></h2>
+<ul>
+<li>Least squares: no closed form solution like linear regression</li>
+<li>Likelihood-based</li>
+</ul>
+</section></section>
+<section><section id="what-could-be-some-issues-if-the-distribution-of-the-test-data-is-significantly-different-than-the-distribution-of-the-training-data" class="title-slide slide level1"><h1><small> What could be some issues if the distribution of the test data is significantly different than the distribution of the training data? </small></h1></section><section id="section-18" class="slide level2">
+<h2></h2>
+<ul>
+<li>High training accuracy and low test accuracy</li>
+<li>P(y|x) are the same but P(x) are different. (covariate shift)</li>
+<li>P(y|x) are different. (concept shift)</li>
+<li>The causes can be:
+<ul>
+<li>Training samples are obtained in a biased way. (sample selection bias)</li>
+<li>Train is different from test because of temporal, spatial changes. (non-stationary environments)</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="what-are-some-ways-i-can-make-my-model-more-robust-to-outliers" class="title-slide slide level1"><h1><small> What are some ways I can make my model more robust to outliers? </small></h1></section><section id="section-19" class="slide level2">
+<h2></h2>
+<ul>
+<li>L1 or L2 norm to increase bias</li>
+<li>Changes to the algorithm:
+<ul>
+<li>Use tree-based methods instead of regression methods as they are more resistant to outliers.</li>
+<li>Use robust error metrics such as MAE or Huber Loss instead of MSE.</li>
+</ul></li>
+<li>Changes to data:
+<ul>
+<li>Winsorizing the data</li>
+<li>Transforming the data (e.g. log)</li>
+<li>Remove them only if you’re certain they’re anomalies and not worth predicting</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="what-are-some-differences-you-would-expect-in-a-model-that-minimizes-squared-error-versus-a-model-that-minimizes-absolute-error-in-which-cases-would-each-error-metric-be-appropriate" class="title-slide slide level1"><h1><small> What are some differences you would expect in a model that minimizes squared error, versus a model that minimizes absolute error? In which cases would each error metric be appropriate? </small></h1></section><section id="section-20" class="slide level2">
+<h2></h2>
+<ul>
+<li>Effect of outlier higher on MSE than MAE</li>
+<li>MAE: Hard to compute gradients, MSE: Easier gradient computation</li>
+<li>MSE corresponds to maximizing likelihood of Gaussian random variables</li>
+<li>MAE commonly used for measure of forecast error in time series analysis</li>
+</ul>
+</section></section>
+<section><section id="what-error-metric-would-you-use-to-evaluate-how-good-a-binary-classifier-is-what-if-the-classes-are-imbalanced-what-if-there-are-more-than-2-groups" class="title-slide slide level1"><h1><small> What error metric would you use to evaluate how good a binary classifier is? What if the classes are imbalanced? What if there are more than 2 groups? </small></h1></section><section id="section-21" class="slide level2">
+<h2></h2>
+<p>Binary classification metrics</p>
+<ul>
+<li>Confusion matrix</li>
+<li>There are two kinds of error to be made:
+<ul>
+<li>FP (type 1 error): reject a true Null-Hypothesis</li>
+<li>FN (type 2 error): accept a false Null-Hypothesis</li>
+<li>There are metrics around these</li>
+</ul></li>
+<li>Accuracy = (TP + TN)/ (TP + TN + FP + FN)</li>
+<li>Precision = TP/(TP+FP)</li>
+<li>Recall = TP/(TP+FN)</li>
+<li>F1 Score = Harmonic mean between Precision and Recall</li>
+<li>ROC curve</li>
+</ul>
+</section><section class="slide level2">
+
+<ul>
+<li>In confusion matrix we have 4 quantities: TP, TN, FP, FN</li>
+<li>number of positives (truth) = TP + FN</li>
+<li>number of negatives (truth) = TN + FP</li>
+<li>FPR = FP/(number of negatives (truth)) = FP/(FP + TN)
+<ul>
+<li>Type 1 error</li>
+<li>The Null-Hypothesis was true but we rejected it</li>
+</ul></li>
+<li>TPR = TP/(number of positives (truth)) = TP/(TP + FN)</li>
+</ul>
+</section></section>
+<section><section id="what-are-various-ways-to-predict-a-binary-response-variable-can-you-compare-two-of-them-and-tell-me-when-one-would-be-more-appropriate-whats-the-difference-between-these-svm-logistic-regression-naive-bayes-decision-tree-etc." class="title-slide slide level1"><h1><small> What are various ways to predict a binary response variable? Can you compare two of them and tell me when one would be more appropriate? What’s the difference between these? (SVM, Logistic Regression, Naive Bayes, Decision Tree, etc.) </small></h1></section><section id="section-22" class="slide level2">
+<h2></h2>
+<p>Things to keep in mind:</p>
+<ul>
+<li>Number of data points N</li>
+<li>Number of feature p</li>
+<li>Separability</li>
+<li>Imbalance of classes</li>
+<li>Features independent</li>
+<li>Performance</li>
+<li>Memory usage</li>
+</ul>
+</section></section>
+<section><section id="what-is-regularization-and-where-might-it-be-helpful-what-is-an-example-of-using-regularization-in-a-model" class="title-slide slide level1"><h1><small> What is regularization and where might it be helpful? What is an example of using regularization in a model? </small></h1></section><section id="section-23" class="slide level2">
+<h2></h2>
+<ul>
+<li>Regularization is used to prevent overfitting by reducing variance.</li>
+<li>L1 and L2 regularization.</li>
+</ul>
+</section></section>
+<section><section id="why-might-it-be-preferable-to-include-fewer-predictors-over-many" class="title-slide slide level1"><h1><small> Why might it be preferable to include fewer predictors over many? </small></h1></section><section id="section-24" class="slide level2">
+<h2></h2>
+<ul>
+<li>To avoid colinearity.</li>
+<li>Occam’s razor</li>
+<li>Computational cost</li>
+</ul>
+</section></section>
+<section><section id="roc-curve" class="title-slide slide level1"><h1><small> ROC curve </small></h1></section><section id="section-25" class="slide level2">
+<h2></h2>
+<p>Plot of False positive rate vs True positive rate.</p>
+<ul>
+<li>FPR = FP/N = FP/(FP + TN)</li>
+<li>TPR = TP/P = TP/(TP + FN)</li>
+</ul>
+</section></section>
+<section><section id="loss-functions-for-regression" class="title-slide slide level1"><h1><small> Loss functions for regression </small></h1></section><section id="section-26" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li>Mean-squared Error (MSE)
+<ul>
+<li><span class="math inline">\(MSE = \sum_{i=0}^{N} \left( y_i - \hat{y_i}\right)^2\)</span></li>
+<li>Convex function so gradient descent converges to global minima (if converges) and does not get stuck at local-minima</li>
+<li>Sensitive to outliers so shouldn’t be used if many outliers are present</li>
+</ul></li>
+</ol>
+</section><section id="section-27" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li>Mean-squared Logarithmic Error (MSLE)
+<ul>
+<li><span class="math inline">\(MSLE = \sum_{i=0}^{N} \left( \log \frac{y_i + 1}{\hat{y_i} + 1} \right)^2\)</span></li>
+<li>Percent difference or relative difference</li>
+</ul></li>
+</ol>
+</section><section id="section-28" class="slide level2">
+<h2></h2>
+<ol start="3" type="1">
+<li>Mean absolute error (MAE)
+<ul>
+<li><span class="math inline">\(MAE = \sum_{i=0}^{N} |\left( y_i - \hat{y_i}\right)|\)</span></li>
+<li>L1 loss</li>
+<li>More robust to outliers compared to MSE</li>
+<li>More complex to solve than MSE</li>
+</ul></li>
+</ol>
+</section></section>
+<section><section id="loss-functions-for-binary-classification" class="title-slide slide level1"><h1><small> Loss functions for binary classification </small></h1></section><section id="section-29" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li>Binary Cross-Entropy
+<ul>
+<li>Default loss function for binary classification</li>
+<li>From the information theory literature used to measure the difference bwtween two probability distributions</li>
+<li>Closely related to but different from KL divergence</li>
+</ul></li>
+</ol>
+</section><section id="section-30" class="slide level2">
+<h2></h2>
+<ul>
+<li>Entropy:
+<ul>
+<li>Skewed Probability Distribution (unsurprising): Low entropy.</li>
+<li>Balanced Probability Distribution (surprising): High entropy.</li>
+<li>Entropy can be calculated for a random variable with a set of x in X discrete states discrete states and their probability P(x) as follows: <span class="math inline">\(H(X) = – \sum_{x\ in\ X} P(x) * log(P(x))\)</span></li>
+</ul></li>
+</ul>
+</section><section id="section-31" class="slide level2">
+<h2></h2>
+<ul>
+<li>Cross-entropy can be calculated using the probabilities of the events from P and Q, as follows: <span class="math inline">\(H(P, Q) = – \sum_{x\ in\ X} P(x) * log(Q(x))\)</span>. Where P(x) is the probability of the event x in P, Q(x) is the probability of event x in Q and log is the base-2 logarithm, meaning that the results are in bits. If the base-e or natural logarithm is used instead, the result will have the units called nats.</li>
+<li>Not symmetric: H(P, Q) != H(Q, P)</li>
+<li><strong>… using the cross-entropy error function instead of the sum-of-squares for a classification problem leads to faster training as well as improved generalization.</strong></li>
+</ul>
+</section><section id="section-32" class="slide level2">
+<h2></h2>
+<pre><code>Hinge loss:</code></pre>
+<ul>
+<li><span class="math inline">\(L = max(0, 1 - y_i*\hat{y_i})\)</span></li>
+<li>Primarily used with SVM.</li>
+<li>Hinge Loss not only penalizes the wrong predictions but also the right predictions that are not confident</li>
+<li>Its a convex function but not differentiable.</li>
+</ul>
+</section></section>
+<section><section id="what-is-a-good-cross-entropy-score" class="title-slide slide level1"><h1><small> What is a good cross entropy score? </small></h1></section><section id="section-33" class="slide level2">
+<h2></h2>
+<pre><code>Cross-Entropy = 0.00: Perfect probabilities.
+Cross-Entropy &lt; 0.02: Great probabilities.
+Cross-Entropy &lt; 0.05: On the right track.
+Cross-Entropy &lt; 0.20: Fine.
+Cross-Entropy &gt; 0.30: Not great.
+Cross-Entropy &gt; 1.00: Terrible.
+Cross-Entropy &gt; 2.00 Something is broken.</code></pre>
+</section></section>
+<section><section id="loss-function-for-multi-class-classification" class="title-slide slide level1"><h1><small> Loss function for multi-class classification </small></h1></section><section id="section-34" class="slide level2">
+<h2></h2>
+<p>Multi-Class Cross Entropy Loss</p>
+<ul>
+<li><span class="math inline">\(L(X_i,y_i) = \sum_{j=1}^c y_{ij} log(p_{ij})\)</span></li>
+<li>Where <span class="math inline">\(y_{ij}\)</span> is the one-hot encoded vector with 1 in the <span class="math inline">\(j^{th}\)</span> location corresponding to the class that <span class="math inline">\(i^{th}\)</span> data belongs to. And <span class="math inline">\(p_{ij} (=f(X_i))\)</span> is the probability that the <span class="math inline">\(i^{th}\)</span> data is in class <span class="math inline">\(j\)</span>.</li>
+</ul>
+</section><section id="section-35" class="slide level2">
+<h2></h2>
+<p>Sparse Multi-class Cross-Entropy</p>
+<ul>
+<li>Multi-Class Cross Entropy without one-hot encoding.</li>
+</ul>
+</section><section id="section-36" class="slide level2">
+<h2></h2>
+<p>Kullback Leibler Divergence Loss</p>
+<ul>
+<li><span class="math inline">\(KL(P || Q) = – \sum_{x\ in\ X} P(x) * log(Q(x) / P(x))\)</span></li>
+<li>KL divergence is the expectation of the log difference between the probability of data in the original distribution with the approximating distribution.</li>
+<li>Not a distance as it’s not symmetric.</li>
+</ul>
+</section></section>
+<section><section id="cross-entropy-vs-kl-divergence" class="title-slide slide level1"><h1><small> Cross Entropy vs KL Divergence </small></h1></section><section id="section-37" class="slide level2">
+<h2></h2>
+<ul>
+<li><strong>Cross-entropy is not KL Divergence.</strong></li>
+<li><p>In other words, the KL divergence is the average number of extra bits needed to encode the data, due to the fact that we used distribution q to encode the data instead of the true distribution p.</p></li>
+<li>Cross-Entropy: Average number of total bits to represent an event from Q instead of P.</li>
+<li><p>Relative Entropy (KL Divergence): Average number of extra bits to represent an event from Q instead of P.</p></li>
+</ul>
+</section><section id="section-38" class="slide level2">
+<h2></h2>
+<ul>
+<li><p>KL Divergence: <span class="math inline">\(KL(P || Q) = – \sum_{x\ in\ X} P(x) * log(Q(x) / P(x))\)</span></p></li>
+<li><strong>H(P, Q) = H(P) + KL(P || Q)</strong> <br> Where H(P, Q) is the cross-entropy of Q from P, H(P) is the entropy of P and KL(P || Q) is the divergence of Q from P.</li>
+<li><p><strong>Both cross-entropy and KL divergence calculate the same quantity when they are used as loss functions for optimizing a classification predictive model.</strong> It is under this context that you might sometimes see that cross-entropy and KL divergence are the same.</p></li>
+</ul>
+</section></section>
+<section><section id="cross-entropy-vs-log-loss" class="title-slide slide level1"><h1><small> Cross-Entropy vs Log Loss </small></h1></section><section id="section-39" class="slide level2">
+<h2></h2>
+<ul>
+<li>Cross-Entropy is not Log Loss, but they calculate the same quantity when used as loss functions for classification problems.</li>
+</ul>
+</section></section>
+<section><section id="simple-example-explaining-liklihood-and-log-loss" class="title-slide slide level1"><h1><small> Simple example explaining liklihood and log-loss </small></h1></section><section id="section-40" class="slide level2">
+<h2></h2>
+<pre><code>Suppose the probabilities of seeing 1 in a classification problem {0,1} are:
+* [0.9, 0.7, 0.4, 0.2]
+
+And the outcomes are:
+* [1,1,1,0]
+
+Then the likelihood can be computed as (multiplying the probabilities):
+* 0.9 x 0.7 x 0.4 x (1 - 0.2) 
+
+Or the log-likelihood will be :
+* log(0.9) + log(0.7) + log(0.4) + log(1 - 0.2)
+* 1 x log(0.9) + 1 x log(0.7) + 1 x log(0.4) + (1 - 0) x log(1 - 0.2)</code></pre>
+</section><section id="section-41" class="slide level2">
+<h2></h2>
+<p>Writing in a single formula: * <span class="math inline">\(\sum_{i=0}^4 y_i * log(p_i) + (1-y_i) * log(1-p_i)\)</span> * Where <span class="math inline">\(y_i = [1,1,1,0]\)</span> and <span class="math inline">\(p_i = [0.9, 0.7, 0.4, 0.2]\)</span></p>
+<ul>
+<li><strong>log-loss is just the negative of log-likelihood</strong></li>
+</ul>
+</section></section>
+<section><section id="what-is-logistic-regression" class="title-slide slide level1"><h1><small> What is Logistic Regression </small></h1></section><section id="algorithm" class="slide level2">
+<h2>Algorithm</h2>
+<ul>
+<li>Given the features x1, x2, fit a linear regression model
+<ul>
+<li><span class="math inline">\(\hat{y_i} = a*x1 + b*x2 + c\)</span></li>
+<li>Transform <span class="math inline">\(\hat{y_i}\)</span> to lie between 0 and 1 by <span class="math inline">\(\hat{p_i} = \frac{1}{1 + e^{-\hat{y_i}}}\)</span></li>
+<li>If <span class="math inline">\(\hat{p_i} &gt; 0.5\)</span> then 1 else 0</li>
+</ul></li>
+</ul>
+</section><section id="intuition" class="slide level2">
+<h2>Intuition</h2>
+<ul>
+<li>Inverting the relationship: <span class="math inline">\(\hat{p_i} = \frac{1}{1 + e^{-\hat{y_i}}}\)</span>
+<ul>
+<li><span class="math inline">\(\hat{y_i} = \log \left( \frac{\hat{p_i}}{1-\hat{p_i}} \right) = a*x1 + b*x2 + c\)</span></li>
+</ul></li>
+<li>We assume a linear relationship between the predictor variables and the log-odds of the event that Y=1.</li>
+</ul>
+</section></section>
+<section><section id="logistic-regression-vs-linear-regression" class="title-slide slide level1"><h1><small> Logistic regression vs linear regression </small></h1></section><section id="section-42" class="slide level2">
+<h2></h2>
+<ul>
+<li>First, the conditional distribution y ∣ x is a Bernoulli distribution rather than a Gaussian distribution, because the dependent variable is binary.</li>
+<li>Second, the predicted values are probabilities and are therefore restricted to (0,1) through the logistic distribution function because logistic regression predicts the probability of particular outcomes rather than the outcomes themselves.</li>
+</ul>
+</section><section id="features" class="slide level2">
+<h2>Features</h2>
+<ul>
+<li>features roughly linear, problem roughly linearly separable</li>
+<li>robust to noise, use l1,l2 regularization for model selection, avoid overfitting</li>
+<li>cons: can hardly handle categorical features</li>
+</ul>
+</section></section>
+<section><section id="support-vector-machine-svm" class="title-slide slide level1"><h1><small> Support Vector Machine (SVM) </small></h1></section><section id="section-43" class="slide level2">
+<h2></h2>
+<ul>
+<li>popular machine learning tool that offers solutions for both classification and regression problems.</li>
+<li>Kernel trick: implicitly mapping inputs into high-dimensional feature space to extend SVMs to non-linear classification</li>
+</ul>
+</section><section id="section-44" class="slide level2">
+<h2></h2>
+<p><img src="Pictures/SVM_picture.png" alt="drawing" width="300"/></p>
+<p>H1 does not separate the classes. H2 does, but only with a small margin. H3 separates them with the maximal margin.</p>
+</section><section id="section-45" class="slide level2">
+<h2></h2>
+<p><img src="Pictures/SVM-kernel-trick.png" alt="drawing" width="300"/> Kernel machine</p>
+<p><a href="https://en.wikipedia.org/wiki/Support_vector_machine">Source: Wikipedia</a></p>
+</section></section>
+<section><section id="linear-svm" class="title-slide slide level1"><h1><small> Linear SVM </small></h1></section><section id="section-46" class="slide level2">
+<h2></h2>
+<p><img src="Pictures/SVM-Linear.png" alt="drawing" width="300"/></p>
+<p>Maximum-margin hyperplane and margins for an SVM trained with samples from two classes. Samples on the margin are called the support vectors.</p>
+</section><section id="section-47" class="slide level2">
+<h2></h2>
+<h3 id="simple-case-for-intution-2d-feature-space">Simple case for intution: 2D feature space</h3>
+<p>We need two points to define a line (Hyperplane for 2D). The two points satisfy following equations: * <span class="math inline">\(w_1x_1^1 + w_2x_2^1 = b\)</span> <br> * <span class="math inline">\(w_1x_1^2 + w_2x_2^2 = b\)</span></p>
+<p>Subtracting the equations * <span class="math inline">\(w_1*(x_1^2-x_1^1) + w_2*(x_2^2-x_2^1) = 0\)</span></p>
+<p>Basically <span class="math inline">\((w_1,w_2)\)</span> is the normal to the plane (line in 2D).</p>
+</section><section id="section-48" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/SVM-Linear-Draw.png" /></p>
+</section><section id="features-1" class="slide level2">
+<h2>Features:</h2>
+<ul>
+<li>with a nonlinear kernel, can deal with problems that are not linearly separable</li>
+<li>cons: slow to train, for most industry scale applications, not really efficient</li>
+</ul>
+</section></section>
+<section><section id="naive-bayes" class="title-slide slide level1"><h1><small> Naive Bayes </small></h1></section><section id="section-49" class="slide level2">
+<h2></h2>
+<p>k classes: <span class="math inline">\(C_1, C_2, ... C_k\)</span><br> n features: <span class="math inline">\(X_1, X_2, ... X_n\)</span></p>
+<p><strong>Quantity of interest: <span class="math inline">\(P(C_k | X_1, X_2, ..., X_n)\)</span></strong></p>
+<p><strong>Assumption: All features in X are mutually independent, conditional on the category <span class="math inline">\(C_k\)</span>.</strong></p>
+</section></section>
+<section><section id="bayes-theorem-naive-assumption" class="title-slide slide level1"><h1><small> Bayes theorem + Naive assumption: </small></h1></section><section id="section-50" class="slide level2">
+<h2></h2>
+<p>$<span class="math display">\[\begin{align*}
+P(C_k|X_1,X_2,...X_n) &amp;= \frac{P(X_1,X_2,...X_n|C_k)P(C_k)}{P(X_1,X_2,...X_n)}\\
+&amp;= \frac{P(X_1|C_k)P(X_2|C_k)...P(X_n|C_k)P(C_k)}{P(X_1,X_2,...X_n)}
+\end{align*}\]</span> $</p>
+<p>The denominator <span class="math inline">\(Z = P(X_1,X_2,...X_n)\)</span> is independent of C_k and is just a scaling constant.<br> <span class="math inline">\(Z = P(X_1,X_2,...X_n) = \sum_k P(C_k) P(X_1,...X_n|C_k)\)</span></p>
+</section></section>
+<section><section id="pros-cons-of-naive-bayes" class="title-slide slide level1"><h1><small> Pros-Cons of Naive Bayes </small></h1></section><section id="section-51" class="slide level2">
+<h2></h2>
+<ul>
+<li>computationally efficient when P is large by alleviating the curse of dimensionality</li>
+<li>works surprisingly well for some cases even if the condition doesn’t hold with word frequencies as features,</li>
+<li>the independence assumption can be seen reasonable. So the algorithm can be used in text categorization</li>
+<li>(-) conditional independence of every other feature should be met</li>
+</ul>
+</section></section>
+<section><section id="example" class="title-slide slide level1"><h1><small> <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier">Example</a> </small></h1></section><section id="section-52" class="slide level2">
+<h2></h2>
+<p><strong>Problem:</strong> classify whether a given person is a male or a female based on the measured features. The features include height, weight, and foot size.</p>
+<p><img data-src="Pictures/NB-table.png" /></p>
+<p>Test sample: Height:6, Weight:130, Foot size:8</p>
+</section></section>
+<section><section id="decision-tree" class="title-slide slide level1"><h1><small> Decision Tree </small></h1></section><section id="section-53" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/Decision_Tree.jpg" /></p>
+</section><section id="types" class="slide level2">
+<h2>Types</h2>
+<p>Decision trees used in data mining are of two main types:</p>
+<ul>
+<li>Classification: Discrete y</li>
+<li>Regression tree: Continuous y</li>
+</ul>
+<p>Umbrella term: CART (Classification and Regression Tress)</p>
+<p>Trees used for regression and trees used for classification have some similarities - but also some differences, such as the <strong>procedure used to determine where to split</strong></p>
+</section><section id="metrics" class="slide level2">
+<h2>Metrics</h2>
+<ul>
+<li>Decision tress work in <strong>top-down</strong> fashion</li>
+<li>choosing a variable at each step that <strong>best splits</strong> the set of items</li>
+</ul>
+</section><section id="gini-impurity" class="slide level2">
+<h2>Gini impurity</h2>
+<p>Gini Impurity is a measurement of the likelihood of an incorrect classification of a new instance of a random variable, if that new instance were randomly classified according to the distribution of class labels from the data set.</p>
+<p><span class="math inline">\(GI = \sum_{k=1}^C P(i)(1-P(i))\)</span> = <span class="math inline">\(\sum_{k=1}^C 1-P(i)^2\)</span><br> Where <span class="math inline">\(P(i)\)</span> is the probability of a certain classification i, per the training data set.</p>
+</section></section>
+<section><section id="gini-impurity-intution" class="title-slide slide level1"><h1><small> Gini impurity: Intution </small></h1></section><section id="section-54" class="slide level2">
+<h2></h2>
+<p>Assume 3 classes: 0, 1, 2</p>
+<ul>
+<li>Case1: A node contains single class (say class 1):
+<ul>
+<li>P(0)=1 P(1)=0 P(2)=0</li>
+<li><span class="math inline">\(GI = 0\)</span></li>
+</ul></li>
+<li>Case2: A node contains equal number of all classes
+<ul>
+<li>P(0)=1/3 P(1)=1/3 P(2)=1/3</li>
+<li><span class="math inline">\(GI = 1 - 3*(1/3)^2 = 2/3\)</span></li>
+</ul></li>
+<li>Case3: A node contians only two classes with equal number (say class 1 and class 2)
+<ul>
+<li>P(0)=1/2 P(1)=1/2 P(2)=0</li>
+<li><span class="math inline">\(GI = 1 - 2*(1/2)^2 = 1/2\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="information-gain" class="title-slide slide level1"><h1><small> Information Gain </small></h1></section><section id="section-55" class="slide level2">
+<h2></h2>
+<p>Information gain (IG) measures how much “information” a feature gives us about the class.</p>
+<ul>
+<li>Information Gain = Entropy (parent) - weigth * Entropy(children)</li>
+</ul>
+</section></section>
+<section><section id="information-gain-intuition" class="title-slide slide level1"><h1><small> Information gain (intuition): </small></h1></section><section id="section-56" class="slide level2">
+<h2></h2>
+<ul>
+<li>Entropy is a measure of disorder. Reduction</li>
+<li>in entropy is information gain.</li>
+<li>Entropy: <span class="math inline">\(E = -p\log2(p)\)</span></li>
+<li>Entropy is zero when p = 0 or 1</li>
+<li>Entropy is zero for pure node. (All examples of same class)</li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

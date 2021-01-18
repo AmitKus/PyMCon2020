@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> Data Science</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> Data Science </small></h1>
+</section>
+
+<section><section id="what-is-r2-coefficient-of-determination" class="title-slide slide level1"><h1><small> What is <span class="math inline">\(R^2\)</span>: coefficient of determination? </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<p>In statistics, the coefficient of determination, denoted R2 or r2 and pronounced “R squared”, is the proportion of the variance in the dependent variable that is predictable from the independent variable(s).</p>
+</section></section>
+<section><section id="quantities-of-interest-for-r2-calculation" class="title-slide slide level1"><h1><small> Quantities of interest for <span class="math inline">\(R^2\)</span> calculation </small></h1></section><section id="section-1" class="slide level2">
+<h2></h2>
+<p>Given N pairs of <span class="math inline">\((x_i,y_i)\)</span> we fit a linear regression to have corresponding model values <span class="math inline">\(\hat{y_i}\)</span>. The different kinds of quantities we can talk about:</p>
+<ul>
+<li>Mean of the data: <span class="math inline">\(\bar{y} = \frac{1}{N}\sum_{i=1}^{N}{y_i}\)</span></li>
+<li>Variance of the data: <span class="math inline">\(SS_{tot} = \sum_{i=1}^{N}{(y_i - \bar{y})^2}\)</span></li>
+<li>Regression sum of squares (explained sum of squares): <span class="math inline">\(SS_{reg} = \sum_{i=1}^{N}{(\hat{y_i} - \bar{y})^2}\)</span></li>
+<li>Sum of squares of residuals: <span class="math inline">\(SS_{res} = \sum_{i=1}^{N}{(y_i - \hat{y_i})^2}\)</span></li>
+</ul>
+</section><section id="section-2" class="slide level2">
+<h2></h2>
+<p>The most general definition of coefficient of regression is:</p>
+<p><span class="math inline">\(R^2 = 1 - \frac{SS_{res}}{SS_{tot}}\)</span></p>
+<p>For simple linear regression: <span class="math inline">\(S_{tot} = SS_{reg} + SS_{res}\)</span></p>
+</section></section>
+<section><section id="when-could-be-r2-negative" class="title-slide slide level1"><h1><small> When could be R2 negative? </small></h1></section><section id="section-3" class="slide level2">
+<h2></h2>
+<ul>
+<li>The negative <span class="math inline">\(R^2\)</span> means the fitted model is worse than just a mean of the data.</li>
+</ul>
+<p>This could happen when:</p>
+<ul>
+<li>not fitting the intercept/constant term</li>
+<li>other constraints forced on the fit that do not agree with data</li>
+<li>while training/validation, reporting <span class="math inline">\(r^2\)</span> on validation dataset.</li>
+<li>should never happen if fitting a full linear regression: (square of pearson correlation)</li>
+</ul>
+</section></section>
+<section><section id="adjusted-r2" class="title-slide slide level1"><h1><small> Adjusted-<span class="math inline">\(R^2\)</span>? </small></h1></section><section id="section-4" class="slide level2">
+<h2></h2>
+<ul>
+<li><p>It is a modification of R2 that adjusts for the number of explanatory terms in a model p relative to the number of data points n.</p></li>
+<li><p>Adjusted R2 can be interpreted as an unbiased (or less biased) estimator of the population R2, whereas the observed sample R2 is a positively biased estimate of the population value.</p></li>
+</ul>
+</section><section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li><span class="math inline">\(R_{adj}^2 = 1 - \left[ \frac{(1 - R^2)(n-1)}{n-k-1} \right]\)</span></li>
+<li><span class="math inline">\(E[R_{adj}^2] = 0\)</span></li>
+<li><span class="math inline">\(E[R^2] = \frac{k}{n-1}\)</span></li>
+</ul>
+</section></section>
+<section><section id="r2-and-squared-correlation-coefficient" class="title-slide slide level1"><h1><small> <span class="math inline">\(R^2\)</span> and squared correlation coefficient? </small></h1></section><section id="section-6" class="slide level2">
+<h2></h2>
+<ul>
+<li>In linear modeling (regression), <span class="math inline">\(R^2 = corr(y_i,\hat{y_i})^2\)</span></li>
+<li>In general modeling conditions, <span class="math inline">\(R^2 = corr(y_i,\hat{y_i})^2\)</span> measures of how good the modeled values are, but rather a measure of how good a predictor might be constructed from the modeled values (by creating a revised predictor of the form α + βƒi)</li>
+</ul>
+</section></section>
+<section><section id="limitations-of-r2" class="title-slide slide level1"><h1><small> Limitations of <span class="math inline">\(R^2\)</span> </small></h1></section><section id="section-7" class="slide level2">
+<h2></h2>
+<ul>
+<li>independent variables are a cause of the changes in the dependent variable;</li>
+<li>omitted-variable bias exists;</li>
+<li>the correct regression was used;</li>
+<li>the most appropriate set of independent variables has been chosen;</li>
+<li>there is collinearity present in the data on the explanatory variables;</li>
+<li>the model might be improved by using transformed versions of the existing set of independent variables;</li>
+<li>there are enough data points to make a solid conclusion.</li>
+</ul>
+</section></section>
+<section><section id="what-is-curse-of-dimensionality" class="title-slide slide level1"><h1><small> What is curse of dimensionality? </small></h1></section><section id="section-8" class="slide level2">
+<h2></h2>
+<ul>
+<li>Various phenomena that arise when analyzing and organizing data in high-dimensional spaces that do not occur in low-dimensional settings.</li>
+<li>The expression was coined by Richard E. Bellman when considering problems in dynamic programming.</li>
+<li>Cursed phenomena occur in domains such as numerical analysis, sampling, combinatorics, machine learning, data mining and databases</li>
+</ul>
+</section><section id="section-9" class="slide level2">
+<h2></h2>
+<p>Distance from origin as the dimensions increase</p>
+<p><img src="pics/distance-from-origin.png" alt="drawing" width="500"/></p>
+</section></section>
+<section><section id="what-are-the-problems-with-anomaly-detection-in-higher-dimension" class="title-slide slide level1"><h1><small> What are the problems with anomaly detection in higher dimension? </small></h1></section><section id="section-10" class="slide level2">
+<h2></h2>
+<p>In a 2012 survey, Zimek et al. identified the following problems when searching for anomalies in high-dimensional data:[8]</p>
+<ul>
+<li>Concentration of scores and distances: derived values such as distances become numerically similar</li>
+<li>Irrelevant attributes: in high dimensional data, a significant number of attributes may be irrelevant</li>
+<li>Definition of reference sets: for local methods, reference sets are often nearest-neighbor based</li>
+<li>Incomparable scores for different dimensionalities: different subspaces produce incomparable scores</li>
+</ul>
+</section><section id="section-11" class="slide level2">
+<h2></h2>
+<ul>
+<li>Interpretability of scores: the scores often no longer convey a semantic meaning</li>
+<li>Exponential search space: the search space can no longer be systematically scanned</li>
+<li>Data snooping bias: given the large search space, for every desired significance a hypothesis can be found</li>
+<li>Hubness: certain objects occur more frequently in neighbor lists than others</li>
+</ul>
+</section></section>
+<section><section id="some-issues-in-high-dimensions" class="title-slide slide level1"><h1><small> Some issues in high dimensions </small></h1></section><section id="section-12" class="slide level2">
+<h2></h2>
+<ul>
+<li>High dimensionality makes clustering hard: everything is “far away” from each other.</li>
+<li>All samples are close to the edge of the sample: prediction is much more difficult near the edges of the training sample.</li>
+<li>The sampling density decreases exponentially as p increases and hence the data becomes much more sparse without significantly more data.</li>
+</ul>
+</section></section>
+<section><section id="is-more-data-better" class="title-slide slide level1"><h1><small> Is more data better? </small></h1></section><section id="section-13" class="slide level2">
+<h2></h2>
+<p>Statistically, - No, if data is biased. - No, if model has high bias (for example: linear regression)</p>
+<p>Practically, - additional storage, computational power, memory it requires: cost of having more data.</p>
+</section></section>
+<section><section id="ensemble-learning" class="title-slide slide level1"><h1><small> Ensemble learning </small></h1></section><section id="section-14" class="slide level2">
+<h2></h2>
+<ul>
+<li>In statistics and machine learning, ensemble methods use multiple learning algorithms to obtain better predictive performance than could be obtained from any of the constituent learning algorithms alone.</li>
+<li>Ensembles can be shown to have more flexibility in the functions they can represent.</li>
+</ul>
+</section><section id="section-15" class="slide level2">
+<h2></h2>
+<ul>
+<li>Empirically, ensembles tend to yield better results when there is a significant diversity among the models.</li>
+<li>Ensemble methods are meta-algorithms that combine several machine learning techniques into one predictive model in order to decrease variance (bagging), bias (boosting), or improve predictions (stacking).</li>
+</ul>
+</section></section>
+<section><section id="bayes-optimal-classifier" class="title-slide slide level1"><h1><small> Bayes optimal classifier </small></h1></section><section id="section-16" class="slide level2">
+<h2></h2>
+<p>Provides the theoretical limit for any ensemble learner. - Step1: Given the training data what’s the hypothesis - Step2: Given the hypothesis what’s the label</p>
+</section></section>
+<section><section id="examples-of-ensemble-learning" class="title-slide slide level1"><h1><small> Examples of ensemble learning </small></h1></section><section id="section-17" class="slide level2">
+<h2></h2>
+<p>Bootstrap aggregating (bagging) - Multiple models - Models vote with equal weight - Models trained on random subset (with replacement) of training data (subsets are same size as training data) - Uses voting for classification and averaging for regression. - Example: random forest (combines random decision trees)</p>
+</section><section id="section-18" class="slide level2">
+<h2></h2>
+<p>Boosting - Incremental ensemble building - New model instances emphasize the training samples that the old model mis-classified - In some cases, boosting &gt; bagging - More likely to overfit - Example: Adaboost (updates the data weights)</p>
+</section><section id="section-19" class="slide level2">
+<h2></h2>
+<p>Bayesian model averaging</p>
+<ul>
+<li>Seeks to approximate the Bayes optimal classifier</li>
+<li>Hypotheses are typically sampled using a Monte Carlo sampling technique such as MCMC.</li>
+</ul>
+</section><section id="section-20" class="slide level2">
+<h2></h2>
+<p>Bayesian model combination</p>
+<ul>
+<li>Bayesian model combination (BMC) is an algorithmic correction to Bayesian model averaging (BMA).</li>
+<li>Instead of sampling each model in the ensemble individually, it samples from the space of possible ensembles (with model weightings drawn randomly from a Dirichlet distribution having uniform parameters). This modification overcomes the tendency of BMA to converge toward giving all of the weight to a single model.</li>
+</ul>
+</section><section id="section-21" class="slide level2">
+<h2></h2>
+<ul>
+<li>BMC have been shown to be better on average (with statistical significance) than BMA, and bagging</li>
+<li>BMA can often be approximated by using cross-validation to select the best model from a bucket of models.</li>
+<li>BMC may be approximated by using cross-validation to select the best ensemble combination from a random sampling of possible weightings.</li>
+</ul>
+</section><section id="section-22" class="slide level2">
+<h2></h2>
+<p>Stacking</p>
+<ul>
+<li>Train all algorithms using the available data,</li>
+<li>Train a combiner algorithm to make a final prediction using all the predictions of the other algorithms as additional inputs.</li>
+</ul>
+</section></section>
+<section><section id="why-ensembles-superior-to-singles" class="title-slide slide level1"><h1><small> Why Ensembles Superior to Singles </small></h1></section><section id="section-23" class="slide level2">
+<h2></h2>
+<p>Three reasons by viewing the nature of machine learning as searching a hypothesis space for the most accurate hypothesis:</p>
+<ul>
+<li>The training data might not provide sufficient information for choosing a single best learner.
+<ul>
+<li>For example, there may be many learners perform equally well on the training data set. Thus, combining these learners may be a better choice.</li>
+</ul></li>
+</ul>
+</section><section id="section-24" class="slide level2">
+<h2></h2>
+<ul>
+<li>The search processes of the learning algorithms might be imperfect.
+<ul>
+<li>For example, even if there exists a unique best hypothesis, it might be difficult to achieve since running the algorithms result in sub-optimal hypotheses.</li>
+</ul></li>
+</ul>
+</section><section id="section-25" class="slide level2">
+<h2></h2>
+<ul>
+<li>The third reason is that, the hypothesis space being searched might not contain the true target function, while ensembles can give some good approximation.
+<ul>
+<li>For example, it is well-known that the classification boundaries of decision trees are linear segments parallel to coordinate axes. If the target classification boundary is a smooth diagonal line, using a single decision tree cannot lead toa good result yet a good approximation can be achieved by combining a set of decision trees.</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="ensemble-learning-and-the-bias-variance-decomposition" class="title-slide slide level1"><h1><small> Ensemble learning and the bias-variance decomposition </small></h1></section><section id="section-26" class="slide level2">
+<h2></h2>
+<ul>
+<li>Bagging can significantly reduce the variance, and therefore it is better to be applied to learners suffered from large variance, e.g., unstable learners such as decision trees or neural networks.</li>
+<li>Boosting can significantly reduce the bias in addition to reducing the variance, and therefore, on weak learners such as decision stumps, Boosting is usually more effective.</li>
+</ul>
+</section></section>
+<section><section id="what-is-item-response-theory" class="title-slide slide level1"><h1><small> What is Item Response Theory? </small></h1></section><section id="section-27" class="slide level2">
+<h2></h2>
+<p>The problem looks like following: we have N students who are tested on M questions. Given data on who got what problem correct, how would you rank the problems in terms of difficulty?</p>
+<p>Simple model to fit: <span class="math inline">\(Probability= \frac{1}{1 + e^{-\left( p-d \right)}}\)</span></p>
+<p>where <span class="math inline">\(p\)</span> is the proficiency of the student and <span class="math inline">\(d\)</span> is the difficulty of the question.</p>
+</section></section>
+<section><section id="recommender-system" class="title-slide slide level1"><h1><small> Recommender System </small></h1></section><section id="section-28" class="slide level2">
+<h2></h2>
+<p>A recommender system is a subclass of information filtering that seeks to predict the “rating” or “preference” a user will give an item, such as a product, movie, song, etc.</p>
+<p>Mathematically, a recommendation task is set to be:</p>
+<ul>
+<li>Set of users (U)</li>
+<li>Set of items (I) that are to be recommended to U</li>
+<li>Learn a function based on the user’s past interaction data that predicts the likeliness of item I to U</li>
+</ul>
+</section><section id="section-29" class="slide level2">
+<h2></h2>
+<p><img data-src="https://raw.githubusercontent.com/AmitKus/Useful_Material/master/Data-Science-Interview/Pictures/TheUtilityMatrix.png?token=AKFZ24ILRWDT4AAIPCRS2O27R6WWE" /></p>
+<p>Goal is to fill the blank space in the Utility matrix above.</p>
+</section></section>
+<section><section id="recommender-systems-long-tail-phenomena" class="title-slide slide level1"><h1><small> Recommender systems: Long-tail phenomena </small></h1></section><section id="section-30" class="slide level2">
+<h2></h2>
+<p>The distinction between the physical (limited shelf-space: popular items) and on-line (unlimited shelf-space: “user-preferred” items) worlds has been called the long tail phenomena.</p>
+<p><img data-src="https://raw.githubusercontent.com/AmitKus/Useful_Material/master/Data-Science-Interview/Pictures/LongTailPhenomena.png?token=AKFZ24NMSPMVA4SYA5OOBG27R6W3A" /></p>
+</section></section>
+<section><section id="recommender-systems-basic-approach" class="title-slide slide level1"><h1><small> Recommender systems: Basic approach </small></h1></section><section id="section-31" class="slide level2">
+<h2></h2>
+<p>Approach</p>
+<ul>
+<li>Find similar users or items.</li>
+<li>Predict the ratings of the items that are not yet rated by a user.</li>
+</ul>
+</section><section id="section-32" class="slide level2">
+<h2></h2>
+<p>Questions to answer</p>
+<ul>
+<li>How do you determine which users or items are similar to one another?
+<ul>
+<li>Euclidean distance and cosine similarity</li>
+</ul></li>
+<li>Given that you know which users are similar, how do you determine the rating that a user would give to an item based on the ratings of similar users?
+<ul>
+<li>Not a single answer. Multiple algorithms to do this.</li>
+<li>Collaborative filtering is a family of algorithms</li>
+</ul></li>
+</ul>
+</section><section id="section-33" class="slide level2">
+<h2></h2>
+<ul>
+<li>How do you measure the accuracy of the ratings you calculate?
+<ul>
+<li>Multiple metrics: RMSE, MAE etc</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="user-based-vs-item-based-collaborative-filtering" class="title-slide slide level1"><h1><small> User-Based vs Item-Based Collaborative Filtering </small></h1></section><section id="section-34" class="slide level2">
+<h2></h2>
+<p>The two approaches are mathematically quite similar, but there is a conceptual difference between the two. Here’s how the two compare:</p>
+<ul>
+<li>User-based: For a user U, with a set of similar users determined based on rating vectors consisting of given item ratings, the rating for an item I, which hasn’t been rated, is found by picking out N users from the similarity list who have rated the item I and calculating the rating based on these N ratings.</li>
+</ul>
+</section><section id="section-35" class="slide level2">
+<h2></h2>
+<ul>
+<li>Item-based: For an item I, with a set of similar items determined based on rating vectors consisting of received user ratings, the rating by a user U, who hasn’t rated it, is found by picking out N items from the similarity list that have been rated by U and calculating the rating based on these N ratings.</li>
+</ul>
+</section><section id="section-36" class="slide level2">
+<h2></h2>
+<ul>
+<li>Item-based collaborative filtering was developed by Amazon.</li>
+<li>In a system where there are more users than items, item-based filtering is faster and more stable than user-based. It is effective because usually, the average rating received by an item doesn’t change as quickly as the average rating given by a user to different items.</li>
+<li>It’s also known to perform better than the user-based approach when the ratings matrix is sparse.</li>
+</ul>
+</section></section>
+<section><section id="pros-and-cons-of-recommender-system" class="title-slide slide level1"><h1><small> Pros and Cons of recommender system </small></h1></section><section id="section-37" class="slide level2">
+<h2></h2>
+<p>Pros:</p>
+<ul>
+<li>Works on any kind on item (no feature selection)</li>
+</ul>
+<p>Cons:</p>
+<ul>
+<li>Cold start: Need enough users.</li>
+<li>User/ratings matrix is sparse</li>
+<li>First rater: New item, esoteric items</li>
+<li>Popularity bias</li>
+</ul>
+</section><section id="section-38" class="slide level2">
+<h2></h2>
+<p>Most expensive step is finding the k most similar users (items).</p>
+<ul>
+<li>Near neighbor search (LSH)</li>
+<li>Clustering</li>
+<li>Dimensionality reduction</li>
+</ul>
+</section></section>
+<section><section id="collaborative-filtering-approaches" class="title-slide slide level1"><h1><small> Collaborative filtering approaches </small></h1></section><section id="section-39" class="slide level2">
+<h2></h2>
+<ul>
+<li>Memory-based: KNN</li>
+<li>Model based: SVD, Neural Nets, Matrix Factorization</li>
+</ul>
+<p><img data-src="https://miro.medium.com/max/840/1*7uW5hLXztSu_FOmZOWpB6g.png" /></p>
+</section></section>
+<section><section id="data-categories" class="title-slide slide level1"><h1><small> Data categories </small></h1></section><section id="section-40" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/data_categories.png" /></p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

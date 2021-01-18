@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title> Bayesian Inference</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/reveal.css">
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@3.9.2//css/theme/white.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'https://unpkg.com/reveal.js@3.9.2//css/print/pdf.css' : 'https://unpkg.com/reveal.js@3.9.2//css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title"><small> Bayesian Inference </small></h1>
+</section>
+
+<section><section id="why-is-posterior-sample-popular" class="title-slide slide level1"><h1><small> Why is posterior sample popular? </small></h1></section><section id="section" class="slide level2">
+<h2></h2>
+<ul>
+<li>Most quantities in Bayesian Inference are defined by integrals involving the posterior density, which are usually intractable and are difficult to deterministically approximate.</li>
+<li>Given a sample from the posterior of sufficient effective size,
+<ul>
+<li>posterior expected values can be approximated by sample means,</li>
+<li>posterior quantiles by sample quantiles</li>
+<li>posterior marginal densities by sample-based density estimates</li>
+</ul></li>
+</ul>
+</section><section id="section-1" class="slide level2">
+<h2></h2>
+<ul>
+<li>Most posterior inference is readily accomplished if an efficient method of sampling from posterior is available.</li>
+</ul>
+</section></section>
+<section><section id="independent-vs-dependent-sampling" class="title-slide slide level1"><h1><small> Independent vs dependent sampling? </small></h1></section><section id="independent-sampling" class="slide level2">
+<h2>Independent sampling</h2>
+<ul>
+<li>Independent sampling from posterior is seemingly ideal, since relatively few samples are required.</li>
+<li>Difficult to implement in general way that efficiently scales with the dimension <span class="math inline">\(\theta\)</span></li>
+<li>Example: Rejection sampling</li>
+</ul>
+</section><section id="dependent-sampling" class="slide level2">
+<h2>Dependent sampling</h2>
+<ul>
+<li>Currently the most efficient generally adaptable method use dependent sampling.</li>
+<li>Incurs a computational cost of acquiring a larger number of samples to attain a given accuracy.</li>
+<li>Flexibility and scalability in higher dimensions offset disadvantages.</li>
+<li>Example: MCMC</li>
+</ul>
+</section></section>
+<section><section id="markov-chain-monte-carlo-mcmc" class="title-slide slide level1"><h1><small> Markov Chain Monte Carlo (MCMC) </small></h1></section><section id="section-2" class="slide level2">
+<h2></h2>
+<ul>
+<li>Sample are obtained from successive states of a discrete-time Markov chain.</li>
+<li>Designed to be easy to simulate</li>
+<li>samples have distribution arbitrarily close to the posterior distribution</li>
+<li>MC is designed to have a particular <span class="math inline">\(\textit{stationary distribution}\)</span>: a distribution on the state space of the chain that is preserved by the transition kernel.</li>
+</ul>
+</section><section id="section-3" class="slide level2">
+<h2></h2>
+<ul>
+<li>Since starting the chain in the stationary distribution is difficult, MCMC relies on the stationary distribution also being the (unique) <span class="math inline">\(\textit{limiting distribution}\)</span>: the state to which the states converge as the time index increases.</li>
+<li>Convergence is usually checked empirically as it’s difficult to verify in general.</li>
+</ul>
+</section><section id="section-4" class="slide level2">
+<h2></h2>
+<ul>
+<li>Burn-in or warm-up: running the chain(s) until declaring convergence.
+<ul>
+<li>All values discarded except final state.</li>
+</ul></li>
+<li>Chains that are highly dependent exhibit <span class="math inline">\(\textit{slow mixing}\)</span>: the decay rate of dependence between the states of the chain at two time points as the time lag increases.</li>
+<li>Retaining only the regularly spaced subsample is called thinning.</li>
+</ul>
+</section><section id="section-5" class="slide level2">
+<h2></h2>
+<ul>
+<li>The main idea is similar to the <span class="math inline">\(\theta\)</span> update techniques in ML: We update with a new set of <span class="math inline">\(\theta\)</span> values based on our evaluation of the likelihood of the current set of <span class="math inline">\(\theta\)</span> values.</li>
+<li>The big difference is that we are sampling rather than updating: we are interested in the history of values that we explored.</li>
+<li>Not interested in just the best but rather collection of “good” estimates and their probability.</li>
+</ul>
+</section><section id="section-6" class="slide level2">
+<h2></h2>
+<ul>
+<li>Criteria for choosing <span class="math inline">\(\theta_{next}\)</span>:</li>
+</ul>
+<p><span class="math inline">\(\alpha = \frac{P_M(D | \theta_2) P_M(\theta_2)}{P_M(D | \theta_{current})P_M(\theta_{current})}\)</span></p>
+<ul>
+<li><p>Density of <span class="math inline">\(\theta_{next} = \alpha\)</span> Density of <span class="math inline">\(\theta_{current}\)</span></p></li>
+<li><p>Metropolis-Hastings: <span class="math inline">\(\alpha_r = \alpha \frac{q(\theta_{current}|\theta_{proposed})}{q(\theta_{proposed}|\theta_{current})}\)</span></p></li>
+<li><p>MCMC approaches assume no model for the studied probability distribution</p></li>
+</ul>
+</section></section>
+<section><section id="gibbs-sampling" class="title-slide slide level1"><h1><small> Gibbs Sampling </small></h1></section><section id="section-7" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(f(\theta) \propto_{\theta} \pi(y | \theta) \pi(\theta)\)</span></p>
+<ul>
+<li>Gibbs sampling, in purest form is, sequential sampling</li>
+<li>Consider the partition of <span class="math inline">\(\theta\)</span> in K pieces: <span class="math inline">\((\theta_1, \theta_2, ... \theta_K)\)</span></li>
+<li>Gibbs sampling, in purest form is, sequential sampling</li>
+<li>One complete cycle involves conditioning upon the most recently sampled value for each component of <span class="math inline">\(\theta_{-k}\)</span></li>
+</ul>
+</section><section id="section-8" class="slide level2">
+<h2></h2>
+<ul>
+<li>Gibbs sampling reduces the problem of sampling <span class="math inline">\(\theta\)</span> to the problem of conditionally sampling each of its pieces.</li>
+</ul>
+<p><span class="math inline">\(\pi(\theta_k | \theta_{-k},y) = \frac{\pi(\theta | y)}{\pi(\theta_{-k}|y)} \propto_{\theta} f(\theta)\)</span></p>
+<ul>
+<li>Even when a Gibbs sampler is easy to implement, its mixing can be arbitrarily slow.
+<ul>
+<li>there is a high degree of posterior dependence among the pieces of <span class="math inline">\(\theta\)</span></li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="gibbs-sampling-auxiliary-variable" class="title-slide slide level1"><h1><small> Gibbs Sampling: Auxiliary variable </small></h1></section><section id="section-9" class="slide level2">
+<h2></h2>
+<ul>
+<li>sampling more than just the parameter θ.</li>
+<li><strong>Data augmentation</strong> involves adding latent variables, usually as intermediaries in a hierarchical structure, that make full conditionals easier to sample.</li>
+<li><strong>Parameter expansion</strong> involves creating extra dimensions in the parameter space that do not affect the Bayesian model, but allow a faster-mixing Markov chain to be constructed.</li>
+</ul>
+</section></section>
+<section><section id="metropolis-hastings" class="title-slide slide level1"><h1><small> Metropolis Hastings </small></h1></section><section id="section-10" class="slide level2">
+<h2></h2>
+<ul>
+<li>Metropolis-Hastings algorithm: A general approach to posterior sampling is to
+<ul>
+<li>perform a <strong>carefully controlled random walk over the parameter space</strong>.</li>
+<li>The steps are chosen such that the resulting Markov chain has the posterior as its stationary distribution.</li>
+</ul></li>
+</ul>
+</section><section id="section-11" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li><p>Compute: <span class="math inline">\(\alpha = \frac{f(\theta`)/T(\theta`|\theta_{old})}{f(\theta_{old})/T(\theta_{old}|\theta`)}\)</span></p></li>
+<li><p><span class="math inline">\(\theta_{new} = {\left\{\begin{matrix} \theta` &amp; \text{ with probability } min(\alpha,1) \\ \theta_{old} &amp; \text{ otherwise } \end{matrix}\right.}\)</span></p></li>
+</ol>
+<ul>
+<li>Metropolis algorithm: <span class="math inline">\(T(\theta&#39; | \theta) = T(\theta | \theta`)\)</span></li>
+<li>Exact Gibbs sampling can be seen as a special case of Metropolis Hastings (<span class="math inline">\(\alpha = 1\)</span>)</li>
+</ul>
+</section></section>
+<section><section id="hamiltonian-monte-carlo" class="title-slide slide level1"><h1><small> Hamiltonian Monte Carlo </small></h1></section><section id="section-12" class="slide level2">
+<h2></h2>
+<ul>
+<li>Hamiltonian or Hybrid Monte Carlo: Special case of Metropolis Hastings algorithm
+<ul>
+<li>uses a proposal involving a special set of auxiliary variables and</li>
+<li>the path of a carefully devised differential equation</li>
+</ul></li>
+<li>HMC can be applied directly to θ if the posterior is continuous and its density is continuously differentiable.</li>
+</ul>
+</section><section id="section-13" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(H(\theta, p) = -\ln(\theta) - \ln(p)\)</span></p>
+<p>Starting from <span class="math inline">\((\theta_{old},p)\)</span>, follow the path <span class="math inline">\((\theta(t),p(t))\)</span> of the differential equation system defined by</p>
+<p><span class="math inline">\(\frac{\partial \theta_k}{\partial t} = \frac{\partial H}{\partial p_k}\)</span> </br> <span class="math inline">\(\frac{\partial p_k}{\partial t} = \frac{\partial H}{\partial \theta_k}\)</span></p>
+</section><section id="section-14" class="slide level2">
+<h2></h2>
+<p>In the Metropolis Hastings step: <span class="math inline">\(\alpha = e^{H(\theta_{old},p) - H(\theta(t_L), p(t_L))}\)</span></p>
+</section></section>
+<section><section id="nuts-no-u-turn-sampler" class="title-slide slide level1"><h1><small> NUTS: No-U-turn Sampler </small></h1></section><section id="section-15" class="slide level2">
+<h2></h2>
+<ul>
+<li>The differential equation path of an HMC proposal has a tendency to loop back on itself, making the efficiency sensitive to the length of the path.</li>
+<li>The no-U-turn sampler (NUTS) is a modification of HMC designed to avoid this behavior.</li>
+<li>Essentially, it allows for adaptive choice of the leapfrog algorithm’s step size and number of steps.</li>
+</ul>
+</section></section>
+<section><section id="sampling-algorithms-demo" class="title-slide slide level1"><h1><small> Sampling algorithms demo </small></h1></section><section id="section-16" class="slide level2">
+<h2></h2>
+<p><a href="https://chi-feng.github.io/mcmc-demo/app.html?algorithm=RandomWalkMH&amp;target=banana">Animation of algos</a></p>
+<p><a href="http://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/">Better Markov Chain</a></p>
+</section></section>
+<section><section id="confidence-interval-modeling-candes-c3" class="title-slide slide level1"><h1><small> Confidence interval modeling (Candes, C3) </small></h1></section><section id="section-17" class="slide level2">
+<h2></h2>
+<ul>
+<li>training and calibration sets</li>
+<li>use pinball loss function to get the quantiles,</li>
+<li>use calibration set to update the intervals by counting how many points lie outside, inside Q</li>
+</ul>
+</section></section>
+<section><section id="solving-bayesian-inference-problems" class="title-slide slide level1"><h1><small> Solving Bayesian Inference Problems </small></h1></section><section id="section-18" class="slide level2">
+<h2></h2>
+<ol type="1">
+<li>Markov Chain Monte Carlo (MCMC): sampling based approach</li>
+<li>Variational Inference: Approximation based approach</li>
+</ol>
+</section></section>
+<section><section id="what-is-statistical-inference" class="title-slide slide level1"><h1><small> What is statistical inference? </small></h1></section><section id="section-19" class="slide level2">
+<h2></h2>
+<ul>
+<li>Statistical inference consists in learning about what we do not observe based on what we observe.</li>
+<li>It is the process of drawing conclusions such as punctual estimations, confidence intervals or distribution estimations about some latent variables (often causes) in a population, based on some observed variables (often effects) in this population or in a sample of this population.</li>
+</ul>
+</section></section>
+<section><section id="what-is-bayesian-inference" class="title-slide slide level1"><h1><small> What is bayesian inference? </small></h1></section><section id="section-20" class="slide level2">
+<h2></h2>
+<ul>
+<li>Bayesian inference is the process of producing statistical inference taking a Bayesian point of view.</li>
+<li>A classical example is the Bayesian inference of parameters.</li>
+</ul>
+</section></section>
+<section><section id="bayesian-inference-in-ml-latent-dirichlet-allocation" class="title-slide slide level1"><h1><small> Bayesian Inference in ML: Latent Dirichlet Allocation </small></h1></section><section id="section-21" class="slide level2">
+<h2></h2>
+<ul>
+<li>Bayesian inference problem naturally appears, for example, in machine learning methods
+<ul>
+<li>that assume a probabilistic graphical model and</li>
+<li>where, given some observations, we want to recover latent variables of the model.</li>
+</ul></li>
+<li>In topic modelling, the Latent Dirichlet Allocation (LDA) method defines such a model for the description of texts in corpus.</li>
+</ul>
+</section></section>
+<section><section id="lda" class="title-slide slide level1"><h1><small> LDA </small></h1></section><section id="section-22" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(p(z|w) = \frac{p(w|z)p(z)}{p(w)} = \frac{p(w|z)p(z)}{\int_z p(w|z)p(z) dz}\)</span></p>
+<ul>
+<li><span class="math inline">\(w\)</span> is the vector of words</li>
+<li><span class="math inline">\(z\)</span> is the vector of topics</li>
+</ul>
+<p><img data-src="Pictures/LatentDirichletAllocation.png" /></p>
+</section></section>
+<section><section id="mcmc-approaches" class="title-slide slide level1"><h1><small> MCMC Approaches </small></h1></section><section id="section-23" class="slide level2">
+<h2></h2>
+<ul>
+<li>MCMC approaches assume no model for the studied probability distribution</li>
+<li>As a consequence, these methods have a low bias but a high variance and it implies that</li>
+<li>Results are most of the time more costly to obtain but also more accurate than the one we can get from Variational Inference.</li>
+</ul>
+</section><section id="section-24" class="slide level2">
+<h2></h2>
+<ul>
+<li>Markov Chain Monte Carlo algorithms are aimed at generating samples from a given probability distribution.</li>
+<li>The “Monte Carlo” part of the method’s name is due to the sampling purpose whereas</li>
+<li>The “Markov Chain” part comes from the way we obtain these samples</li>
+<li>The whole MCMC approach is based on the ability to build a Markov Chain whose stationary distribution is the one we want to sample from.</li>
+</ul>
+</section><section id="section-25" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/markovchain.png" /></p>
+</section></section>
+<section><section id="what-is-the-key-property-required-by-mcmc-algorithms" class="title-slide slide level1"><h1><small> What is the key property required by MCMC algorithms? </small></h1></section><section id="section-26" class="slide level2">
+<h2></h2>
+<ul>
+<li>Metropolis-Hasting and Gibbs Sampling algorithms both use a particular property of Markov Chains: reversibility.</li>
+<li><p>A Markov Chain over a state space E with transition probabilities denoted by</p></li>
+<li><p><span class="math inline">\(k(\alpha,\beta) = p(X_{n+1} = \beta | X_n = \alpha)\)</span></p></li>
+<li><p>is said to be reversible if there exists a probability distribution γ such that</p></li>
+<li><p><span class="math inline">\(k(\alpha,\beta) \gamma(\beta) = k(\beta, \alpha) \gamma(\alpha)\)</span> for <span class="math inline">\(\forall \alpha, \beta \in R\)</span></p></li>
+</ul>
+<p><a href="https://towardsdatascience.com/bayesian-inference-problem-mcmc-and-variational-inference-25a8aa9bce29">Source: Towards data science</a></p>
+</section></section>
+<section><section id="gibbs-sampling-transitions" class="title-slide slide level1"><h1><small> Gibbs sampling transitions </small></h1></section><section id="section-27" class="slide level2">
+<h2></h2>
+<ul>
+<li><p>Markov chain: <span class="math inline">\((X_{n,1}, X_{n,2}, .... , X_{n,d})\)</span></p></li>
+<li>Step1: Randomly choose a dimension d: <span class="math inline">\(d \sim Uniform( 1,2,....,D)\)</span></li>
+<li>Step2: <span class="math inline">\(X_{n+1,j} = X_{n,j}\)</span> for <span class="math inline">\(\forall j \neq d\)</span></li>
+<li><p>Step3: <span class="math inline">\(X_{n+1,d} \sim \pi_d (. | X_{n,-d})\)</span></p>
+<p>where <span class="math inline">\(\pi_d (. | X_{n,-d}) = \frac{\pi(X_{n,1},X_{n,2},....X_{n,d-1},.,X_{n,d+1}, ... X_{n,D})}{\int_u \pi(X_{n,1},X_{n,2},....X_{n,d-1},u,X_{n,d+1}, ... X_{n,D})du}\)</span></p></li>
+</ul>
+</section></section>
+<section><section id="metropolis-hastings-transitions" class="title-slide slide level1"><h1><small> Metropolis-Hastings transitions </small></h1></section><section id="section-28" class="slide level2">
+<h2></h2>
+<ul>
+<li>Sometimes even conditional distributions involved in Gibbs methods are far too complex.</li>
+<li><p>In such cases, Metropolis-Hastings can be used.</p></li>
+<li>Draw a suggested transition <span class="math inline">\(x\)</span>: <span class="math inline">\(x \sim h(X_n,.)\)</span></li>
+<li>Compute related probability: <span class="math inline">\(r = min(1, \frac{g(x)h(x,X_n)}{g(X_n)h(X_n,x)})\)</span></li>
+<li><p>Effective transition is chosen such that: <span class="math inline">\(X_{n+1} = {\left\{\begin{matrix} x &amp; \text{ with probability r } \\ X_n &amp; \text{ with probability 1-r} \end{matrix}\right.}\)</span></p></li>
+</ul>
+</section></section>
+<section><section id="variational-inference" class="title-slide slide level1"><h1><small> Variational Inference </small></h1></section><section id="section-29" class="slide level2">
+<h2></h2>
+<ul>
+<li>Variational Inference: VI methods consist in finding the best approximation of a distribution among a parametrized family.</li>
+<li>Follow an optimization process (over the family parameters) that only require the targeted distribution to be defined up to a factor.</li>
+<li>Contrary to sampling approaches, a model is assumed (the parametrized family), implying a bias but also a low variance.</li>
+<li>VI methods are less accurate than MCMC but faster.</li>
+</ul>
+</section><section id="section-30" class="slide level2">
+<h2></h2>
+<ul>
+<li>Target distribution:<span class="math inline">\(\pi(.) = C \times g(.) \propto g(.)\)</span></li>
+<li>Parametrized family: <span class="math inline">\(F_{\omega} = \{ f_{\omega};w \in \Omega \}\)</span> where <span class="math inline">\(\Omega \equiv\)</span> set of possible parameters</li>
+<li>Error measure between two distributions p and q: <span class="math inline">\(w = \underset{\omega \in \Omega}{argmin E(f_{\omega}},\pi)\)</span></li>
+</ul>
+</section><section id="section-31" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/variational_inference.png" /></p>
+</section></section>
+<section><section id="variational-inference-family-of-distribution" class="title-slide slide level1"><h1><small> Variational Inference: Family of distribution </small></h1></section><section id="section-32" class="slide level2">
+<h2></h2>
+<ul>
+<li>The choice of the family defines a model that control both the bias and the complexity of the method.</li>
+<li>Restrictive model: High bias, easier optimization</li>
+<li>Complex model: Low bias, hard optimization</li>
+</ul>
+</section><section id="section-33" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/VI_family_distribution.png" /></p>
+</section></section>
+<section><section id="variational-inference-kl-divergence" class="title-slide slide level1"><h1><small> Variational Inference: KL Divergence </small></h1></section><section id="section-34" class="slide level2">
+<h2></h2>
+<p>If p and q are two distributions:</p>
+<p><span class="math inline">\(KL(p,q) = \mathbb{E}_{z \sim p}[\log p(z)] - \mathbb{E}_{z \sim p}[\log q(z)]\)</span></p>
+<p><span class="math inline">\(KL(f_{\omega}, C_g) = \mathbb{E}_{z \sim f_{\omega}}[\log f_{\omega}(z)] - \mathbb{E}_{z \sim f_{\omega}}[\log Cg(z)]\)</span></p>
+<p><span class="math inline">\(KL(f_{\omega}, C_g) = \mathbb{E}_{z \sim f_{\omega}}[\log f_{\omega}(z)] - \mathbb{E}_{z \sim f_{\omega}}[\log g(z)] - \log C\)</span></p>
+</section><section id="section-35" class="slide level2">
+<h2></h2>
+<p>Which implies the following equality for the minimization problem:</p>
+<p><span class="math inline">\(w* = \underset{\omega \in \Omega}{arg min KL(f_{\omega},\pi)}\)</span> <br> <span class="math inline">\(\underset{\omega \in \Omega}{arg min KL(f_{\omega},Cg)}\)</span> <br> <span class="math inline">\(\underset{\omega \in \Omega}{arg min KL(f_{\omega},g)}\)</span></p>
+<ul>
+<li>The optimization process is not sensitive to multiplicative coefficients.</li>
+<li>KL divergence is the cross-entropy minus entropy.</li>
+</ul>
+</section></section>
+<section><section id="variational-inference-optimization" class="title-slide slide level1"><h1><small> Variational Inference: Optimization </small></h1></section><section id="section-36" class="slide level2">
+<h2></h2>
+<ul>
+<li>Use gradient descent or coordinate descent</li>
+<li><span class="math inline">\(w* = \underset{\omega \in \Omega}{arg min KL(f_{\omega},p(z|x))}\)</span><br></li>
+<li><span class="math inline">\(w* = \underset{\omega \in \Omega}{arg max -KL(f_{\omega},p(x|z)p(z))}\)</span><br></li>
+<li><span class="math inline">\(w* = \underset{\omega \in \Omega}{arg max}{(\mathbb{E}_{z \sim f_{\omega}}[\log p(x|z)] - KL(f_{\omega},p(z)))}\)</span></li>
+</ul>
+</section><section id="section-37" class="slide level2">
+<h2></h2>
+<ul>
+<li>The first term is the expected log-likelihood: adjusts parameters to place more mass of values that explain the observed data best.</li>
+<li>The second term is the negative KL divergence between the approximation and the prior: adjusts parameters to make the approximation be close to the prior distribution.</li>
+</ul>
+</section><section id="section-38" class="slide level2">
+<h2></h2>
+<p><img data-src="Pictures/KL-divergence-optimization.png" /></p>
+</section></section>
+<section><section id="gaussian-processes" class="title-slide slide level1"><h1><small> Gaussian Processes </small></h1></section><section id="section-39" class="slide level2">
+<h2></h2>
+<p>Regular Gaussian Processes:</p>
+<p><span class="math inline">\(P(y|K) = \frac{1}{\sqrt{det 2\pi K}} e^{-\frac{1}{2}y^TK^{-1}y}\)</span></p>
+<ul>
+<li>Intuition behind Gaussian Processes (2D) <img data-src="Pictures/gaussian_processes1.png" /></li>
+</ul>
+</section><section id="section-40" class="slide level2">
+<h2></h2>
+<ul>
+<li>How about 6D?</li>
+</ul>
+<p><img data-src="Pictures/gaussian_processes2.png" /></p>
+</section><section id="section-41" class="slide level2">
+<h2></h2>
+<ul>
+<li>Generalization to n points (looks like regression now)</li>
+</ul>
+<p><img data-src="Pictures/gaussian_processes3.png" /></p>
+</section><section id="section-42" class="slide level2">
+<h2></h2>
+<ul>
+<li>Conditioning on data (3 red points) compute the posterior distribution</li>
+</ul>
+<p><img data-src="Pitures/../Pictures/gaussian_processes4.png" /></p>
+</section><section id="section-43" class="slide level2">
+<h2></h2>
+<ul>
+<li>Can’t write down a general inverse covariance matrix representation but can write down the covariance. That’s why we write covariance.</li>
+<li>Number of hyperparameters that can be inferred from the data.</li>
+<li>Hyperparameters: noise level, horizontal lengthscale, vertical lengthscale</li>
+</ul>
+</section><section id="computational-efficiency" class="slide level2">
+<h2>Computational efficiency</h2>
+<p><img data-src="Pictures/gaussian_processes5.png" /></p>
+</section><section id="relationship-to-nn" class="slide level2">
+<h2>Relationship to NN</h2>
+<p><img data-src="Pictures/gaussian_processes6.png" /></p>
+</section></section>
+<section><section id="gaussian-processes-1" class="title-slide slide level1"><h1><small> Gaussian Processes </small></h1></section><section id="section-44" class="slide level2">
+<h2></h2>
+<p>GP can be seen as an infinite-dimensional generalization of multivariate normal distribution.</p>
+<p>A time continuous stochastic process <span class="math inline">\({\displaystyle \left\{X_{t};t\in T\right\}}\)</span> is Gaussian if and only if for every finite set of indices <span class="math inline">\({\displaystyle t_{1},\ldots ,t_{k}}\)</span> in the index set <span class="math inline">\({\displaystyle T}\)</span></p>
+<p><span class="math inline">\({\displaystyle \mathbf {X} _{t_{1},\ldots ,t_{k}}=(X_{t_{1}},\ldots ,X_{t_{k}})}\)</span></p>
+<p>is a multivariate Gaussian random variable.That is the same as saying every linear combination of<span class="math inline">\({\displaystyle (X_{t_{1}},\ldots ,X_{t_{k}})}\)</span> has a univariate normal (or Gaussian) distribution.</p>
+</section><section id="section-45" class="slide level2">
+<h2></h2>
+<p><span class="math inline">\(\textbf{Variance}\)</span>: The variance of a Gaussian process is finite at any time <span class="math inline">\({\displaystyle t}\)</span>,</p>
+<p><span class="math inline">\(\textbf{Covariance function}\)</span>: A key fact of Gaussian processes is that they can be completely defined by their second-order statistics</p>
+</section></section>
+<section><section id="stationary-process" class="title-slide slide level1"><h1><small> Stationary Process </small></h1></section><section id="section-46" class="slide level2">
+<h2></h2>
+<p>In mathematics and statistics, a stationary process (or a strict/strictly stationary process or strong/strongly stationary process) is a stochastic process whose unconditional joint probability distribution does not change when shifted in time.</p>
+<p>Consequently, parameters such as mean and variance also do not change over time.</p>
+</section><section id="section-47" class="slide level2">
+<h2></h2>
+<p>Stationarity refers to the process’ behaviour regarding the separation of any two points <span class="math inline">\({\displaystyle x}\)</span> and <span class="math inline">\({\displaystyle x&#39;}\)</span>. If the process is stationary, it depends on their separation, <span class="math inline">\({\displaystyle x-x&#39;}\)</span>, while if non-stationary it depends on the actual position of the points <span class="math inline">\({\displaystyle x}\)</span> and <span class="math inline">\({\displaystyle x&#39;}\)</span>.</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@3.9.2//lib/js/head.min.js"></script>
+  <script src="https://unpkg.com/reveal.js@3.9.2//js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+        math: {
+          mathjax: '/usr/share/javascript/mathjax/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'https://unpkg.com/reveal.js@3.9.2//lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/zoom-js/zoom.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/math/math.js', async: true },
+          { src: 'https://unpkg.com/reveal.js@3.9.2//plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>
